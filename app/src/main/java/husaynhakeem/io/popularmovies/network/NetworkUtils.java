@@ -1,6 +1,8 @@
 package husaynhakeem.io.popularmovies.network;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 
 import java.io.IOException;
@@ -83,5 +85,12 @@ public class NetworkUtils {
             if (httpURLConnection != null)
                 httpURLConnection.disconnect();
         }
+    }
+
+
+    public static boolean isInternetAvailable(Context context) {
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
     }
 }
