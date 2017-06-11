@@ -1,7 +1,5 @@
 package husaynhakeem.io.popularmovies.models;
 
-import android.util.Log;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -12,8 +10,6 @@ import java.io.IOException;
 
 public class Mapper {
 
-    private static final String TAG = Mapper.class.getSimpleName();
-
     public static MoviesPage convertFromJsonToMovies(String moviesJson) {
 
         try {
@@ -21,7 +17,6 @@ public class Mapper {
             return mapper.readValue(moviesJson, MoviesPage.class);
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e(TAG, "Error while converting movies from JSON to objects: " + e.getMessage());
             return null;
         }
     }
