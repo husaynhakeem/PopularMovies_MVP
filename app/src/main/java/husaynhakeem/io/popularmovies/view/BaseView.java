@@ -9,6 +9,7 @@ import android.view.View;
 
 public interface BaseView {
 
+    void initViews();
     View getRootView();
     Bundle getViewState();
 }

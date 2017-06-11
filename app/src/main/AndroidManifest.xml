@@ -12,13 +12,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".features.moviesDiscovery.MoviesDiscoveryPresenter">
+
+        <activity android:name=".features.moviesDiscovery.MoviesDiscoveryPresenter"
+            android:label="@string/activity_movies_discovery">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".features.movieDetails.MovieDetailsPresenter"
+            android:label="@string/activity_movie_detail"/>
+
     </application>
 
 </manifest>

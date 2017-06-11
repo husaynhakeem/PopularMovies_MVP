@@ -1,5 +1,6 @@
 package husaynhakeem.io.popularmovies.features.moviesDiscovery;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,11 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.net.URL;
 
 import husaynhakeem.io.popularmovies.R;
+import husaynhakeem.io.popularmovies.features.movieDetails.MovieDetailsPresenter;
 import husaynhakeem.io.popularmovies.models.Mapper;
 import husaynhakeem.io.popularmovies.models.MoviesPage;
 import husaynhakeem.io.popularmovies.network.NetworkUtils;
@@ -72,8 +73,10 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
 
 
     @Override
-    public void onMovieClick(int id) {
-        Toast.makeText(this, "Movie id: " + id, Toast.LENGTH_SHORT).show();
+    public void onMovieClick(Bundle bundle) {
+        Intent movieDetails = new Intent(this, MovieDetailsPresenter.class);
+        movieDetails.putExtras(bundle);
+        startActivity(movieDetails);
     }
 
 

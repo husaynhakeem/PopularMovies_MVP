@@ -11,6 +11,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Movie {
 
 
+    public static final String MOVIE_TITLE = "movie title";
+    public static final String MOVIE_POSTER = "movie poster";
+    public static final String MOVIE_RELEASE_DATE = "movie release date";
+    public static final String MOVIE_VOTE_AVERAGE = "movie vote average";
+    public static final String MOVIE_OVERVIEW = "movie overview";
+
+
     @JsonProperty("id")
     private int id;
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="movie_detail_title_height">150dp</dimen>
+    <dimen name="movie_detail_poster_width">150dp</dimen>
+
+    <dimen name="space_small">8dp</dimen>
+    <dimen name="space_normal">16dp</dimen>
+    <dimen name="space_big">24dp</dimen>
+    <dimen name="space_bigger">36dp</dimen>
+
+    <dimen name="text_size_normal">16sp</dimen>
+    <dimen name="text_size_big">24sp</dimen>
+    <dimen name="text_size_bigger">36sp</dimen>
+
+
+</resources>

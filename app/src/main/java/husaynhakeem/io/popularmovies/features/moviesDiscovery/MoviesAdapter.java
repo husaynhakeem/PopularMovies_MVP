@@ -1,5 +1,6 @@
 package husaynhakeem.io.popularmovies.features.moviesDiscovery;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,13 @@ import java.util.List;
 import husaynhakeem.io.popularmovies.R;
 import husaynhakeem.io.popularmovies.models.Movie;
 import husaynhakeem.io.popularmovies.network.NetworkUtils;
+import husaynhakeem.io.popularmovies.utilities.StringUtils;
+
+import static husaynhakeem.io.popularmovies.models.Movie.MOVIE_OVERVIEW;
+import static husaynhakeem.io.popularmovies.models.Movie.MOVIE_POSTER;
+import static husaynhakeem.io.popularmovies.models.Movie.MOVIE_RELEASE_DATE;
+import static husaynhakeem.io.popularmovies.models.Movie.MOVIE_TITLE;
+import static husaynhakeem.io.popularmovies.models.Movie.MOVIE_VOTE_AVERAGE;
 
 /**
  * Created by husaynhakeem on 6/11/17.
@@ -44,7 +52,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
         Movie currentMovie = movies.get(position);
 
-        holder.movieId = currentMovie.getId();
+        holder.movie = currentMovie;
 
         Picasso.with(holder.posterImageView.getContext())
                 .load(NetworkUtils.buildPosterUrl(currentMovie.getPosterPath()).toString())
@@ -77,14 +85,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
 
     interface ClickListener {
-        void onMovieClick(int id);
+        void onMovieClick(Bundle bundle);
     }
 
 
     class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView posterImageView;
-        private int movieId;
+        private Movie movie;
+
 
 
         public MovieViewHolder(View itemView) {
@@ -95,7 +104,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
         @Override
         public void onClick(View v) {
-            clickListener.onMovieClick(movieId);
+
+            Bundle bundle = new Bundle();
+            bundle.putString(MOVIE_TITLE, movie.getTitle());
+            bundle.putString(MOVIE_POSTER, NetworkUtils.buildPosterUrl(movie.getPosterPath()).toString());
+            bundle.putString(MOVIE_RELEASE_DATE, StringUtils.getYearFromDate(movie.getReleaseDate()));
+            bundle.putString(MOVIE_VOTE_AVERAGE, StringUtils.getVoteAverageToDisplay(movie.getVoteAverage()));
+            bundle.putString(MOVIE_OVERVIEW, movie.getOverview());
+
+            clickListener.onMovieClick(bundle);
         }
     }
 }

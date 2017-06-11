@@ -36,7 +36,8 @@ public class MoviesDiscoveryView implements MoviesDiscoveryContract {
     }
 
 
-    private void initViews() {
+    @Override
+    public void initViews() {
         moviesRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_movies);
 
         GridLayoutManager layoutManager = new GridLayoutManager(rootView.getContext(), 2);
