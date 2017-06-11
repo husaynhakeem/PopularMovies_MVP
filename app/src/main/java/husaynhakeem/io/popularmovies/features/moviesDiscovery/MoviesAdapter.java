@@ -26,8 +26,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     private ClickListener clickListener;
 
 
-    public MoviesAdapter(List<Movie> movies) {
+    public MoviesAdapter(List<Movie> movies, ClickListener clickListener) {
         this.movies = movies;
+        this.clickListener = clickListener;
     }
 
 
@@ -77,6 +78,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     }
 
 
+    public void setClickListener(ClickListener listener) {
+        clickListener = listener;
+    }
+
+
     interface ClickListener {
         void onMovieClick(int id);
     }
@@ -91,6 +97,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         public MovieViewHolder(View itemView) {
             super(itemView);
             posterImageView = (ImageView) itemView.findViewById(R.id.iv_movie_poster);
+            posterImageView.setOnClickListener(this);
         }
 
         @Override

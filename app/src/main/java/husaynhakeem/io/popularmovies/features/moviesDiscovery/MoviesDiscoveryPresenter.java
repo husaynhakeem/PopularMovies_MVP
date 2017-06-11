@@ -9,15 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.net.URL;
+
 import husaynhakeem.io.popularmovies.R;
 import husaynhakeem.io.popularmovies.models.Mapper;
 import husaynhakeem.io.popularmovies.models.MoviesPage;
 import husaynhakeem.io.popularmovies.network.NetworkUtils;
 
-public class MoviesDiscoveryPresenter extends AppCompatActivity implements MoviesAdapter.ClickListener {
+public class MoviesDiscoveryPresenter extends AppCompatActivity implements MoviesAdapter.ClickListener, MoviesDiscoveryContract.LoadMoreListener {
 
 
     private MoviesDiscoveryView discoveryView;
+    private int currentPage = 1;
+    private int totalPages = 1;
 
 
     @Override
@@ -28,7 +32,15 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
                 (ViewGroup) getWindow().getDecorView().findViewById(android.R.id.content));
         setContentView(discoveryView.getRootView());
 
+        discoveryView.setClickListener(this);
+        discoveryView.setLoadMoreListener(this);
+
         loadMovies();
+    }
+
+
+    private boolean canLoadMoreMovies() {
+        return currentPage <= totalPages;
     }
 
 
@@ -37,8 +49,16 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
             discoveryView.onNoInternetConnection();
         } else {
             discoveryView.onInternetConnection();
-            new MoviesTask().execute();
+
+            if (canLoadMoreMovies())
+                new MoviesTask(currentPage, "top_rated").execute();
         }
+    }
+
+
+    @Override
+    public void loadMore() {
+        loadMovies();
     }
 
 
@@ -80,7 +100,18 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
     }
 
 
-    class MoviesTask extends AsyncTask<Void, Void, String> {
+    private class MoviesTask extends AsyncTask<Void, Void, String> {
+
+
+        private int page;
+        private String sortOption;
+
+
+        public MoviesTask(int page, String sortOption) {
+            this.page = page;
+            this.sortOption = sortOption;
+        }
+
 
         @Override
         protected void onPreExecute() {
@@ -88,16 +119,26 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
             discoveryView.onLoading();
         }
 
+
         @Override
         protected String doInBackground(Void... params) {
-            return NetworkUtils.getResponseFromUrl(NetworkUtils.buildMoviesUrl(MoviesDiscoveryPresenter.this, "popular", "1"));
+            URL moviesUrl = NetworkUtils.buildMoviesUrl(MoviesDiscoveryPresenter.this, sortOption, String.valueOf(page));
+            return NetworkUtils.getResponseFromUrl(moviesUrl);
         }
+
 
         @Override
         protected void onPostExecute(String s) {
-            discoveryView.onDoneLoading();
-
             MoviesPage moviesPage = Mapper.convertFromJsonToMovies(s);
+            onPostLoadingMovies(moviesPage);
+
+            discoveryView.onDoneLoading();
+        }
+
+
+        private void onPostLoadingMovies(MoviesPage moviesPage) {
+            currentPage++;
+            totalPages = moviesPage.getTotalPages();
             discoveryView.bindMoviesToList(moviesPage.getMovies());
         }
     }

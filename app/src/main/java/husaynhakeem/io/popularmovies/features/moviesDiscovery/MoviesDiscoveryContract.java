@@ -11,6 +11,10 @@ import husaynhakeem.io.popularmovies.view.BaseView;
 
 public interface MoviesDiscoveryContract extends BaseView {
 
+    interface LoadMoreListener {
+        void loadMore();
+    }
+
     void bindMoviesToList(List<Movie> movies);
 
     void onLoading();
@@ -20,4 +24,8 @@ public interface MoviesDiscoveryContract extends BaseView {
     void onInternetConnection();
 
     void onNoInternetConnection();
+
+    void setClickListener(MoviesAdapter.ClickListener listener);
+
+    void setLoadMoreListener(LoadMoreListener listener);
 }

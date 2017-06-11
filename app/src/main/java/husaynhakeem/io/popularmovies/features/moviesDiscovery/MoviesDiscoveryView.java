@@ -12,12 +12,15 @@ import java.util.List;
 
 import husaynhakeem.io.popularmovies.R;
 import husaynhakeem.io.popularmovies.models.Movie;
+import husaynhakeem.io.popularmovies.view.EndlessRecyclerViewScrollListener;
 
 /**
  * Created by husaynhakeem on 6/11/17.
  */
 
 public class MoviesDiscoveryView implements MoviesDiscoveryContract {
+
+    private LoadMoreListener loadMoreListener;
 
     private View rootView;
     private RecyclerView moviesRecyclerView;
@@ -34,9 +37,20 @@ public class MoviesDiscoveryView implements MoviesDiscoveryContract {
 
     private void initViews() {
         moviesRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_movies);
-        moviesRecyclerView.setLayoutManager(new GridLayoutManager(rootView.getContext(), 2));
+
+        GridLayoutManager layoutManager = new GridLayoutManager(rootView.getContext(), 2);
+        moviesRecyclerView.setLayoutManager(layoutManager);
+
+        EndlessRecyclerViewScrollListener recyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                loadMoreListener.loadMore();
+            }
+        };
+        moviesRecyclerView.addOnScrollListener(recyclerViewScrollListener);
+
         moviesRecyclerView.setHasFixedSize(true);
-        moviesAdapter = new MoviesAdapter(null);
+        moviesAdapter = new MoviesAdapter(null, null);
         moviesRecyclerView.setAdapter(moviesAdapter);
 
         loadingProgressBar = (ProgressBar) rootView.findViewById(R.id.pb_loading);
@@ -75,6 +89,18 @@ public class MoviesDiscoveryView implements MoviesDiscoveryContract {
         moviesRecyclerView.setVisibility(View.GONE);
         loadingProgressBar.setVisibility(View.GONE);
         noInternetLayout.setVisibility(View.VISIBLE);
+    }
+
+
+    @Override
+    public void setClickListener(MoviesAdapter.ClickListener listener) {
+        moviesAdapter.setClickListener(listener);
+    }
+
+
+    @Override
+    public void setLoadMoreListener(LoadMoreListener listener) {
+        loadMoreListener = listener;
     }
 
 
