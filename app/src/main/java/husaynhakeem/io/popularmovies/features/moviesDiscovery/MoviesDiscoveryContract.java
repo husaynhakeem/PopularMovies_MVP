@@ -17,6 +17,8 @@ public interface MoviesDiscoveryContract extends BaseView {
 
     void bindMoviesToList(List<Movie> movies);
 
+    void onMoviesListReset();
+
     void onLoading();
 
     void onDoneLoading();

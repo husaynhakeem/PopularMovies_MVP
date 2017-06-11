@@ -24,6 +24,7 @@ public class MoviesDiscoveryView implements MoviesDiscoveryContract {
 
     private View rootView;
     private RecyclerView moviesRecyclerView;
+    EndlessRecyclerViewScrollListener recyclerViewScrollListener;
     private MoviesAdapter moviesAdapter;
     private ProgressBar loadingProgressBar;
     private View noInternetLayout;
@@ -41,7 +42,7 @@ public class MoviesDiscoveryView implements MoviesDiscoveryContract {
         GridLayoutManager layoutManager = new GridLayoutManager(rootView.getContext(), 2);
         moviesRecyclerView.setLayoutManager(layoutManager);
 
-        EndlessRecyclerViewScrollListener recyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+        recyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 loadMoreListener.loadMore();
@@ -62,6 +63,14 @@ public class MoviesDiscoveryView implements MoviesDiscoveryContract {
     public void bindMoviesToList(List<Movie> movies) {
         moviesAdapter.addMovies(movies);
         moviesAdapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    public void onMoviesListReset() {
+        moviesAdapter.getMovies().clear();
+        moviesAdapter.notifyDataSetChanged();
+        recyclerViewScrollListener.resetState();
     }
 
 

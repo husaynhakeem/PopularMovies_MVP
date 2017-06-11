@@ -18,10 +18,14 @@ import husaynhakeem.io.popularmovies.network.NetworkUtils;
 
 public class MoviesDiscoveryPresenter extends AppCompatActivity implements MoviesAdapter.ClickListener, MoviesDiscoveryContract.LoadMoreListener {
 
+    private static final String SORT_BY_MOST_POPULAR = "popular";
+    private static final String SORT_BY_TOP_RATED = "top_rated";
 
     private MoviesDiscoveryView discoveryView;
+
     private int currentPage = 1;
     private int totalPages = 1;
+    private String currentSortingMode = SORT_BY_MOST_POPULAR;
 
 
     @Override
@@ -35,7 +39,7 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
         discoveryView.setClickListener(this);
         discoveryView.setLoadMoreListener(this);
 
-        loadMovies();
+        loadMovies(currentSortingMode);
     }
 
 
@@ -44,26 +48,26 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
     }
 
 
-    private void loadMovies() {
+    private void loadMovies(String sortingMode) {
         if (!NetworkUtils.isInternetAvailable(this)) {
             discoveryView.onNoInternetConnection();
         } else {
             discoveryView.onInternetConnection();
 
             if (canLoadMoreMovies())
-                new MoviesTask(currentPage, "top_rated").execute();
+                new MoviesTask(currentPage, sortingMode).execute();
         }
     }
 
 
     @Override
     public void loadMore() {
-        loadMovies();
+        loadMovies(currentSortingMode);
     }
 
 
     public void reloadMovies(View view) {
-        loadMovies();
+        loadMovies(currentSortingMode);
     }
 
 
@@ -88,15 +92,26 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
         switch (id) {
 
             case R.id.action_sort_by_popular:
-                Toast.makeText(this, "Sorting by most popular", Toast.LENGTH_SHORT).show();
+                discoveryView.onMoviesListReset();
+                onSortingModeChanged();
+                loadMovies(SORT_BY_MOST_POPULAR);
                 return true;
 
             case R.id.action_sort_by_top_rated:
-                Toast.makeText(this, "Sorting by top rated", Toast.LENGTH_SHORT).show();
+                discoveryView.onMoviesListReset();
+                onSortingModeChanged();
+                loadMovies(SORT_BY_TOP_RATED);
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void onSortingModeChanged() {
+
+        currentPage = 1;
+        totalPages = 1;
     }
 
 
