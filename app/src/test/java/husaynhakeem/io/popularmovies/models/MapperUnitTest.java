@@ -43,7 +43,7 @@ public class MapperUnitTest {
 
 
     @Test
-    public void mapping_is_correct() {
+    public void mappingIsCorrect() {
         MoviesPage moviesPage = dummyMoviePage();
         MoviesPage moviesPageFromJson = Mapper.convertFromJsonToMovies(MOVIES_PAGE_JSON);
 

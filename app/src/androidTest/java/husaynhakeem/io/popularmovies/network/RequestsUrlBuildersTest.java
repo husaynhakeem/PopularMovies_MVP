@@ -19,7 +19,7 @@ public class RequestsUrlBuildersTest {
 
 
     @Test
-    public void building_movies_url_is_correct() {
+    public void buildingMoviesUrlIsCorrect() {
 
         Context context = InstrumentationRegistry.getTargetContext();
         assertEquals(MOVIES_URL, NetworkUtils.buildMoviesUrl(context, "popular", "1").toString());
@@ -27,7 +27,7 @@ public class RequestsUrlBuildersTest {
 
 
     @Test
-    public void building_movies_poster_url_is_correct() {
+    public void buildingMoviesPosterUrlIsCorrect() {
 
         Assert.assertEquals(POSTER_URL, NetworkUtils.buildPosterUrl("/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg").toString());
     }

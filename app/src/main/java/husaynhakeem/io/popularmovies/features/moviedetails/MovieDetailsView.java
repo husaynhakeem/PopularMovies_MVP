@@ -1,4 +1,4 @@
-package husaynhakeem.io.popularmovies.features.movieDetails;
+package husaynhakeem.io.popularmovies.features.moviedetails;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

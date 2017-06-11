@@ -1,4 +1,4 @@
-package husaynhakeem.io.popularmovies.features.moviesDiscovery;
+package husaynhakeem.io.popularmovies.features.moviesdiscovery;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import java.net.URL;
 
 import husaynhakeem.io.popularmovies.R;
-import husaynhakeem.io.popularmovies.features.movieDetails.MovieDetailsPresenter;
+import husaynhakeem.io.popularmovies.features.moviedetails.MovieDetailsPresenter;
 import husaynhakeem.io.popularmovies.models.Mapper;
 import husaynhakeem.io.popularmovies.models.MoviesPage;
 import husaynhakeem.io.popularmovies.network.NetworkUtils;

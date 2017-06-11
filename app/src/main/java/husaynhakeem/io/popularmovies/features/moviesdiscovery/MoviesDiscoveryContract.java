@@ -1,4 +1,4 @@
-package husaynhakeem.io.popularmovies.features.moviesDiscovery;
+package husaynhakeem.io.popularmovies.features.moviesdiscovery;
 
 import java.util.List;
 
