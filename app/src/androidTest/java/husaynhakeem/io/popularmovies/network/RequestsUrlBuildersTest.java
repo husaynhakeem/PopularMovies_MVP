@@ -3,7 +3,6 @@ package husaynhakeem.io.popularmovies.network;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -29,6 +28,6 @@ public class RequestsUrlBuildersTest {
     @Test
     public void buildingMoviesPosterUrlIsCorrect() {
 
-        Assert.assertEquals(POSTER_URL, NetworkUtils.buildPosterUrl("/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg").toString());
+        assertEquals(POSTER_URL, NetworkUtils.buildPosterUrl("/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg").toString());
     }
 }
