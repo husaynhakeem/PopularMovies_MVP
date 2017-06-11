@@ -24,7 +24,7 @@ public class MoviesDiscoveryView implements MoviesDiscoveryContract {
 
     private View rootView;
     private RecyclerView moviesRecyclerView;
-    EndlessRecyclerViewScrollListener recyclerViewScrollListener;
+    private EndlessRecyclerViewScrollListener recyclerViewScrollListener;
     private MoviesAdapter moviesAdapter;
     private ProgressBar loadingProgressBar;
     private View noInternetLayout;

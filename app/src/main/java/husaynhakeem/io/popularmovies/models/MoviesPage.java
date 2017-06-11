@@ -86,10 +86,7 @@ public class MoviesPage {
             return movies == null;
         }
 
-        if (movies.size() != moviesToCompare.size()
-                || !moviesToCompare.containsAll(movies))
-            return false;
-
-        return true;
+        return !(movies.size() != moviesToCompare.size()
+                || !moviesToCompare.containsAll(movies));
     }
 }
