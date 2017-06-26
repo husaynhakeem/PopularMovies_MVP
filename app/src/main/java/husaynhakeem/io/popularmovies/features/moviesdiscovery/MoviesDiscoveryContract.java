@@ -23,6 +23,8 @@ public interface MoviesDiscoveryContract extends BaseView {
 
     void onDoneLoading();
 
+    void displaySortCriteria(String sortCriteria);
+
     void onInternetConnection();
 
     void onNoInternetConnection();

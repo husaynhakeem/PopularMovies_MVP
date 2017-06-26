@@ -1,6 +1,7 @@
 package husaynhakeem.io.popularmovies.features.moviesdiscovery;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -84,6 +85,22 @@ public class MoviesDiscoveryView implements MoviesDiscoveryContract {
     @Override
     public void onDoneLoading() {
         loadingProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void displaySortCriteria(String sortCriteria) {
+
+        int messageSortCriteria;
+
+        if (MoviesDiscoveryPresenter.SORT_BY_MOST_POPULAR.equals(sortCriteria))
+            messageSortCriteria = R.string.message_sort_by_most_popular;
+        else
+            messageSortCriteria = R.string.message_sort_by_top_rated;
+
+        Snackbar.make(rootView,
+                messageSortCriteria,
+                Snackbar.LENGTH_SHORT
+        ).show();
     }
 
 

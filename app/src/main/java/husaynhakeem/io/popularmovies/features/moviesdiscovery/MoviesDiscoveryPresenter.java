@@ -19,8 +19,9 @@ import husaynhakeem.io.popularmovies.network.NetworkUtils;
 
 public class MoviesDiscoveryPresenter extends AppCompatActivity implements MoviesAdapter.ClickListener, MoviesDiscoveryContract.LoadMoreListener {
 
-    private static final String SORT_BY_MOST_POPULAR = "popular";
-    private static final String SORT_BY_TOP_RATED = "top_rated";
+    public static final String SORT_BY_MOST_POPULAR = "popular";
+    public static final String SORT_BY_TOP_RATED = "top_rated";
+    private String sortCriteria = SORT_BY_MOST_POPULAR;
 
     private MoviesDiscoveryView discoveryView;
 
@@ -94,16 +95,14 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
 
         switch (id) {
 
-            case R.id.action_sort_by_popular:
+            case R.id.action_sort:
                 discoveryView.onMoviesListReset();
                 onSortingModeChanged();
-                loadMovies(SORT_BY_MOST_POPULAR);
+                loadMovies(sortCriteria);
+                displaySortCriteria();
                 return true;
 
-            case R.id.action_sort_by_top_rated:
-                discoveryView.onMoviesListReset();
-                onSortingModeChanged();
-                loadMovies(SORT_BY_TOP_RATED);
+            case R.id.action_settings:
                 return true;
         }
 
@@ -115,6 +114,21 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
 
         currentPage = 1;
         totalPages = 1;
+        switchSortCriteria();
+    }
+
+
+    private void switchSortCriteria() {
+        if (sortCriteria.equals(SORT_BY_MOST_POPULAR)) {
+            sortCriteria = SORT_BY_TOP_RATED;
+        } else {
+            sortCriteria = SORT_BY_MOST_POPULAR;
+        }
+    }
+
+
+    private void displaySortCriteria() {
+        discoveryView.displaySortCriteria(sortCriteria);
     }
 
 
