@@ -8,13 +8,29 @@ import java.io.IOException;
  * Created by husaynhakeem on 6/11/17.
  */
 
-public class Mapper {
+public class Mapper<T> {
 
-    public static MoviesPage convertFromJsonToMovies(String moviesJson) {
+
+    private static Mapper mapperInstance;
+
+
+    private Mapper() {
+    }
+
+
+    public static Mapper instance() {
+        if (mapperInstance == null)
+            mapperInstance = new Mapper();
+
+        return mapperInstance;
+    }
+
+
+    public T convertFromJsonToMovies(String moviesJson, Class<T> classType) {
 
         try {
             ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(moviesJson, MoviesPage.class);
+            return mapper.readValue(moviesJson, classType);
         } catch (IOException e) {
             e.printStackTrace();
             return null;

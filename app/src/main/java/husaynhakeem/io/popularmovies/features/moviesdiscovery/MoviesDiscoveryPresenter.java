@@ -162,7 +162,7 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
 
         @Override
         protected void onPostExecute(String s) {
-            MoviesPage moviesPage = Mapper.convertFromJsonToMovies(s);
+            MoviesPage moviesPage = (MoviesPage) Mapper.instance().convertFromJsonToMovies(s, MoviesPage.class);
             onPostLoadingMovies(moviesPage);
 
             discoveryView.onDoneLoading();
