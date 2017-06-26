@@ -14,7 +14,7 @@ import java.util.List;
 
 import husaynhakeem.io.popularmovies.R;
 import husaynhakeem.io.popularmovies.models.Movie;
-import husaynhakeem.io.popularmovies.network.NetworkUtils;
+import husaynhakeem.io.popularmovies.network.MoviePosterNetworkUtils;
 import husaynhakeem.io.popularmovies.utilities.StringUtils;
 
 import static husaynhakeem.io.popularmovies.models.Movie.MOVIE_OVERVIEW;
@@ -55,7 +55,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         holder.movie = currentMovie;
 
         Picasso.with(holder.posterImageView.getContext())
-                .load(NetworkUtils.buildPosterUrl(currentMovie.getPosterPath()).toString())
+                .load(MoviePosterNetworkUtils.buildPosterUrl(currentMovie.getPosterPath()).toString())
                 .into(holder.posterImageView);
     }
 
@@ -107,7 +107,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
             Bundle bundle = new Bundle();
             bundle.putString(MOVIE_TITLE, movie.getTitle());
-            bundle.putString(MOVIE_POSTER, NetworkUtils.buildPosterUrl(movie.getPosterPath()).toString());
+            bundle.putString(MOVIE_POSTER, MoviePosterNetworkUtils.buildPosterUrl(movie.getPosterPath()).toString());
             bundle.putString(MOVIE_RELEASE_DATE, StringUtils.getYearFromDate(movie.getReleaseDate()));
             bundle.putString(MOVIE_VOTE_AVERAGE, StringUtils.getVoteAverageToDisplay(movie.getVoteAverage()));
             bundle.putString(MOVIE_OVERVIEW, movie.getOverview());

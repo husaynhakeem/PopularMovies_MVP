@@ -15,7 +15,8 @@ import husaynhakeem.io.popularmovies.R;
 import husaynhakeem.io.popularmovies.features.moviedetails.MovieDetailsPresenter;
 import husaynhakeem.io.popularmovies.models.Mapper;
 import husaynhakeem.io.popularmovies.models.MoviesPage;
-import husaynhakeem.io.popularmovies.network.NetworkUtils;
+import husaynhakeem.io.popularmovies.network.GeneralNetworkUtils;
+import husaynhakeem.io.popularmovies.network.MoviesNetworkUtils;
 
 public class MoviesDiscoveryPresenter extends AppCompatActivity implements MoviesAdapter.ClickListener, MoviesDiscoveryContract.LoadMoreListener {
 
@@ -51,7 +52,7 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
 
 
     private void loadMovies(String sortingMode) {
-        if (!NetworkUtils.isInternetAvailable(this)) {
+        if (!GeneralNetworkUtils.isInternetAvailable(this)) {
             discoveryView.onNoInternetConnection();
         } else {
             discoveryView.onInternetConnection();
@@ -154,8 +155,8 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
 
         @Override
         protected String doInBackground(Void... params) {
-            URL moviesUrl = NetworkUtils.buildMoviesUrl(MoviesDiscoveryPresenter.this, sortOption, String.valueOf(page));
-            return NetworkUtils.getResponseFromUrl(moviesUrl);
+            URL moviesUrl = MoviesNetworkUtils.buildMoviesUrl(MoviesDiscoveryPresenter.this, sortOption, String.valueOf(page));
+            return GeneralNetworkUtils.getResponseFromUrl(moviesUrl);
         }
 
 
