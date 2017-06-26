@@ -5,11 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import husaynhakeem.io.popularmovies.R;
+import husaynhakeem.io.popularmovies.models.Review;
 
 import static husaynhakeem.io.popularmovies.models.Movie.MOVIE_OVERVIEW;
 import static husaynhakeem.io.popularmovies.models.Movie.MOVIE_RELEASE_DATE;
@@ -29,6 +33,7 @@ public class MovieDetailsView implements MovieDetailsContract {
     private TextView releaseDateTextView;
     private TextView voteAverageTextView;
     private TextView overViewTextView;
+    private ProgressBar loadingProgressBar;
 
 
     public MovieDetailsView(LayoutInflater layoutInflater, ViewGroup parent) {
@@ -44,6 +49,7 @@ public class MovieDetailsView implements MovieDetailsContract {
         releaseDateTextView = (TextView) rootView.findViewById(R.id.tv_release_date);
         voteAverageTextView = (TextView) rootView.findViewById(R.id.tv_vote_average);
         overViewTextView = (TextView) rootView.findViewById(R.id.tv_overview);
+        loadingProgressBar = (ProgressBar) rootView.findViewById(R.id.pb_loading);
     }
 
 
@@ -67,9 +73,23 @@ public class MovieDetailsView implements MovieDetailsContract {
     }
 
 
+    public void setMovieReviews(List<Review> reviews) {
+
+    }
+
+
     private void populateTextView(Bundle bundle, String key, TextView textView) {
         if (bundle.containsKey(key)) {
             textView.setText(bundle.getString(key));
+        }
+    }
+
+
+    public void showLoadingIndicator(boolean shouldDisplay) {
+        if (shouldDisplay) {
+            loadingProgressBar.setVisibility(View.VISIBLE);
+        } else {
+            loadingProgressBar.setVisibility(View.GONE);
         }
     }
 

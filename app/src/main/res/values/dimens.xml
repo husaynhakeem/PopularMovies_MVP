@@ -13,5 +13,6 @@
     <dimen name="text_size_big">24sp</dimen>
     <dimen name="text_size_bigger">36sp</dimen>
 
+    <dimen name="progress_bar_dimension">42dp</dimen>
 
 </resources>

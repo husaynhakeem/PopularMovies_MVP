@@ -17,6 +17,7 @@ import husaynhakeem.io.popularmovies.models.Movie;
 import husaynhakeem.io.popularmovies.network.MoviePosterNetworkUtils;
 import husaynhakeem.io.popularmovies.utilities.StringUtils;
 
+import static husaynhakeem.io.popularmovies.models.Movie.MOVIE_ID;
 import static husaynhakeem.io.popularmovies.models.Movie.MOVIE_OVERVIEW;
 import static husaynhakeem.io.popularmovies.models.Movie.MOVIE_POSTER;
 import static husaynhakeem.io.popularmovies.models.Movie.MOVIE_RELEASE_DATE;
@@ -106,6 +107,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         public void onClick(View v) {
 
             Bundle bundle = new Bundle();
+            bundle.putInt(MOVIE_ID, movie.getId());
             bundle.putString(MOVIE_TITLE, movie.getTitle());
             bundle.putString(MOVIE_POSTER, MoviePosterNetworkUtils.buildPosterUrl(movie.getPosterPath()).toString());
             bundle.putString(MOVIE_RELEASE_DATE, StringUtils.getYearFromDate(movie.getReleaseDate()));

@@ -75,6 +75,13 @@
             android:textSize="@dimen/text_size_normal" />
 
 
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="@dimen/progress_bar_dimension"
+            android:layout_height="@dimen/progress_bar_dimension"
+            android:visibility="gone" />
+
+
     </LinearLayout>
 
 

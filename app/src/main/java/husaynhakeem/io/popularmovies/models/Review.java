@@ -1,5 +1,6 @@
 package husaynhakeem.io.popularmovies.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -20,6 +21,7 @@ public class Review {
     @JsonProperty("content")
     private String content;
 
+    @JsonIgnore
     @JsonProperty("url")
     private String url;
 
