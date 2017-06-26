@@ -27,7 +27,7 @@ import static husaynhakeem.io.popularmovies.models.Movie.MOVIE_POSTER;
 public class MovieDetailsPresenter extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Review>> {
 
 
-    private static final int MOVIE_REVIEWS_LOADER_ID = 0;
+    private static final int MOVIE_REVIEWS_LOADER_ID = 1;
 
     private MovieDetailsView movieDetailsView;
 

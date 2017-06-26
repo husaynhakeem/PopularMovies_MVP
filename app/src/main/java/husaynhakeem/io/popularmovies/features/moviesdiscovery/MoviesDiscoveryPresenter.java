@@ -1,8 +1,10 @@
 package husaynhakeem.io.popularmovies.features.moviesdiscovery;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,17 +20,19 @@ import husaynhakeem.io.popularmovies.models.MoviesPage;
 import husaynhakeem.io.popularmovies.network.GeneralNetworkUtils;
 import husaynhakeem.io.popularmovies.network.MoviesNetworkUtils;
 
-public class MoviesDiscoveryPresenter extends AppCompatActivity implements MoviesAdapter.ClickListener, MoviesDiscoveryContract.LoadMoreListener {
+public class MoviesDiscoveryPresenter extends AppCompatActivity implements MoviesAdapter.ClickListener, MoviesDiscoveryContract.LoadMoreListener, LoaderManager.LoaderCallbacks<MoviesPage> {
+
+    private static final int MOVIES_DISCOVERY_LOADER_ID = 0;
 
     public static final String SORT_BY_MOST_POPULAR = "popular";
     public static final String SORT_BY_TOP_RATED = "top_rated";
+    private static final String SORT_CRITERIA_KEY = "sort_criteria_key";
     private String sortCriteria = SORT_BY_MOST_POPULAR;
 
     private MoviesDiscoveryView discoveryView;
 
     private int currentPage = 1;
     private int totalPages = 1;
-    private String currentSortingMode = SORT_BY_MOST_POPULAR;
 
 
     @Override
@@ -42,7 +46,7 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
         discoveryView.setClickListener(this);
         discoveryView.setLoadMoreListener(this);
 
-        loadMovies(currentSortingMode);
+        loadMovies();
     }
 
 
@@ -51,26 +55,27 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
     }
 
 
-    private void loadMovies(String sortingMode) {
+    private void loadMovies() {
         if (!GeneralNetworkUtils.isInternetAvailable(this)) {
             discoveryView.onNoInternetConnection();
         } else {
             discoveryView.onInternetConnection();
 
-            if (canLoadMoreMovies())
-                new MoviesTask(currentPage, sortingMode).execute();
+            if (canLoadMoreMovies()) {
+                getSupportLoaderManager().restartLoader(MOVIES_DISCOVERY_LOADER_ID, null, this);
+            }
         }
     }
 
 
     @Override
     public void loadMore() {
-        loadMovies(currentSortingMode);
+        loadMovies();
     }
 
 
     public void reloadMovies(View view) {
-        loadMovies(currentSortingMode);
+        loadMovies();
     }
 
 
@@ -99,7 +104,7 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
             case R.id.action_sort:
                 discoveryView.onMoviesListReset();
                 onSortingModeChanged();
-                loadMovies(sortCriteria);
+                loadMovies();
                 displaySortCriteria();
                 return true;
 
@@ -133,46 +138,66 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
     }
 
 
-    private class MoviesTask extends AsyncTask<Void, Void, String> {
+    @Override
+    public Loader<MoviesPage> onCreateLoader(int id, Bundle args) {
+        return new AsyncTaskLoader<MoviesPage>(this) {
+
+            private MoviesPage moviesPage;
+
+            @Override
+            protected void onStartLoading() {
+                if (moviesPage != null) {
+                    deliverResult(moviesPage);
+                } else {
+                    discoveryView.onLoading();
+                    forceLoad();
+                }
+            }
+
+            @Override
+            public MoviesPage loadInBackground() {
+
+                try {
+                    URL moviesUrl = MoviesNetworkUtils.buildMoviesUrl(MoviesDiscoveryPresenter.this, sortCriteria, String.valueOf(currentPage));
+                    String moviesPageJson = GeneralNetworkUtils.getResponseFromUrl(moviesUrl);
+                    MoviesPage moviesPage = (MoviesPage) Mapper.instance().convertFromJsonToMovies(moviesPageJson, MoviesPage.class);
+
+                    return moviesPage;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        };
+    }
 
 
-        private int page;
-        private String sortOption;
+    @Override
+    public void onLoadFinished(Loader<MoviesPage> loader, MoviesPage data) {
+        currentPage++;
+        totalPages = data.getTotalPages();
+        discoveryView.bindMoviesToList(data.getMovies());
+        discoveryView.onDoneLoading();
+    }
 
 
-        public MoviesTask(int page, String sortOption) {
-            this.page = page;
-            this.sortOption = sortOption;
-        }
+    @Override
+    public void onLoaderReset(Loader<MoviesPage> loader) {
+    }
 
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            discoveryView.onLoading();
-        }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(SORT_CRITERIA_KEY, sortCriteria);
+    }
 
 
-        @Override
-        protected String doInBackground(Void... params) {
-            URL moviesUrl = MoviesNetworkUtils.buildMoviesUrl(MoviesDiscoveryPresenter.this, sortOption, String.valueOf(page));
-            return GeneralNetworkUtils.getResponseFromUrl(moviesUrl);
-        }
-
-
-        @Override
-        protected void onPostExecute(String s) {
-            MoviesPage moviesPage = (MoviesPage) Mapper.instance().convertFromJsonToMovies(s, MoviesPage.class);
-            onPostLoadingMovies(moviesPage);
-
-            discoveryView.onDoneLoading();
-        }
-
-
-        private void onPostLoadingMovies(MoviesPage moviesPage) {
-            currentPage++;
-            totalPages = moviesPage.getTotalPages();
-            discoveryView.bindMoviesToList(moviesPage.getMovies());
-        }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null && savedInstanceState.containsKey(SORT_CRITERIA_KEY))
+            sortCriteria = savedInstanceState.getString(SORT_CRITERIA_KEY);
     }
 }
