@@ -82,7 +82,7 @@ public class MovieDetailsPresenter extends AppCompatActivity implements LoaderMa
                     String movieReviews = GeneralNetworkUtils.getResponseFromUrl(movieReviewsUrl);
                     ReviewsPage reviewsPage = (ReviewsPage) Mapper.instance().convertFromJsonToMovies(movieReviews, ReviewsPage.class);
                     return reviewsPage.getReviews();
-                } catch(Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     return null;
                 }

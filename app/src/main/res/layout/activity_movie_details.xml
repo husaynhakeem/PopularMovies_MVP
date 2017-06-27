@@ -1,88 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
+    <ScrollView
 
-    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:gravity="center_vertical"
-            android:minHeight="@dimen/movie_detail_title_height"
-            android:padding="@dimen/space_normal"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_bigger" />
-
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/space_small"
-            android:paddingLeft="@dimen/space_normal"
-            android:paddingRight="@dimen/space_normal"
-            android:paddingTop="@dimen/space_small">
+            android:orientation="vertical">
 
+            <!--Trailers-->
+            <HorizontalScrollView
+                android:id="@+id/sv_movie_trailers"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
 
-            <ImageView
-                android:id="@+id/iv_movie_poster"
-                android:layout_width="@dimen/movie_detail_poster_width"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_big"
-                android:layout_marginRight="@dimen/space_big"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/movie_poster_description"
-                android:scaleType="fitStart" />
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/space_small">
-
-                <TextView
-                    android:id="@+id/tv_release_date"
+                <LinearLayout
+                    android:id="@+id/ll_movie_trailers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:textSize="@dimen/text_size_big" />
+                    android:orientation="horizontal" />
 
-                <TextView
-                    android:id="@+id/tv_vote_average"
-                    android:layout_width="wrap_content"
+            </HorizontalScrollView>
+
+
+            <!--General info-->
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_normal"
+                app:cardElevation="@dimen/cardview_elevation">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_movie_poster"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/movie_poster_description"
+                        android:scaleType="fitStart"
+                        tools:src="@drawable/movie_poster" />
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/space_normal"
+                        android:layout_marginStart="@dimen/space_normal"
+                        android:layout_marginTop="@dimen/space_normal"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:textSize="@dimen/text_size_big"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@+id/iv_movie_poster"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Wonder woman" />
+
+                    <TextView
+                        android:id="@+id/tv_release_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_normal"
+                        android:textSize="@dimen/text_size_normal"
+                        app:layout_constraintLeft_toLeftOf="@+id/tv_title"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                        tools:text="Released in: 2017" />
+
+                    <TextView
+                        android:id="@+id/tv_vote_average"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_normal"
+                        android:textSize="@dimen/text_size_normal"
+                        app:layout_constraintLeft_toLeftOf="@+id/tv_release_date"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_release_date"
+                        tools:text="Rating: 7.2/10" />
+
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <!--Overview-->
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_normal"
+                app:cardElevation="@dimen/cardview_elevation">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_normal" />
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/space_small"
+                    android:paddingLeft="@dimen/space_normal"
+                    android:paddingRight="@dimen/space_normal"
+                    android:paddingTop="@dimen/space_small">
 
-            </LinearLayout>
+                    <TextView
+                        style="@style/MovieDetailSectionTilte"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/movie_overview" />
+
+                    <TextView
+                        android:id="@+id/tv_overview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_small"
+                        android:textSize="@dimen/text_size_normal"
+                        tools:text="@string/dummy_overview" />
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <!--Reviews-->
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_normal"
+                app:cardElevation="@dimen/cardview_elevation">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/space_small"
+                    android:paddingLeft="@dimen/space_normal"
+                    android:paddingRight="@dimen/space_normal"
+                    android:paddingTop="@dimen/space_small">
+
+                    <TextView
+                        android:id="@+id/tv_reviews_title"
+                        style="@style/MovieDetailSectionTilte"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/movie_reviews" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_normal">
+
+                        <LinearLayout
+                            android:id="@+id/ll_no_internet_reviews"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="@dimen/space_small"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/message_no_internet_connection"
+                                android:textSize="@dimen/text_size_normal"
+                                android:textStyle="bold" />
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/button_no_internet_connection" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_movie_reviews"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/space_small"
+                            android:paddingRight="@dimen/space_small" />
+
+                        <ProgressBar
+                            android:id="@+id/pb_loading"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_centerInParent="true"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
 
-
-        <TextView
-            android:id="@+id/tv_overview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/space_normal"
-            android:textSize="@dimen/text_size_normal" />
+    </ScrollView>
 
 
-        <ProgressBar
-            android:id="@+id/pb_loading"
-            android:layout_width="@dimen/progress_bar_dimension"
-            android:layout_height="@dimen/progress_bar_dimension"
-            android:visibility="gone" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/space_normal"
+        android:src="@drawable/ic_action_save_movie"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:pressedTranslationZ="12dp"
+        app:rippleColor="@android:color/transparent" />
 
-
-    </LinearLayout>
-
-
-</ScrollView>
+</RelativeLayout>

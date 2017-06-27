@@ -70,7 +70,8 @@ public class MoviesDiscoveryView implements MoviesDiscoveryContract {
 
     @Override
     public void onMoviesListReset() {
-        moviesAdapter.getMovies().clear();
+        if (moviesAdapter.getMovies() != null)
+            moviesAdapter.getMovies().clear();
         moviesAdapter.notifyDataSetChanged();
         recyclerViewScrollListener.resetState();
     }

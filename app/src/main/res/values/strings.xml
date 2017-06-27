@@ -15,5 +15,13 @@
     <!--Details screen-->
     <string name="activity_movie_detail">Movie detail</string>
     <string name="movie_poster_description">Movie poster</string>
+    <string name="action_save_movie">Save movie</string>
+    <string name="release_date">Released: $1%s</string>
+    <string name="vote_average">Rating: $1%s</string>
+    <string name="movie_overview">Overview</string>
+    <string name="dummy_overview">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+    <string name="movie_reviews">Reviews</string>
+    <string name="message_no_internet_connection">No internet connexion. Please retry once you have one.</string>
+    <string name="button_no_internet_connection">Retry</string>
 
 </resources>

@@ -45,7 +45,7 @@ public class MapperUnitTest {
     @Test
     public void mappingIsCorrect() {
         MoviesPage moviesPage = dummyMoviePage();
-        MoviesPage moviesPageFromJson = Mapper.convertFromJsonToMovies(MOVIES_PAGE_JSON);
+        MoviesPage moviesPageFromJson = (MoviesPage) Mapper.instance().convertFromJsonToMovies(MOVIES_PAGE_JSON, MoviesPage.class);
 
         Assert.assertEquals(moviesPage, moviesPageFromJson);
     }
