@@ -1,5 +1,8 @@
 package husaynhakeem.io.popularmovies.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -8,9 +11,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Movie {
+public class Movie implements Parcelable {
 
 
+    public static final String MOVIE = "movie";
     public static final String MOVIE_ID = "movie id";
     public static final String MOVIE_TITLE = "movie title";
     public static final String MOVIE_POSTER = "movie poster";
@@ -49,6 +53,42 @@ public class Movie {
         this.overview = overview;
         this.releaseDate = releaseDate;
     }
+
+    public Movie(Parcel in) {
+        id = in.readInt();
+        voteAverage = in.readDouble();
+        title = in.readString();
+        posterPath = in.readString();
+        overview = in.readString();
+        releaseDate = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeDouble(voteAverage);
+        dest.writeString(title);
+        dest.writeString(posterPath);
+        dest.writeString(overview);
+        dest.writeString(releaseDate);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     public int getId() {
         return id;

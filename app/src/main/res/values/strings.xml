@@ -23,5 +23,6 @@
     <string name="movie_reviews">Reviews</string>
     <string name="message_no_internet_connection">No internet connexion. Please retry once you have one.</string>
     <string name="button_no_internet_connection">Retry</string>
+    <string name="message_no_reviews">Oups! It seems there are currently no reviews for this movie.</string>
 
 </resources>

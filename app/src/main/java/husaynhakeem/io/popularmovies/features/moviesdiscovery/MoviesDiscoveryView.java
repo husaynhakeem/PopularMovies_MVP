@@ -88,6 +88,7 @@ public class MoviesDiscoveryView implements MoviesDiscoveryContract {
         loadingProgressBar.setVisibility(View.GONE);
     }
 
+
     @Override
     public void displaySortCriteria(String sortCriteria) {
 

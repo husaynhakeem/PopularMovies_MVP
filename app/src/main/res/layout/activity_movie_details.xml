@@ -155,6 +155,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_normal">
 
+                        <!--No internet-->
                         <LinearLayout
                             android:id="@+id/ll_no_internet_reviews"
                             android:layout_width="match_parent"
@@ -173,12 +174,24 @@
                                 android:textStyle="bold" />
 
                             <Button
+                                android:id="@+id/btn_retry_reviews"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/button_no_internet_connection" />
 
                         </LinearLayout>
 
+                        <!--No reviews-->
+                        <TextView
+                            android:id="@+id/tv_no_reviews"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/message_no_reviews"
+                            android:textSize="@dimen/text_size_normal"
+                            android:visibility="gone"/>
+
+                        <!--Reviews-->
                         <LinearLayout
                             android:id="@+id/ll_movie_reviews"
                             android:layout_width="match_parent"
@@ -188,10 +201,10 @@
                             android:paddingRight="@dimen/space_small" />
 
                         <ProgressBar
-                            android:id="@+id/pb_loading"
+                            android:id="@+id/pb_reviews_loading"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:layout_centerInParent="true"/>
+                            android:layout_centerInParent="true" />
 
                     </RelativeLayout>
 
@@ -205,7 +218,7 @@
 
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab_save_movie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

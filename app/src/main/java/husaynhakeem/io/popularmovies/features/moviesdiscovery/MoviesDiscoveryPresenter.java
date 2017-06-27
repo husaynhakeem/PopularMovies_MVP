@@ -16,9 +16,12 @@ import java.net.URL;
 import husaynhakeem.io.popularmovies.R;
 import husaynhakeem.io.popularmovies.features.moviedetails.MovieDetailsPresenter;
 import husaynhakeem.io.popularmovies.models.Mapper;
+import husaynhakeem.io.popularmovies.models.Movie;
 import husaynhakeem.io.popularmovies.models.MoviesPage;
 import husaynhakeem.io.popularmovies.network.GeneralNetworkUtils;
 import husaynhakeem.io.popularmovies.network.MoviesNetworkUtils;
+
+import static husaynhakeem.io.popularmovies.models.Movie.MOVIE;
 
 public class MoviesDiscoveryPresenter extends AppCompatActivity implements MoviesAdapter.ClickListener, MoviesDiscoveryContract.LoadMoreListener, LoaderManager.LoaderCallbacks<MoviesPage> {
 
@@ -80,9 +83,13 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
 
 
     @Override
-    public void onMovieClick(Bundle bundle) {
+    public void onMovieClick(Movie movie) {
         Intent movieDetails = new Intent(this, MovieDetailsPresenter.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(MOVIE, movie);
         movieDetails.putExtras(bundle);
+
         startActivity(movieDetails);
     }
 
