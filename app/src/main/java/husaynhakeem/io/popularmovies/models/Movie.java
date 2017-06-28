@@ -1,5 +1,8 @@
 package husaynhakeem.io.popularmovies.models;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.PrimaryKey;
+import android.content.ContentValues;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -23,21 +26,27 @@ public class Movie implements Parcelable {
     public static final String MOVIE_OVERVIEW = "movie overview";
 
 
+    @PrimaryKey
     @JsonProperty("id")
     private int id;
 
+    @ColumnInfo(name = "vote_average")
     @JsonProperty("vote_average")
     private double voteAverage;
 
+    @ColumnInfo(name = "title")
     @JsonProperty("title")
     private String title;
 
+    @ColumnInfo(name = "poster_path")
     @JsonProperty("poster_path")
     private String posterPath;
 
+    @ColumnInfo(name = "overview")
     @JsonProperty("overview")
     private String overview;
 
+    @ColumnInfo(name = "release_date")
     @JsonProperty("release_date")
     private String releaseDate;
 
@@ -52,6 +61,15 @@ public class Movie implements Parcelable {
         this.posterPath = posterPath;
         this.overview = overview;
         this.releaseDate = releaseDate;
+    }
+
+    public Movie(ContentValues contentValues) {
+        this.id = contentValues.getAsInteger(MOVIE_ID);
+        this.voteAverage = contentValues.getAsDouble(MOVIE_VOTE_AVERAGE);
+        this.title = contentValues.getAsString(MOVIE_TITLE);
+        this.posterPath = contentValues.getAsString(MOVIE_POSTER);
+        this.overview = contentValues.getAsString(MOVIE_OVERVIEW);
+        this.releaseDate = contentValues.getAsString(MOVIE_RELEASE_DATE);
     }
 
     public Movie(Parcel in) {

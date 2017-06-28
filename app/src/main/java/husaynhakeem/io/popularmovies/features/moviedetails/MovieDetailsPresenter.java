@@ -130,10 +130,12 @@ public class MovieDetailsPresenter extends AppCompatActivity implements MovieDet
         Toast.makeText(this, "Save movie!", Toast.LENGTH_SHORT).show();
     }
 
+
     @Override
     public void onShareMovie() {
         Toast.makeText(this, "Share movie!", Toast.LENGTH_SHORT).show();
     }
+
 
     @Override
     public void onRetry() {

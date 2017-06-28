@@ -46,5 +46,8 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.3'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.3'
 
+    compile "android.arch.persistence.room:runtime:1.0.0-alpha1"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0-alpha1"
+
     testCompile 'junit:junit:4.12'
 }
