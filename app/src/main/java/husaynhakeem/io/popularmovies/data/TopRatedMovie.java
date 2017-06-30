@@ -1,6 +1,7 @@
 package husaynhakeem.io.popularmovies.data;
 
 import android.arch.persistence.room.Entity;
+import android.content.ContentValues;
 import android.net.Uri;
 
 import husaynhakeem.io.popularmovies.models.Movie;
@@ -20,4 +21,20 @@ public class TopRatedMovie extends Movie {
             .build();
 
     public static final String TABLE_NAME = "movie_top_rated";
+
+    public TopRatedMovie(ContentValues contentValues) {
+        super(contentValues);
+    }
+
+    public static TopRatedMovie[] toMovies(ContentValues[] values) {
+
+        if (values == null || values.length == 0)
+            return null;
+
+        TopRatedMovie[] movies = new TopRatedMovie[values.length];
+        for (int i = 0; i < values.length; i++) {
+            movies[i] = new TopRatedMovie(values[i]);
+        }
+        return movies;
+    }
 }

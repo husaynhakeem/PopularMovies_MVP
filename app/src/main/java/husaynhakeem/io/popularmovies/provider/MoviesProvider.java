@@ -82,16 +82,15 @@ public class MoviesProvider extends ContentProvider {
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
 
-        Movie movie = new Movie(values);
         int match = sUriMatcher.match(uri);
 
         switch (match) {
 
             case CODE_POPULAR_MOVIES:
-                movieDb.popularMovieDao().insert((PopularMovie) movie);
+                movieDb.popularMovieDao().insert(new PopularMovie(values));
 
             case CODE_TOP_RATED_MOVIES:
-                movieDb.topRatedMovieDao().insert((TopRatedMovie) movie);
+                movieDb.topRatedMovieDao().insert(new TopRatedMovie(values));
 
             default:
                 throw new RuntimeException("Undefined query uri");
@@ -101,13 +100,44 @@ public class MoviesProvider extends ContentProvider {
 
     @Override
     public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
-        return super.bulkInsert(uri, values);
+
+        int match = sUriMatcher.match(uri);
+
+        switch (match) {
+
+            case CODE_POPULAR_MOVIES:
+                movieDb.popularMovieDao().insert(PopularMovie.toMovies(values));
+
+            case CODE_TOP_RATED_MOVIES:
+                movieDb.topRatedMovieDao().insert(TopRatedMovie.toMovies(values));
+
+            default:
+                throw new RuntimeException("Undefined query uri");
+        }
     }
 
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         return 0;
+    }
+
+
+    public void delete(@NonNull Uri uri, @NonNull Movie[] values) {
+
+        int match = sUriMatcher.match(uri);
+
+        switch (match) {
+
+            case CODE_POPULAR_MOVIES:
+                movieDb.popularMovieDao().delete((PopularMovie[]) values);
+
+            case CODE_TOP_RATED_MOVIES:
+                movieDb.topRatedMovieDao().delete((TopRatedMovie[]) values);
+
+            default:
+                throw new RuntimeException("Undefined query uri");
+        }
     }
 
 

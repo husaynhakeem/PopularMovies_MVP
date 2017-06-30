@@ -156,7 +156,6 @@ public class Movie implements Parcelable {
         this.releaseDate = releaseDate;
     }
 
-
     @Override
     public boolean equals(Object obj) {
 
