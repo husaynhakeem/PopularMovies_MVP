@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import java.net.URL;
 
 import husaynhakeem.io.popularmovies.R;
+import husaynhakeem.io.popularmovies.database.DbTasks;
 import husaynhakeem.io.popularmovies.features.moviedetails.MovieDetailsPresenter;
 import husaynhakeem.io.popularmovies.models.Mapper;
 import husaynhakeem.io.popularmovies.models.Movie;
@@ -21,6 +22,10 @@ import husaynhakeem.io.popularmovies.models.MoviesPage;
 import husaynhakeem.io.popularmovies.network.GeneralNetworkUtils;
 import husaynhakeem.io.popularmovies.network.MoviesNetworkUtils;
 
+import static husaynhakeem.io.popularmovies.database.DbTasks.POPULAR_BULK_DELETE;
+import static husaynhakeem.io.popularmovies.database.DbTasks.POPULAR_BULK_INSERT;
+import static husaynhakeem.io.popularmovies.database.DbTasks.TOP_RATED_BULK_DELETE;
+import static husaynhakeem.io.popularmovies.database.DbTasks.TOP_RATED_BULK_INSERT;
 import static husaynhakeem.io.popularmovies.models.Movie.MOVIE;
 
 public class MoviesDiscoveryPresenter extends AppCompatActivity implements MoviesAdapter.ClickListener, MoviesDiscoveryContract.LoadMoreListener, LoaderManager.LoaderCallbacks<MoviesPage> {
@@ -137,6 +142,9 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
         } else {
             sortCriteria = SORT_BY_MOST_POPULAR;
         }
+
+        DbTasks.executeTask(this,
+                sortCriteria.equals(SORT_BY_MOST_POPULAR) ? POPULAR_BULK_DELETE : TOP_RATED_BULK_DELETE);
     }
 
 
@@ -167,7 +175,7 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
                 try {
                     URL moviesUrl = MoviesNetworkUtils.buildMoviesUrl(MoviesDiscoveryPresenter.this, sortCriteria, String.valueOf(currentPage));
                     String moviesPageJson = GeneralNetworkUtils.getResponseFromUrl(moviesUrl);
-                    MoviesPage moviesPage = (MoviesPage) Mapper.instance().convertFromJsonToMovies(moviesPageJson, MoviesPage.class);
+                    moviesPage = (MoviesPage) Mapper.instance().convertFromJsonToMovies(moviesPageJson, MoviesPage.class);
 
                     return moviesPage;
 
@@ -187,7 +195,9 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
         discoveryView.bindMoviesToList(data.getMovies());
         discoveryView.onDoneLoading();
 
-
+        DbTasks.executeTask(this,
+                sortCriteria.equals(SORT_BY_MOST_POPULAR) ? POPULAR_BULK_INSERT : TOP_RATED_BULK_INSERT,
+                data.getMovies().toArray(new Movie[data.getMovies().size()]));
     }
 
 

@@ -30,6 +30,7 @@ public class DbTasks {
 
             @Override
             protected Void doInBackground(Void... params) {
+
                 switch (action) {
 
                     case POPULAR_BULK_INSERT:

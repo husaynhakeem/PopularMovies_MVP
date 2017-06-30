@@ -59,24 +59,29 @@ public class MoviesProvider extends ContentProvider {
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
 
         int match = sUriMatcher.match(uri);
-        Cursor cursor;
+        Cursor cursor = null;
 
-        switch (match) {
+        try {
+            switch (match) {
 
-            case CODE_POPULAR_MOVIES:
-                cursor = query(PopularMovieTable.TABLE_NAME, projection, selection, selectionArgs, sortOrder);
-                break;
+                case CODE_POPULAR_MOVIES:
+                    cursor = query(PopularMovieTable.TABLE_NAME, projection, selection, selectionArgs, sortOrder);
+                    break;
 
-            case CODE_TOP_RATED_MOVIES:
-                cursor = query(TopRatedMovieTable.TABLE_NAME, projection, selection, selectionArgs, sortOrder);
-                break;
+                case CODE_TOP_RATED_MOVIES:
+                    cursor = query(TopRatedMovieTable.TABLE_NAME, projection, selection, selectionArgs, sortOrder);
+                    break;
 
-            default:
-                throw new RuntimeException("Query: Undefined query uri" + uri);
+                default:
+                    throw new RuntimeException("Query: Undefined query uri" + uri);
+            }
+
+            cursor.setNotificationUri(getContext().getContentResolver(), uri);
+            return cursor;
+        } finally {
+            if (cursor != null)
+                cursor.close();
         }
-
-        cursor.setNotificationUri(getContext().getContentResolver(), uri);
-        return cursor;
     }
 
     private Cursor query(String tableName, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
