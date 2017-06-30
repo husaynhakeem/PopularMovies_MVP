@@ -186,6 +186,8 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
         totalPages = data.getTotalPages();
         discoveryView.bindMoviesToList(data.getMovies());
         discoveryView.onDoneLoading();
+
+
     }
 
 

@@ -9,9 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import husaynhakeem.io.popularmovies.data.MovieDatabase;
-import husaynhakeem.io.popularmovies.data.PopularMovie;
+import husaynhakeem.io.popularmovies.data.MovieTable;
 import husaynhakeem.io.popularmovies.data.TopRatedMovie;
-import husaynhakeem.io.popularmovies.models.Movie;
 
 import static husaynhakeem.io.popularmovies.provider.MoviesContract.CONTENT_AUTHORITY;
 import static husaynhakeem.io.popularmovies.provider.MoviesContract.POPULAR_MOVIES_PATH;
@@ -54,59 +53,24 @@ public class MoviesProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-
-        int match = sUriMatcher.match(uri);
-
-        switch (match) {
-
-            case CODE_POPULAR_MOVIES:
-                return movieDb.popularMovieDao().loadAll();
-
-            case CODE_TOP_RATED_MOVIES:
-                return movieDb.topRatedMovieDao().loadAll();
-
-            default:
-                throw new RuntimeException("Undefined query uri");
-        }
-    }
-
-
-    @Nullable
-    @Override
-    public String getType(@NonNull Uri uri) {
-        return null;
+        return query(uri);
     }
 
 
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-
-        int match = sUriMatcher.match(uri);
-
-        switch (match) {
-
-            case CODE_POPULAR_MOVIES:
-                movieDb.popularMovieDao().insert(new PopularMovie(values));
-
-            case CODE_TOP_RATED_MOVIES:
-                movieDb.topRatedMovieDao().insert(new TopRatedMovie(values));
-
-            default:
-                throw new RuntimeException("Undefined query uri");
-        }
+        return null;
     }
 
 
     @Override
     public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
-
         int match = sUriMatcher.match(uri);
-
         switch (match) {
 
             case CODE_POPULAR_MOVIES:
-                movieDb.popularMovieDao().insert(PopularMovie.toMovies(values));
+                bulkInsert(uri, MovieTable.toMovies(values));
 
             case CODE_TOP_RATED_MOVIES:
                 movieDb.topRatedMovieDao().insert(TopRatedMovie.toMovies(values));
@@ -118,31 +82,20 @@ public class MoviesProvider extends ContentProvider {
 
 
     @Override
+    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
+        return 0;
+    }
+
+
+    @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         return 0;
     }
 
 
-    public void delete(@NonNull Uri uri, @NonNull Movie[] values) {
-
-        int match = sUriMatcher.match(uri);
-
-        switch (match) {
-
-            case CODE_POPULAR_MOVIES:
-                movieDb.popularMovieDao().delete((PopularMovie[]) values);
-
-            case CODE_TOP_RATED_MOVIES:
-                movieDb.topRatedMovieDao().delete((TopRatedMovie[]) values);
-
-            default:
-                throw new RuntimeException("Undefined query uri");
-        }
-    }
-
-
+    @Nullable
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+    public String getType(@NonNull Uri uri) {
+        return null;
     }
 }
