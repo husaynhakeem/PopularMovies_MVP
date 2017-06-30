@@ -11,9 +11,9 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import husaynhakeem.io.popularmovies.data.MovieDatabase;
-import husaynhakeem.io.popularmovies.data.PopularMovieTable;
-import husaynhakeem.io.popularmovies.data.TopRatedMovieTable;
+import husaynhakeem.io.popularmovies.database.MovieDatabase;
+import husaynhakeem.io.popularmovies.database.PopularMovieTable;
+import husaynhakeem.io.popularmovies.database.TopRatedMovieTable;
 
 import static android.R.attr.id;
 import static husaynhakeem.io.popularmovies.provider.MoviesContract.CONTENT_AUTHORITY;

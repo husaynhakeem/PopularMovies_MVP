@@ -1,4 +1,4 @@
-package husaynhakeem.io.popularmovies.data;
+package husaynhakeem.io.popularmovies.database;
 
 import android.provider.BaseColumns;
 
