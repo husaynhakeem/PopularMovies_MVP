@@ -34,7 +34,9 @@ public class MovieDatabase extends SQLiteOpenHelper {
             MovieTable.COLUMN_MOVIE_OVERVIEW + " TEXT" +
             ")";
 
-//    private static final String QUERY_DELETE_MOI
+    private static final String QUERY_DELETE_POPULAR_TABLE = "DROP TABLE IF EXISTS " + PopularMovieTable.TABLE_NAME;
+
+    private static final String QUERY_DELETE_TOP_RATED_TABLE = "DROP TABLE IF EXISTS " + TopRatedMovieTable.TABLE_NAME;
 
 
     public MovieDatabase(Context context) {
@@ -51,6 +53,8 @@ public class MovieDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL(QUERY_DELETE_POPULAR_TABLE);
+        db.execSQL(QUERY_DELETE_TOP_RATED_TABLE);
+        onCreate(db);
     }
 }
