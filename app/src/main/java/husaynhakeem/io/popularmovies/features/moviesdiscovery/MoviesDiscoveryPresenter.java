@@ -1,12 +1,12 @@
 package husaynhakeem.io.popularmovies.features.moviesdiscovery;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +28,7 @@ import static husaynhakeem.io.popularmovies.database.DbTasks.TOP_RATED_BULK_DELE
 import static husaynhakeem.io.popularmovies.database.DbTasks.TOP_RATED_BULK_INSERT;
 import static husaynhakeem.io.popularmovies.models.Movie.MOVIE;
 
-public class MoviesDiscoveryPresenter extends AppCompatActivity implements MoviesAdapter.ClickListener, MoviesDiscoveryContract.LoadMoreListener, LoaderManager.LoaderCallbacks<MoviesPage> {
+public class MoviesDiscoveryPresenter extends Fragment implements MoviesAdapter.ClickListener, MoviesDiscoveryContract.LoadMoreListener, LoaderManager.LoaderCallbacks<MoviesPage> {
 
     private static final int MOVIES_DISCOVERY_LOADER_ID = 0;
 
@@ -43,18 +43,25 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
     private int totalPages = 1;
 
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return discoveryView.getRootView();
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        discoveryView = new MoviesDiscoveryView(getLayoutInflater(),
-                (ViewGroup) getWindow().getDecorView().findViewById(android.R.id.content));
-        setContentView(discoveryView.getRootView());
+        discoveryView = new MoviesDiscoveryView(getActivity().getLayoutInflater(), (ViewGroup) getActivity().findViewById(android.R.id.content));
 
         discoveryView.setClickListener(this);
         discoveryView.setLoadMoreListener(this);
 
         loadMovies();
+
+        setHasOptionsMenu(true);
     }
 
 
@@ -64,13 +71,13 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
 
 
     private void loadMovies() {
-        if (!GeneralNetworkUtils.isInternetAvailable(this)) {
+        if (!GeneralNetworkUtils.isInternetAvailable(getContext())) {
             discoveryView.onNoInternetConnection();
         } else {
             discoveryView.onInternetConnection();
 
             if (canLoadMoreMovies()) {
-                getSupportLoaderManager().restartLoader(MOVIES_DISCOVERY_LOADER_ID, null, this);
+                getActivity().getSupportLoaderManager().restartLoader(MOVIES_DISCOVERY_LOADER_ID, null, this);
             }
         }
     }
@@ -89,20 +96,18 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
 
     @Override
     public void onMovieClick(Movie movie) {
-        Intent movieDetails = new Intent(this, MovieDetailsPresenter.class);
+
+        MovieDetailsPresenter movieDetails = new MovieDetailsPresenter();
 
         Bundle bundle = new Bundle();
         bundle.putParcelable(MOVIE, movie);
-        movieDetails.putExtras(bundle);
+        movieDetails.setArguments(bundle);
 
-        startActivity(movieDetails);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_movies_discovery, menu);
-        return true;
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_content, movieDetails)
+                .addToBackStack("Details")
+                .commit();
     }
 
 
@@ -143,7 +148,7 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
             sortCriteria = SORT_BY_MOST_POPULAR;
         }
 
-        DbTasks.executeTask(this,
+        DbTasks.executeTask(getContext(),
                 sortCriteria.equals(SORT_BY_MOST_POPULAR) ? POPULAR_BULK_DELETE : TOP_RATED_BULK_DELETE);
     }
 
@@ -155,7 +160,7 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
 
     @Override
     public Loader<MoviesPage> onCreateLoader(int id, Bundle args) {
-        return new AsyncTaskLoader<MoviesPage>(this) {
+        return new AsyncTaskLoader<MoviesPage>(getContext()) {
 
             private MoviesPage moviesPage;
 
@@ -173,7 +178,7 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
             public MoviesPage loadInBackground() {
 
                 try {
-                    URL moviesUrl = MoviesNetworkUtils.buildMoviesUrl(MoviesDiscoveryPresenter.this, sortCriteria, String.valueOf(currentPage));
+                    URL moviesUrl = MoviesNetworkUtils.buildMoviesUrl(getContext(), sortCriteria, String.valueOf(currentPage));
                     String moviesPageJson = GeneralNetworkUtils.getResponseFromUrl(moviesUrl);
                     moviesPage = (MoviesPage) Mapper.instance().convertFromJsonToMovies(moviesPageJson, MoviesPage.class);
 
@@ -195,7 +200,7 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
         discoveryView.bindMoviesToList(data.getMovies());
         discoveryView.onDoneLoading();
 
-        DbTasks.executeTask(this,
+        DbTasks.executeTask(getContext(),
                 sortCriteria.equals(SORT_BY_MOST_POPULAR) ? POPULAR_BULK_INSERT : TOP_RATED_BULK_INSERT,
                 data.getMovies().toArray(new Movie[data.getMovies().size()]));
     }
@@ -207,15 +212,15 @@ public class MoviesDiscoveryPresenter extends AppCompatActivity implements Movie
 
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(SORT_CRITERIA_KEY, sortCriteria);
     }
 
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null && savedInstanceState.containsKey(SORT_CRITERIA_KEY))
             sortCriteria = savedInstanceState.getString(SORT_CRITERIA_KEY);
     }

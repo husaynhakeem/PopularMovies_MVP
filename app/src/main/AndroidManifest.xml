@@ -13,25 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity
-            android:name=".features.moviesdiscovery.MoviesDiscoveryPresenter"
-            android:label="@string/activity_movies_discovery">
+        <provider
+            android:name=".provider.MoviesProvider"
+            android:authorities="husaynhakeem.io.popularmovies"
+            android:exported="false" />
+
+        <activity android:name=".features.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".features.moviedetails.MovieDetailsPresenter"
-            android:label="@string/activity_movie_detail" />
-
-        <provider
-            android:name=".provider.MoviesProvider"
-            android:authorities="husaynhakeem.io.popularmovies"
-            android:exported="false" />
-
     </application>
 
 </manifest>
