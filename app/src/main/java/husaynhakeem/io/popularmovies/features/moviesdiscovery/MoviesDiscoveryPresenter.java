@@ -103,11 +103,11 @@ public class MoviesDiscoveryPresenter extends Fragment implements MoviesAdapter.
         bundle.putParcelable(MOVIE, movie);
         movieDetails.setArguments(bundle);
 
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.frame_content, movieDetails)
-                .addToBackStack("Details")
-                .commit();
+//        getActivity().getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.frame_content, movieDetails)
+//                .addToBackStack("Details")
+//                .commit();
     }
 
 
@@ -195,6 +195,10 @@ public class MoviesDiscoveryPresenter extends Fragment implements MoviesAdapter.
 
     @Override
     public void onLoadFinished(Loader<MoviesPage> loader, MoviesPage data) {
+
+        if (data == null)
+            return;
+
         currentPage++;
         totalPages = data.getTotalPages();
         discoveryView.bindMoviesToList(data.getMovies());
@@ -223,5 +227,10 @@ public class MoviesDiscoveryPresenter extends Fragment implements MoviesAdapter.
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null && savedInstanceState.containsKey(SORT_CRITERIA_KEY))
             sortCriteria = savedInstanceState.getString(SORT_CRITERIA_KEY);
+    }
+
+
+    public void scrollBackToTop() {
+        discoveryView.scrollBackToTop();
     }
 }

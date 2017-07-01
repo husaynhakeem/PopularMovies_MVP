@@ -32,7 +32,7 @@ public class MoviesDiscoveryView implements MoviesDiscoveryContract {
 
 
     public MoviesDiscoveryView(LayoutInflater layoutInflater, ViewGroup parent) {
-        rootView = layoutInflater.inflate(R.layout.activity_movies_discovery, parent, false);
+        rootView = layoutInflater.inflate(R.layout.fragment_movies_discovery, parent, false);
         initViews();
     }
 
@@ -130,6 +130,14 @@ public class MoviesDiscoveryView implements MoviesDiscoveryContract {
     @Override
     public void setLoadMoreListener(LoadMoreListener listener) {
         loadMoreListener = listener;
+    }
+
+
+    @Override
+    public void scrollBackToTop() {
+
+        if (moviesRecyclerView != null)
+            moviesRecyclerView.smoothScrollToPosition(0);
     }
 
 

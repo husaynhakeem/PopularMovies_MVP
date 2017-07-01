@@ -32,4 +32,6 @@ public interface MoviesDiscoveryContract extends BaseView {
     void setClickListener(MoviesAdapter.ClickListener listener);
 
     void setLoadMoreListener(LoadMoreListener listener);
+
+    void scrollBackToTop();
 }
