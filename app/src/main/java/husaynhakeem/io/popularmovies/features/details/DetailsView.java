@@ -1,7 +1,9 @@
-package husaynhakeem.io.popularmovies.features.moviedetails;
+package husaynhakeem.io.popularmovies.features.details;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +23,11 @@ import husaynhakeem.io.popularmovies.models.Review;
 import husaynhakeem.io.popularmovies.utilities.StringUtils;
 
 /**
- * Created by husaynhakeem on 6/11/17.
+ * Created by husaynhakeem on 7/1/17.
  */
-public class MovieDetailsView implements MovieDetailsContract {
+
+public class DetailsView extends Fragment implements DetailsContract.View {
+
 
     private View rootView;
     private FloatingActionButton saveMovieFAB;
@@ -45,15 +49,16 @@ public class MovieDetailsView implements MovieDetailsContract {
     private View reviewsNoInternetLayout;
     private Button reviewRetryButton;
     private TextView noReviewsTextView;
+    private DetailsPresenter presenter;
 
 
-    private Movie movie;
-    private ClickHandler clickHandler;
-
-
-    public MovieDetailsView(LayoutInflater layoutInflater, ViewGroup parent) {
-        rootView = layoutInflater.inflate(R.layout.activity_movie_details, parent, false);
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.activity_movie_details, container, false);
         initViews();
+        presenter.start();
+        return rootView;
     }
 
 
@@ -80,7 +85,7 @@ public class MovieDetailsView implements MovieDetailsContract {
         reviewRetryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickHandler.onRetry();
+                presenter.onRetry();
             }
         });
 
@@ -88,9 +93,15 @@ public class MovieDetailsView implements MovieDetailsContract {
         saveMovieFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickHandler.onSaveMovieClicked();
+                presenter.onSaveMovieClicked();
             }
         });
+    }
+
+
+    @Override
+    public void setPresenter(DetailsContract.Presenter presenter) {
+        this.presenter = (DetailsPresenter) presenter;
     }
 
 
@@ -113,10 +124,8 @@ public class MovieDetailsView implements MovieDetailsContract {
         overViewTextView.setText(movie.getOverview());
     }
 
-
     @Override
     public void setMovieReviews(List<Review> reviews) {
-
         if (reviews == null || reviews.size() == 0) {
             onNoReviews();
             return;
@@ -155,6 +164,7 @@ public class MovieDetailsView implements MovieDetailsContract {
     }
 
 
+    @Override
     public void onNoReviews() {
         noReviewsTextView.setVisibility(View.VISIBLE);
         reviewsLayout.setVisibility(View.GONE);
@@ -176,19 +186,13 @@ public class MovieDetailsView implements MovieDetailsContract {
 
 
     @Override
-    public void setClickHandler(ClickHandler clickHandler) {
-        this.clickHandler = clickHandler;
+    public void onSaveMovieClicked() {
+        presenter.onSaveMovieClicked();
     }
 
 
     @Override
-    public View getRootView() {
-        return rootView;
-    }
-
-
-    @Override
-    public Bundle getViewState() {
-        return null;
+    public void onRetry() {
+        presenter.onRetry();
     }
 }

@@ -1,4 +1,4 @@
-package husaynhakeem.io.popularmovies.features.moviesdiscovery;
+package husaynhakeem.io.popularmovies.features.discovery.movies;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,12 +23,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
 
     private List<Movie> movies;
-    private ClickListener clickListener;
+    private MoviesView view;
 
 
-    public MoviesAdapter(List<Movie> movies, ClickListener clickListener) {
+    public MoviesAdapter(List<Movie> movies, MoviesView view) {
         this.movies = movies;
-        this.clickListener = clickListener;
+        this.view = view;
     }
 
 
@@ -71,22 +71,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         return movies;
     }
 
-    public void setClickListener(ClickListener listener) {
-        clickListener = listener;
-    }
-
-
-    interface ClickListener {
-        void onMovieClick(Movie movie);
-    }
-
 
     class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView posterImageView;
         private Movie movie;
-
-
 
         public MovieViewHolder(View itemView) {
             super(itemView);
@@ -96,7 +85,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
         @Override
         public void onClick(View v) {
-            clickListener.onMovieClick(movie);
+            view.onMovieClick(movie);
         }
     }
 }

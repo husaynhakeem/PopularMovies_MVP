@@ -1,14 +1,9 @@
-package husaynhakeem.io.popularmovies.features.moviedetails;
+package husaynhakeem.io.popularmovies.features.details;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.net.URL;
@@ -25,46 +20,31 @@ import husaynhakeem.io.popularmovies.network.MovieReviewsNetworkUtils;
 import static husaynhakeem.io.popularmovies.models.Movie.MOVIE;
 
 /**
- * Created by husaynhakeem on 6/11/17.
+ * Created by husaynhakeem on 7/1/17.
  */
 
-public class MovieDetailsPresenter extends Fragment implements MovieDetailsContract.ClickHandler, LoaderManager.LoaderCallbacks<List<Review>> {
-
+public class DetailsPresenter implements DetailsContract.Presenter, LoaderManager.LoaderCallbacks<List<Review>> {
 
     private static final int MOVIE_REVIEWS_LOADER_ID = 1;
-
-    private MovieDetailsView movieDetailsView;
+    private DetailsView view;
     private Movie movie;
 
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return movieDetailsView.getRootView();
-    }
-
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        movieDetailsView = new MovieDetailsView(getActivity().getLayoutInflater(), (ViewGroup) getActivity().findViewById(android.R.id.content));
-        movieDetailsView.setClickHandler(this);
-
+    public void start() {
         populateView();
-        getActivity().getSupportLoaderManager().initLoader(MOVIE_REVIEWS_LOADER_ID, null, this);
+        view.getActivity().getSupportLoaderManager().initLoader(MOVIE_REVIEWS_LOADER_ID, null, this);
     }
 
 
-    private void populateView() {
-        Bundle bundle = getArguments();
+    @Override
+    public void populateView() {
+        Bundle bundle = view.getArguments();
 
         if (bundle != null) {
-
             movie = bundle.getParcelable(MOVIE);
-            movieDetailsView.setMovieGeneralInfo(movie);
-
-            movieDetailsView.setMoviePoster(MoviePosterNetworkUtils.buildPosterUrl(movie.getPosterPath()).toString());
+            view.setMovieGeneralInfo(movie);
+            view.setMoviePoster(MoviePosterNetworkUtils.buildPosterUrl(movie.getPosterPath()).toString());
         }
     }
 
@@ -74,7 +54,7 @@ public class MovieDetailsPresenter extends Fragment implements MovieDetailsContr
 
         switch (id) {
             case MOVIE_REVIEWS_LOADER_ID:
-                return new AsyncTaskLoader<List<Review>>(getContext()) {
+                return new AsyncTaskLoader<List<Review>>(view.getContext()) {
 
                     private List<Review> movieReviews;
 
@@ -84,7 +64,7 @@ public class MovieDetailsPresenter extends Fragment implements MovieDetailsContr
                         if (movieReviews != null) {
                             deliverResult(movieReviews);
                         } else {
-                            movieDetailsView.onReviewsLoading(true);
+                            view.onReviewsLoading(true);
                             forceLoad();
                         }
                     }
@@ -117,8 +97,8 @@ public class MovieDetailsPresenter extends Fragment implements MovieDetailsContr
 
         switch (id) {
             case MOVIE_REVIEWS_LOADER_ID:
-                movieDetailsView.setMovieReviews(data);
-                movieDetailsView.onReviewsLoading(false);
+                view.setMovieReviews(data);
+                view.onReviewsLoading(false);
                 break;
 
             default:
@@ -134,18 +114,16 @@ public class MovieDetailsPresenter extends Fragment implements MovieDetailsContr
 
     @Override
     public void onSaveMovieClicked() {
-        Toast.makeText(getContext(), "Save movie!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(view.getContext(), "Save movie!", Toast.LENGTH_SHORT).show();
     }
-
-
-    @Override
-    public void onShareMovie() {
-        Toast.makeText(getContext(), "Share movie!", Toast.LENGTH_SHORT).show();
-    }
-
 
     @Override
     public void onRetry() {
-        Toast.makeText(getContext(), "Retry !", Toast.LENGTH_SHORT).show();
+        Toast.makeText(view.getContext(), "Retry!", Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void setView(DetailsView view) {
+        this.view = view;
     }
 }
