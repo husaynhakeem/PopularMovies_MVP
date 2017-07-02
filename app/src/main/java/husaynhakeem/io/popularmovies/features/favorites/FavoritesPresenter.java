@@ -1,4 +1,4 @@
-package husaynhakeem.io.popularmovies.features.discovery.favorites;
+package husaynhakeem.io.popularmovies.features.favorites;
 
 /**
  * Created by husaynhakeem on 7/1/17.

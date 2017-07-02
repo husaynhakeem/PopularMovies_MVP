@@ -1,4 +1,4 @@
-package husaynhakeem.io.popularmovies.features.discovery.main;
+package husaynhakeem.io.popularmovies.features.main;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import husaynhakeem.io.popularmovies.R;
-import husaynhakeem.io.popularmovies.features.discovery.movies.MoviesView;
+import husaynhakeem.io.popularmovies.features.movies.MoviesView;
 
 /**
  * Created by husaynhakeem on 7/1/17.

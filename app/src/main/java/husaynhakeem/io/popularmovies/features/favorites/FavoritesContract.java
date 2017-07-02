@@ -1,4 +1,4 @@
-package husaynhakeem.io.popularmovies.features.discovery.favorites;
+package husaynhakeem.io.popularmovies.features.favorites;
 
 import husaynhakeem.io.popularmovies.BasePresenter;
 import husaynhakeem.io.popularmovies.BaseView;

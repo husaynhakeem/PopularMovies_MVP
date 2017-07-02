@@ -55,7 +55,7 @@ public class DetailsView extends Fragment implements DetailsContract.View {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.activity_movie_details, container, false);
+        rootView = inflater.inflate(R.layout.fragment_details, container, false);
         initViews();
         presenter.start();
         return rootView;

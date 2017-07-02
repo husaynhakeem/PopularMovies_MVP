@@ -1,4 +1,4 @@
-package husaynhakeem.io.popularmovies.features.discovery.favorites;
+package husaynhakeem.io.popularmovies.features.favorites;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,7 +28,7 @@ public class FavoritesView extends Fragment implements FavoritesContract.View {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_favorite_movies_discovery, container, false);
+        rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
         return rootView;
     }
 

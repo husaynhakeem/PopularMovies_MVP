@@ -1,13 +1,13 @@
-package husaynhakeem.io.popularmovies.features.discovery.main;
+package husaynhakeem.io.popularmovies.features.main;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import husaynhakeem.io.popularmovies.features.discovery.favorites.FavoritesPresenter;
-import husaynhakeem.io.popularmovies.features.discovery.favorites.FavoritesView;
-import husaynhakeem.io.popularmovies.features.discovery.movies.MoviesPresenter;
-import husaynhakeem.io.popularmovies.features.discovery.movies.MoviesView;
+import husaynhakeem.io.popularmovies.features.favorites.FavoritesPresenter;
+import husaynhakeem.io.popularmovies.features.favorites.FavoritesView;
+import husaynhakeem.io.popularmovies.features.movies.MoviesPresenter;
+import husaynhakeem.io.popularmovies.features.movies.MoviesView;
 
 /**
  * Created by husaynhakeem on 7/1/17.

@@ -1,4 +1,4 @@
-package husaynhakeem.io.popularmovies.features.discovery.movies;
+package husaynhakeem.io.popularmovies.features.movies;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

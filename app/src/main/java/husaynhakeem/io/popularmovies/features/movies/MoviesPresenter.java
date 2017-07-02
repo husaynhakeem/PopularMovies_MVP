@@ -1,4 +1,4 @@
-package husaynhakeem.io.popularmovies.features.discovery.movies;
+package husaynhakeem.io.popularmovies.features.movies;
 
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;

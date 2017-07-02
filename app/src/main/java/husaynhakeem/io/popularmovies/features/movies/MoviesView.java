@@ -1,4 +1,4 @@
-package husaynhakeem.io.popularmovies.features.discovery.movies;
+package husaynhakeem.io.popularmovies.features.movies;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -58,7 +58,7 @@ public class MoviesView extends Fragment implements MoviesContract.View {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_movies_discovery, container, false);
+        rootView = inflater.inflate(R.layout.fragment_movies, container, false);
         initView();
         setHasOptionsMenu(true);
         return rootView;

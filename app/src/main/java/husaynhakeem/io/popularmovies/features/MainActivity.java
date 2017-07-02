@@ -5,8 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
 import husaynhakeem.io.popularmovies.R;
-import husaynhakeem.io.popularmovies.features.discovery.main.DiscoveryPresenter;
-import husaynhakeem.io.popularmovies.features.discovery.main.DiscoveryView;
+import husaynhakeem.io.popularmovies.features.main.DiscoveryPresenter;
+import husaynhakeem.io.popularmovies.features.main.DiscoveryView;
 
 public class MainActivity extends AppCompatActivity {
 
