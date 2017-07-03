@@ -15,15 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Movie implements Parcelable {
 
-
     public static final String MOVIE = "movie";
-    public static final String MOVIE_ID = "movie id";
-    public static final String MOVIE_TITLE = "movie title";
-    public static final String MOVIE_POSTER = "movie poster";
-    public static final String MOVIE_RELEASE_DATE = "movie release date";
-    public static final String MOVIE_VOTE_AVERAGE = "movie vote average";
-    public static final String MOVIE_OVERVIEW = "movie overview";
-
 
     @PrimaryKey
     @JsonProperty("id")

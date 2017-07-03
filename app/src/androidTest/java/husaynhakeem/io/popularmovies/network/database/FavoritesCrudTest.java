@@ -41,7 +41,7 @@ public class FavoritesCrudTest {
 
     @Test
     public void querying_favorites_should_return_empty_result() {
-        givenMovieDeletedIfNeeded();
+        givenMovieDeleted();
         Cursor cursor = readMovie(FavoriteMovieTable.CONTENT_URI, movie.getId());
         Assert.assertNotEquals(null, cursor);
         Assert.assertEquals(0, cursor.getCount());
@@ -62,20 +62,20 @@ public class FavoritesCrudTest {
 
     @Test
     public void querying_favorites_should_return_one_result() {
-        givenMovieDeletedIfNeeded();
-        givenMovieIsInserted();
+        givenMovieDeleted();
+        givenMovieInserted();
         Cursor cursor = readMovie(FavoriteMovieTable.CONTENT_URI, movie.getId());
         Assert.assertTrue(cursor != null);
         Assert.assertEquals(1, cursor.getCount());
     }
 
 
-    private int givenMovieDeletedIfNeeded() {
+    private int givenMovieDeleted() {
         return deleteMovie(FavoriteMovieTable.CONTENT_URI, movie.getId());
     }
 
 
-    private Uri givenMovieIsInserted() {
+    private Uri givenMovieInserted() {
         return insertMovie(FavoriteMovieTable.CONTENT_URI, movie);
     }
 }

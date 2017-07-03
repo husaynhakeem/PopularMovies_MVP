@@ -133,7 +133,7 @@ public class MoviesProvider extends ContentProvider {
         SQLiteDatabase db = movieDb.getWritableDatabase();
         long popularId = db.insert(tableName, null, values);
 
-        if (popularId > 0)
+        if (popularId >= 0)
             return ContentUris.withAppendedId(uri, id);
         else
             throw new SQLException("Failed to insert row into " + uri);
@@ -162,7 +162,7 @@ public class MoviesProvider extends ContentProvider {
         SQLiteDatabase db = movieDb.getWritableDatabase();
         db.beginTransaction();
 
-        int insertedRows = -1;
+        int insertedRows = 0;
         long rowId;
 
         try {

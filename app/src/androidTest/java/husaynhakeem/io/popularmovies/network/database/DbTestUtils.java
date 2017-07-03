@@ -19,6 +19,16 @@ public class DbTestUtils {
     private static Context context = InstrumentationRegistry.getTargetContext();
 
 
+    static Cursor readMovie(Uri uri) {
+        return context.getContentResolver()
+                .query(uri,
+                        null,
+                        null,
+                        null,
+                        null);
+    }
+
+
     static Cursor readMovie(Uri uri, int movieId) {
         return context.getContentResolver()
                 .query(uri,
@@ -41,5 +51,10 @@ public class DbTestUtils {
     static Uri insertMovie(Uri uri, Movie movie) {
         return context.getContentResolver()
                 .insert(uri, DbUtils.toContentValues(new Movie[]{movie}));
+    }
+
+
+    static int bulkInsertMovies(Uri uri, Movie[] movies) {
+        return context.getContentResolver().bulkInsert(uri, DbUtils.toContentValuesArray(movies));
     }
 }

@@ -85,6 +85,6 @@ public class DbUtils {
                         new String[]{String.valueOf(id)},
                         null);
 
-        return cursor == null || cursor.getCount() == 0;
+        return cursor != null && cursor.getCount() > 0;
     }
 }
