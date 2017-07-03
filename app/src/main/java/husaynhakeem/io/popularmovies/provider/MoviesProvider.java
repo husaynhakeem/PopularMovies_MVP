@@ -89,7 +89,7 @@ public class MoviesProvider extends ContentProvider {
 
     private synchronized Cursor query(String tableName, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteDatabase db = movieDb.getReadableDatabase();
-        return db.query(TopRatedMovieTable.TABLE_NAME,
+        return db.query(tableName,
                 projection,
                 selection,
                 selectionArgs,
