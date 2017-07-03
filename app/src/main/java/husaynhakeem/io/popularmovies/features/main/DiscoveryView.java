@@ -24,12 +24,14 @@ public class DiscoveryView extends Fragment implements DiscoveryContract.View {
     private PagerAdapter pagerAdapter;
     private DiscoveryPresenter presenter;
 
+    private static int TAB_POSITION = 0;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        presenter.setView(this);
         presenter.start();
-
     }
 
 
@@ -55,10 +57,12 @@ public class DiscoveryView extends Fragment implements DiscoveryContract.View {
     public void setupTabs() {
 
         TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.tab_layout);
+        tabLayout.getTabAt(TAB_POSITION).select();
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+                TAB_POSITION = tab.getPosition();
+                viewPager.setCurrentItem(TAB_POSITION);
             }
 
             @Override
@@ -79,7 +83,18 @@ public class DiscoveryView extends Fragment implements DiscoveryContract.View {
 
 
     @Override
+    public void onFavoritesChanged() {
+        presenter.onFavoritesChanged();
+    }
+
+
+    @Override
     public void setPresenter(DiscoveryContract.Presenter presenter) {
         this.presenter = (DiscoveryPresenter) presenter;
+    }
+
+
+    public PagerAdapter getPagerAdapter() {
+        return pagerAdapter;
     }
 }

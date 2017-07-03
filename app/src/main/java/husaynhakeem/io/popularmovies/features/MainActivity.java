@@ -11,13 +11,16 @@ import husaynhakeem.io.popularmovies.features.main.DiscoveryView;
 public class MainActivity extends AppCompatActivity {
 
 
+    private DiscoveryView discoveryView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
-        DiscoveryView discoveryView = new DiscoveryView();
+        discoveryView = new DiscoveryView();
         DiscoveryPresenter discoveryPresenter = new DiscoveryPresenter();
         discoveryView.setPresenter(discoveryPresenter);
 
@@ -37,5 +40,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+
+    public void onFavoritesChanged() {
+        discoveryView.onFavoritesChanged();
     }
 }

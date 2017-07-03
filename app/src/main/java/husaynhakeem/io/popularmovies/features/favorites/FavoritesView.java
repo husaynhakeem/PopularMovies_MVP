@@ -34,6 +34,7 @@ public class FavoritesView extends Fragment implements FavoritesContract.View {
         super.onCreate(savedInstanceState);
         presenter.setView(this);
         presenter.start();
+        adapter = new FavoritesAdapter(null, this);
     }
 
 
@@ -52,18 +53,24 @@ public class FavoritesView extends Fragment implements FavoritesContract.View {
         favoritesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         favoritesRecyclerView.setHasFixedSize(true);
 
-        adapter = new FavoritesAdapter(null, this);
         favoritesRecyclerView.setAdapter(adapter);
 
         noFavoritesTextView = (TextView) rootView.findViewById(R.id.tv_no_favorites);
         loadingProgressBar = (ProgressBar) rootView.findViewById(R.id.pb_loading);
+
+        if (adapter.getItemCount() == 0)
+            onNoFavorites();
     }
 
 
     @Override
     public void bindMoviesToList(Cursor movies) {
-        if (adapter != null)
+        if (adapter != null) {
             adapter.putFavorites(movies);
+            if (movies == null || movies.getCount() == 0) {
+                onNoFavorites();
+            }
+        }
     }
 
 
@@ -99,6 +106,12 @@ public class FavoritesView extends Fragment implements FavoritesContract.View {
         loadingProgressBar.setVisibility(View.GONE);
         favoritesRecyclerView.setVisibility(View.GONE);
         noFavoritesTextView.setVisibility(View.VISIBLE);
+    }
+
+
+    @Override
+    public void onFavoritesChanged() {
+        presenter.reloadFavoriteMovies();
     }
 
 

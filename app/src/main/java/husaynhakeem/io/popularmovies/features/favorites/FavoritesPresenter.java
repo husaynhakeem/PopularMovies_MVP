@@ -23,7 +23,7 @@ public class FavoritesPresenter implements FavoritesContract.Presenter, LoaderMa
 
 
     private static final int FAVORITE_MOVIES_LOADER_ID = 2;
-    private FavoritesView view;
+    private static FavoritesView view;
 
 
     @Override
@@ -74,6 +74,7 @@ public class FavoritesPresenter implements FavoritesContract.Presenter, LoaderMa
                 protected void onStartLoading() {
                     super.onStartLoading();
                     view.onLoading();
+                    forceLoad();
                 }
 
                 @Override
@@ -88,8 +89,8 @@ public class FavoritesPresenter implements FavoritesContract.Presenter, LoaderMa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        view.bindMoviesToList(data);
         view.onDoneLoading();
+        view.bindMoviesToList(data);
     }
 
 

@@ -15,10 +15,13 @@ public interface DiscoveryContract {
         void setupPager();
 
         void setupTabs();
+
+        void onFavoritesChanged();
     }
 
 
     interface Presenter extends BasePresenter {
 
+        void onFavoritesChanged();
     }
 }

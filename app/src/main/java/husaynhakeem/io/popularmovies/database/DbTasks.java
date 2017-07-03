@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import husaynhakeem.io.popularmovies.features.MainActivity;
 import husaynhakeem.io.popularmovies.models.Movie;
 
 import static husaynhakeem.io.popularmovies.utilities.DbUtils.toContentValues;
@@ -82,6 +83,20 @@ public class DbTasks {
 
                 return null;
             }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                switch (action) {
+
+                    case FAVORITE_INSERT:
+                    case FAVORITE_DELETE:
+                        onFavoritesChanged(context);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
         }.execute();
     }
 
@@ -101,5 +116,10 @@ public class DbTasks {
             default:
                 return null;
         }
+    }
+
+
+    private static void onFavoritesChanged(Context context) {
+        ((MainActivity) context).onFavoritesChanged();
     }
 }

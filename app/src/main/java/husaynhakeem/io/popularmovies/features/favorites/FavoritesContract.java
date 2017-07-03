@@ -26,6 +26,8 @@ public interface FavoritesContract {
         void onMovieClicked(Movie movie);
 
         void onNoFavorites();
+
+        void onFavoritesChanged();
     }
 
 
