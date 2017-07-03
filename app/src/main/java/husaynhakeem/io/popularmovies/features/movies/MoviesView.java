@@ -59,17 +59,17 @@ public class MoviesView extends Fragment implements MoviesContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_movies, container, false);
-        initView();
+        initViews();
         setHasOptionsMenu(true);
         return rootView;
     }
 
 
     @Override
-    public void initView() {
+    public void initViews() {
         moviesRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_movies);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(rootView.getContext(), 2);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         moviesRecyclerView.setLayoutManager(layoutManager);
 
         recyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
@@ -172,8 +172,8 @@ public class MoviesView extends Fragment implements MoviesContract.View {
 
 
     @Override
-    public void onMovieClick(Movie movie) {
-        presenter.onMovieClick(movie);
+    public void onMovieClicked(Movie movie) {
+        presenter.onMovieClicked(movie);
     }
 
 

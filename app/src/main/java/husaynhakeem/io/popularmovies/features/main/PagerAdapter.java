@@ -43,6 +43,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
             favoritesView = new FavoritesView();
             FavoritesPresenter favoritesPresenter = new FavoritesPresenter();
             favoritesView.setPresenter(favoritesPresenter);
+
         }
     }
 

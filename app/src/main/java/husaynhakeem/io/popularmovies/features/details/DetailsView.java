@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -38,10 +39,8 @@ public class DetailsView extends Fragment implements DetailsContract.View {
     private TextView releaseDateTextView;
     private TextView voteAverageTextView;
 
-
     // overview
     private TextView overViewTextView;
-
 
     // Reviews
     private LinearLayout reviewsLayout;
@@ -50,6 +49,8 @@ public class DetailsView extends Fragment implements DetailsContract.View {
     private Button reviewRetryButton;
     private TextView noReviewsTextView;
     private DetailsPresenter presenter;
+
+    private boolean movieIsSaved = false;
 
 
     @Nullable
@@ -80,6 +81,17 @@ public class DetailsView extends Fragment implements DetailsContract.View {
     }
 
 
+    @Override
+    public void setFABImage(boolean isMovieSaved) {
+        if (isMovieSaved)
+            saveMovieFAB.setImageResource(R.drawable.ic_action_save_movie_checked);
+        else
+            saveMovieFAB.setImageResource(R.drawable.ic_action_save_movie_unchecked);
+
+        movieIsSaved = isMovieSaved;
+    }
+
+
     private void initListeners() {
 
         reviewRetryButton.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +105,7 @@ public class DetailsView extends Fragment implements DetailsContract.View {
         saveMovieFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.onSaveMovieClicked();
+                onSaveMovieClicked();
             }
         });
     }
@@ -187,7 +199,21 @@ public class DetailsView extends Fragment implements DetailsContract.View {
 
     @Override
     public void onSaveMovieClicked() {
-        presenter.onSaveMovieClicked();
+        presenter.onSaveMovieClicked(movieIsSaved);
+    }
+
+
+    @Override
+    public void onMovieSaved() {
+        saveMovieFAB.setImageResource(R.drawable.ic_action_save_movie_checked);
+        Toast.makeText(getContext(), R.string.message_movie_saved, Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void onMovieUnsaved() {
+        saveMovieFAB.setImageResource(R.drawable.ic_action_save_movie_unchecked);
+        Toast.makeText(getContext(), R.string.message_movie_unsaved, Toast.LENGTH_SHORT).show();
     }
 
 

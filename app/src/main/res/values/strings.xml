@@ -11,6 +11,7 @@
     <string name="action_settings">Settings</string>
     <string name="message_sort_by_most_popular">Movies sorted by most popular</string>
     <string name="message_sort_by_top_rated">Movies sorted by top rated</string>
+    <string name="message_no_favorites">It seems you currently don\'t have any saved movies.</string>
 
     <!--Details screen-->
     <string name="activity_movie_detail">Movie detail</string>
@@ -24,5 +25,7 @@
     <string name="message_no_internet_connection">No internet connexion. Please retry once you have one.</string>
     <string name="button_no_internet_connection">Retry</string>
     <string name="message_no_reviews">Oups! It seems there are currently no reviews for this movie.</string>
+    <string name="message_movie_saved">Movie added to favorites</string>
+    <string name="message_movie_unsaved">Movie removed from favorites</string>
 
 </resources>

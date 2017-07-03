@@ -171,7 +171,7 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
 
 
     @Override
-    public void onMovieClick(Movie movie) {
+    public void onMovieClicked(Movie movie) {
 
         DetailsView detailsView = new DetailsView();
         DetailsPresenter detailsPresenter = new DetailsPresenter();

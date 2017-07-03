@@ -1,5 +1,6 @@
 package husaynhakeem.io.popularmovies.features.details;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import java.net.URL;
 import java.util.List;
 
+import husaynhakeem.io.popularmovies.database.DbTasks;
 import husaynhakeem.io.popularmovies.models.Mapper;
 import husaynhakeem.io.popularmovies.models.Movie;
 import husaynhakeem.io.popularmovies.models.Review;
@@ -16,7 +18,10 @@ import husaynhakeem.io.popularmovies.models.ReviewsPage;
 import husaynhakeem.io.popularmovies.network.GeneralNetworkUtils;
 import husaynhakeem.io.popularmovies.network.MoviePosterNetworkUtils;
 import husaynhakeem.io.popularmovies.network.MovieReviewsNetworkUtils;
+import husaynhakeem.io.popularmovies.utilities.DbUtils;
 
+import static husaynhakeem.io.popularmovies.database.DbTasks.FAVORITE_DELETE;
+import static husaynhakeem.io.popularmovies.database.DbTasks.FAVORITE_INSERT;
 import static husaynhakeem.io.popularmovies.models.Movie.MOVIE;
 
 /**
@@ -33,6 +38,7 @@ public class DetailsPresenter implements DetailsContract.Presenter, LoaderManage
     @Override
     public void start() {
         populateView();
+        checkIfMovieSaved();
         view.getActivity().getSupportLoaderManager().initLoader(MOVIE_REVIEWS_LOADER_ID, null, this);
     }
 
@@ -46,6 +52,30 @@ public class DetailsPresenter implements DetailsContract.Presenter, LoaderManage
             view.setMovieGeneralInfo(movie);
             view.setMoviePoster(MoviePosterNetworkUtils.buildPosterUrl(movie.getPosterPath()).toString());
         }
+    }
+
+
+    @Override
+    public void checkIfMovieSaved() {
+
+        new AsyncTask<Void, Boolean, Boolean>() {
+
+            @Override
+            protected Boolean doInBackground(Void... params) {
+                return DbUtils.isMovieSaved(view.getContext(), movie.getId());
+            }
+
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                setUpFABImage(aBoolean);
+            }
+        }.execute();
+    }
+
+
+    @Override
+    public void setUpFABImage(boolean isMovieSaved) {
+        view.setFABImage(isMovieSaved);
     }
 
 
@@ -113,8 +143,19 @@ public class DetailsPresenter implements DetailsContract.Presenter, LoaderManage
 
 
     @Override
-    public void onSaveMovieClicked() {
-        Toast.makeText(view.getContext(), "Save movie!", Toast.LENGTH_SHORT).show();
+    public void onSaveMovieClicked(boolean isMovieSaved) {
+
+        if (isMovieSaved) {
+            DbTasks.executeTask(view.getContext(),
+                    FAVORITE_DELETE,
+                    movie);
+            view.onMovieUnsaved();
+        } else {
+            DbTasks.executeTask(view.getContext(),
+                    FAVORITE_INSERT,
+                    movie);
+            view.onMovieSaved();
+        }
     }
 
     @Override

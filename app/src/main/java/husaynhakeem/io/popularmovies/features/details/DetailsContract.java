@@ -17,6 +17,8 @@ public interface DetailsContract {
 
         void initViews();
 
+        void setFABImage(boolean isMovieSaved);
+
         void setMoviePoster(String posterPath);
 
         void setMovieGeneralInfo(Movie movie);
@@ -45,6 +47,10 @@ public interface DetailsContract {
 
         void onSaveMovieClicked();
 
+        void onMovieSaved();
+
+        void onMovieUnsaved();
+
         /*
         Retry after internet connection gone.
         - Fetch for movie trailers
@@ -58,7 +64,11 @@ public interface DetailsContract {
 
         void populateView();
 
-        void onSaveMovieClicked();
+        void checkIfMovieSaved();
+
+        void setUpFABImage(boolean isMovieSaved);
+
+        void onSaveMovieClicked(boolean isMovieSaved);
 
         void onRetry();
     }

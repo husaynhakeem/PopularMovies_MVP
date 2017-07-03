@@ -11,12 +11,14 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import husaynhakeem.io.popularmovies.database.FavoriteMovieTable;
 import husaynhakeem.io.popularmovies.database.MovieDatabase;
 import husaynhakeem.io.popularmovies.database.PopularMovieTable;
 import husaynhakeem.io.popularmovies.database.TopRatedMovieTable;
 
 import static android.R.attr.id;
 import static husaynhakeem.io.popularmovies.provider.MoviesContract.CONTENT_AUTHORITY;
+import static husaynhakeem.io.popularmovies.provider.MoviesContract.FAVORITE_MOVIES_PATH;
 import static husaynhakeem.io.popularmovies.provider.MoviesContract.POPULAR_MOVIES_PATH;
 import static husaynhakeem.io.popularmovies.provider.MoviesContract.TOP_RATED_MOVIES_PATH;
 
@@ -29,6 +31,7 @@ public class MoviesProvider extends ContentProvider {
 
     private static final int CODE_POPULAR_MOVIES = 100;
     private static final int CODE_TOP_RATED_MOVIES = 101;
+    private static final int CODE_FAVORITE_MOVIES = 102;
 
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
@@ -42,6 +45,7 @@ public class MoviesProvider extends ContentProvider {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(CONTENT_AUTHORITY, POPULAR_MOVIES_PATH, CODE_POPULAR_MOVIES);
         uriMatcher.addURI(CONTENT_AUTHORITY, TOP_RATED_MOVIES_PATH, CODE_TOP_RATED_MOVIES);
+        uriMatcher.addURI(CONTENT_AUTHORITY, FAVORITE_MOVIES_PATH, CODE_FAVORITE_MOVIES);
         return uriMatcher;
     }
 
@@ -56,35 +60,34 @@ public class MoviesProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+    public synchronized Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
 
         int match = sUriMatcher.match(uri);
         Cursor cursor = null;
 
-        try {
-            switch (match) {
+        switch (match) {
 
-                case CODE_POPULAR_MOVIES:
-                    cursor = query(PopularMovieTable.TABLE_NAME, projection, selection, selectionArgs, sortOrder);
-                    break;
+            case CODE_POPULAR_MOVIES:
+                cursor = query(PopularMovieTable.TABLE_NAME, projection, selection, selectionArgs, sortOrder);
+                break;
 
-                case CODE_TOP_RATED_MOVIES:
-                    cursor = query(TopRatedMovieTable.TABLE_NAME, projection, selection, selectionArgs, sortOrder);
-                    break;
+            case CODE_TOP_RATED_MOVIES:
+                cursor = query(TopRatedMovieTable.TABLE_NAME, projection, selection, selectionArgs, sortOrder);
+                break;
 
-                default:
-                    throw new RuntimeException("Query: Undefined query uri" + uri);
-            }
+            case CODE_FAVORITE_MOVIES:
+                cursor = query(FavoriteMovieTable.TABLE_NAME, projection, selection, selectionArgs, sortOrder);
+                break;
 
-            cursor.setNotificationUri(getContext().getContentResolver(), uri);
-            return cursor;
-        } finally {
-            if (cursor != null)
-                cursor.close();
+            default:
+                throw new RuntimeException("Query: Undefined query uri" + uri);
         }
+
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        return cursor;
     }
 
-    private Cursor query(String tableName, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    private synchronized Cursor query(String tableName, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteDatabase db = movieDb.getReadableDatabase();
         return db.query(TopRatedMovieTable.TABLE_NAME,
                 projection,
@@ -111,6 +114,10 @@ public class MoviesProvider extends ContentProvider {
 
             case CODE_TOP_RATED_MOVIES:
                 returnUri = insert(uri, TopRatedMovieTable.TABLE_NAME, values);
+                break;
+
+            case CODE_FAVORITE_MOVIES:
+                returnUri = insert(uri, FavoriteMovieTable.TABLE_NAME, values);
                 break;
 
             default:

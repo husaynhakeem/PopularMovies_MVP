@@ -15,4 +15,6 @@ public class MoviesContract {
     public static final String POPULAR_MOVIES_PATH = "popular";
 
     public static final String TOP_RATED_MOVIES_PATH = "top_rated";
+
+    public static final String FAVORITE_MOVIES_PATH = "favorite";
 }

@@ -14,7 +14,7 @@ public interface MoviesContract extends BaseView {
 
     interface View extends BaseView<Presenter> {
 
-        void initView();
+        void initViews();
 
         void bindMoviesToList(List<Movie> movies);
 
@@ -32,7 +32,7 @@ public interface MoviesContract extends BaseView {
 
         void scrollBackToTop();
 
-        void onMovieClick(Movie movie);
+        void onMovieClicked(Movie movie);
     }
 
 
@@ -54,6 +54,6 @@ public interface MoviesContract extends BaseView {
 
         void setSortCriteria(String sortCriteria);
 
-        void onMovieClick(Movie movie);
+        void onMovieClicked(Movie movie);
     }
 }
