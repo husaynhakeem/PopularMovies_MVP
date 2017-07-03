@@ -57,6 +57,8 @@ public interface DetailsContract {
         - Fetch for movie reviews
          */
         void onRetry();
+
+        void setMovieSaved(boolean isMovieSaved);
     }
 
 

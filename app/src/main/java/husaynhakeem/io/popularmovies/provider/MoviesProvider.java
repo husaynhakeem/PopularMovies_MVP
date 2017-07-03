@@ -211,6 +211,10 @@ public class MoviesProvider extends ContentProvider {
                 numberOfDeletedRows = delete(TopRatedMovieTable.TABLE_NAME, selection, selectionArgs);
                 break;
 
+            case CODE_FAVORITE_MOVIES:
+                numberOfDeletedRows = delete(FavoriteMovieTable.TABLE_NAME, selection, selectionArgs);
+                break;
+
             default:
                 throw new RuntimeException("Delete: Undefined query uri " + uri);
         }

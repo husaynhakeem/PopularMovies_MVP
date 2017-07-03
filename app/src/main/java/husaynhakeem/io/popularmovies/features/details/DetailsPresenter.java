@@ -68,6 +68,7 @@ public class DetailsPresenter implements DetailsContract.Presenter, LoaderManage
             @Override
             protected void onPostExecute(Boolean aBoolean) {
                 setUpFABImage(aBoolean);
+                view.setMovieSaved(aBoolean);
             }
         }.execute();
     }

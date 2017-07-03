@@ -50,7 +50,7 @@ public class DetailsView extends Fragment implements DetailsContract.View {
     private TextView noReviewsTextView;
     private DetailsPresenter presenter;
 
-    private boolean movieIsSaved = false;
+    private boolean isMovieSaved;
 
 
     @Nullable
@@ -87,8 +87,6 @@ public class DetailsView extends Fragment implements DetailsContract.View {
             saveMovieFAB.setImageResource(R.drawable.ic_action_save_movie_checked);
         else
             saveMovieFAB.setImageResource(R.drawable.ic_action_save_movie_unchecked);
-
-        movieIsSaved = isMovieSaved;
     }
 
 
@@ -199,7 +197,13 @@ public class DetailsView extends Fragment implements DetailsContract.View {
 
     @Override
     public void onSaveMovieClicked() {
-        presenter.onSaveMovieClicked(movieIsSaved);
+        presenter.onSaveMovieClicked(isMovieSaved);
+    }
+
+
+    @Override
+    public void setMovieSaved(boolean isMovieSaved) {
+        this.isMovieSaved = isMovieSaved;
     }
 
 
@@ -207,6 +211,7 @@ public class DetailsView extends Fragment implements DetailsContract.View {
     public void onMovieSaved() {
         saveMovieFAB.setImageResource(R.drawable.ic_action_save_movie_checked);
         Toast.makeText(getContext(), R.string.message_movie_saved, Toast.LENGTH_SHORT).show();
+        isMovieSaved = true;
     }
 
 
@@ -214,6 +219,7 @@ public class DetailsView extends Fragment implements DetailsContract.View {
     public void onMovieUnsaved() {
         saveMovieFAB.setImageResource(R.drawable.ic_action_save_movie_unchecked);
         Toast.makeText(getContext(), R.string.message_movie_unsaved, Toast.LENGTH_SHORT).show();
+        isMovieSaved = false;
     }
 
 
