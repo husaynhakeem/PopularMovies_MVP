@@ -55,5 +55,7 @@ public interface MoviesContract extends BaseView {
         void setSortCriteria(String sortCriteria);
 
         void onMovieClicked(Movie movie);
+
+        void onNoInternetConnection();
     }
 }

@@ -119,6 +119,7 @@ public class DetailsView extends Fragment implements DetailsContract.View {
     public void setMoviePoster(String posterPath) {
         Picasso.with(rootView.getContext())
                 .load(posterPath)
+                .placeholder(R.drawable.ic_poster_placeholder)
                 .into(posterImageView);
     }
 

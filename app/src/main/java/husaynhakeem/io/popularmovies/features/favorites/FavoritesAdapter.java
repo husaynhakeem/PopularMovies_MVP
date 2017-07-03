@@ -59,6 +59,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         holder.movie = currentMovie;
         Picasso.with(holder.poster.getContext())
                 .load(MoviePosterNetworkUtils.buildPosterUrl(currentMovie.getPosterPath()).toString())
+                .placeholder(R.drawable.ic_poster_placeholder)
                 .into(holder.poster);
     }
 

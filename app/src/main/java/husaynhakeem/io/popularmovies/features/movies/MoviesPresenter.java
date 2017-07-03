@@ -191,6 +191,12 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
     }
 
 
+    @Override
+    public void onNoInternetConnection() {
+        view.onNoInternetConnection();
+    }
+
+
     public void setView(MoviesView view) {
         this.view = view;
     }

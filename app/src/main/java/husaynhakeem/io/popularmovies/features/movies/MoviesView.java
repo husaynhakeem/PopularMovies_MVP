@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 
 import java.util.List;
@@ -86,6 +87,16 @@ public class MoviesView extends Fragment implements MoviesContract.View {
 
         loadingProgressBar = (ProgressBar) rootView.findViewById(R.id.pb_loading);
         noInternetLayout = rootView.findViewById(R.id.layout_no_internet);
+
+        Button reloadMoviesButton = (Button) rootView.findViewById(R.id.btn_reload_movies);
+        reloadMoviesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reloadMovies();
+            }
+        });
+
+        presenter.onNoInternetConnection();
     }
 
 
@@ -105,10 +116,7 @@ public class MoviesView extends Fragment implements MoviesContract.View {
     }
 
 
-    /**
-     * On click event handler for on no internet button
-     */
-    public void reloadMovies(View view) {
+    public void reloadMovies() {
         presenter.loadMovies();
     }
 
