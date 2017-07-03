@@ -134,7 +134,7 @@ public class MoviesProvider extends ContentProvider {
         long popularId = db.insert(tableName, null, values);
 
         if (popularId > 0)
-            return ContentUris.withAppendedId(PopularMovieTable.CONTENT_URI, id);
+            return ContentUris.withAppendedId(uri, id);
         else
             throw new SQLException("Failed to insert row into " + uri);
     }
