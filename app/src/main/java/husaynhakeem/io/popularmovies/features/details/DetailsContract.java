@@ -6,6 +6,7 @@ import husaynhakeem.io.popularmovies.BasePresenter;
 import husaynhakeem.io.popularmovies.BaseView;
 import husaynhakeem.io.popularmovies.models.Movie;
 import husaynhakeem.io.popularmovies.models.Review;
+import husaynhakeem.io.popularmovies.models.Trailer;
 
 /**
  * Created by husaynhakeem on 6/11/17.
@@ -23,6 +24,8 @@ public interface DetailsContract {
 
         void setMovieGeneralInfo(Movie movie);
 
+        void setMovieTrailers(List<Trailer> trailers);
+
         void setMovieReviews(List<Review> reviews);
 
         /*
@@ -30,6 +33,8 @@ public interface DetailsContract {
         the value of 'doneLoading'
         */
         void onReviewsLoading(boolean doneLoading);
+
+        void onNoTrailers();
 
         void onNoReviews();
 
@@ -71,6 +76,10 @@ public interface DetailsContract {
         void setUpFABImage(boolean isMovieSaved);
 
         void onSaveMovieClicked(boolean isMovieSaved);
+
+        void loadTrailers();
+
+        void loadReviews();
 
         void onRetry();
     }

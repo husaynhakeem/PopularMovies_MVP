@@ -1,5 +1,6 @@
 package husaynhakeem.io.popularmovies.features.details;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -21,7 +23,10 @@ import java.util.List;
 import husaynhakeem.io.popularmovies.R;
 import husaynhakeem.io.popularmovies.models.Movie;
 import husaynhakeem.io.popularmovies.models.Review;
+import husaynhakeem.io.popularmovies.models.Trailer;
+import husaynhakeem.io.popularmovies.network.MovieTrailersNetworkUtils;
 import husaynhakeem.io.popularmovies.utilities.StringUtils;
+import husaynhakeem.io.popularmovies.utilities.TrailerUtils;
 
 /**
  * Created by husaynhakeem on 7/1/17.
@@ -50,6 +55,11 @@ public class DetailsView extends Fragment implements DetailsContract.View {
     private TextView noReviewsTextView;
     private DetailsPresenter presenter;
 
+    // Trailers
+    private GridLayout trailersGridView;
+    private TextView noTrailersTextView;
+    private TextView trailersNoInternetTextView;
+
     private boolean isMovieSaved;
 
 
@@ -70,6 +80,9 @@ public class DetailsView extends Fragment implements DetailsContract.View {
         releaseDateTextView = (TextView) rootView.findViewById(R.id.tv_release_date);
         voteAverageTextView = (TextView) rootView.findViewById(R.id.tv_vote_average);
         overViewTextView = (TextView) rootView.findViewById(R.id.tv_overview);
+        trailersGridView = (GridLayout) rootView.findViewById(R.id.gl_movie_trailers);
+        noTrailersTextView = (TextView) rootView.findViewById(R.id.tv_no_trailers);
+        trailersNoInternetTextView = (TextView) rootView.findViewById(R.id.tv_no_internet_trailers);
         reviewsLayout = (LinearLayout) rootView.findViewById(R.id.ll_movie_reviews);
         reviewsLoadingProgressBar = (ProgressBar) rootView.findViewById(R.id.pb_reviews_loading);
         reviewsNoInternetLayout = rootView.findViewById(R.id.ll_no_internet_reviews);
@@ -135,6 +148,38 @@ public class DetailsView extends Fragment implements DetailsContract.View {
         overViewTextView.setText(movie.getOverview());
     }
 
+
+    @Override
+    public void setMovieTrailers(List<Trailer> trailers) {
+        if (trailers == null || trailers.size() == 0) {
+            onNoTrailers();
+            return;
+        }
+
+        trailersGridView.setVisibility(View.VISIBLE);
+        noTrailersTextView.setVisibility(View.GONE);
+        trailersNoInternetTextView.setVisibility(View.GONE);
+
+        for (Trailer trailer : trailers) {
+            trailersGridView.addView(trailerView(trailer));
+        }
+    }
+
+
+    private View trailerView(final Trailer trailer) {
+        View itemView = LayoutInflater.from(rootView.getContext()).inflate(R.layout.item_trailer, (ViewGroup) rootView, false);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri trailerUriForYoutubeApp = MovieTrailersNetworkUtils.buildTrailerYoutubeUri(trailer.getKey());
+                String trailerUrlForBrowser = MovieTrailersNetworkUtils.buildTrailerYoutubeUrl(trailer.getKey());
+                TrailerUtils.openTrailer(getContext(), trailerUriForYoutubeApp, trailerUrlForBrowser);
+            }
+        });
+        return itemView;
+    }
+
+
     @Override
     public void setMovieReviews(List<Review> reviews) {
         if (reviews == null || reviews.size() == 0) {
@@ -176,6 +221,13 @@ public class DetailsView extends Fragment implements DetailsContract.View {
 
 
     @Override
+    public void onNoTrailers() {
+        noTrailersTextView.setVisibility(View.VISIBLE);
+        trailersGridView.setVisibility(View.GONE);
+    }
+
+
+    @Override
     public void onNoReviews() {
         noReviewsTextView.setVisibility(View.VISIBLE);
         reviewsLayout.setVisibility(View.GONE);
@@ -184,6 +236,9 @@ public class DetailsView extends Fragment implements DetailsContract.View {
 
     @Override
     public void onNoInternet() {
+        trailersGridView.setVisibility(View.GONE);
+        trailersNoInternetTextView.setVisibility(View.VISIBLE);
+
         reviewsLayout.setVisibility(View.GONE);
         reviewsNoInternetLayout.setVisibility(View.VISIBLE);
     }

@@ -193,7 +193,8 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
 
     @Override
     public void onNoInternetConnection() {
-        view.onNoInternetConnection();
+        if (!GeneralNetworkUtils.isInternetAvailable(view.getContext()))
+            view.onNoInternetConnection();
     }
 
 
