@@ -48,7 +48,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
         Picasso.with(holder.posterImageView.getContext())
                 .load(MoviePosterNetworkUtils.buildPosterUrl(currentMovie.getPosterPath()).toString())
-                .placeholder(R.drawable.ic_poster_placeholder)
+                .placeholder(R.drawable.ic_movie_placeholder)
                 .into(holder.posterImageView);
     }
 
