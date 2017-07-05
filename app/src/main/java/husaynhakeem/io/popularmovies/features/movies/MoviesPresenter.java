@@ -15,6 +15,7 @@ import husaynhakeem.io.popularmovies.models.Movie;
 import husaynhakeem.io.popularmovies.models.MoviesPage;
 import husaynhakeem.io.popularmovies.network.GeneralNetworkUtils;
 import husaynhakeem.io.popularmovies.network.MoviesNetworkUtils;
+import husaynhakeem.io.popularmovies.utilities.UiUtils;
 
 import static husaynhakeem.io.popularmovies.models.Movie.MOVIE;
 
@@ -170,10 +171,14 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
         bundle.putParcelable(MOVIE, movie);
         detailsView.setArguments(bundle);
 
+        int frameId = R.id.content_frame;
+        if (UiUtils.isTablet())
+            frameId = R.id.detail_frame;
+
         view.getActivity()
                 .getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_frame, detailsView)
+                .replace(frameId, detailsView)
                 .addToBackStack("Details")
                 .commit();
     }

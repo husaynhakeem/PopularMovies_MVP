@@ -31,5 +31,6 @@
     <string name="message_no_reviews">It seems there are currently no reviews for this movie. Try again soon!</string>
     <string name="message_movie_saved">Movie added to favorites</string>
     <string name="message_movie_unsaved">Movie removed from favorites</string>
+    <string name="message_no_movie_detail">Click on a movie to display it\'s details</string>
 
 </resources>

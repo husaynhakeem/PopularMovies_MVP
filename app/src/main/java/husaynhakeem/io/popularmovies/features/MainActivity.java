@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
 import husaynhakeem.io.popularmovies.R;
+import husaynhakeem.io.popularmovies.features.details.DetailsPresenter;
+import husaynhakeem.io.popularmovies.features.details.DetailsView;
 import husaynhakeem.io.popularmovies.features.main.DiscoveryPresenter;
 import husaynhakeem.io.popularmovies.features.main.DiscoveryView;
 
@@ -19,6 +21,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        startDiscoveryView();
+//        if (UiUtils.isTablet())
+//            startDetailsView();
+    }
+
+
+    private void startDiscoveryView() {
 
         discoveryView = new DiscoveryView();
         DiscoveryPresenter discoveryPresenter = new DiscoveryPresenter();
@@ -26,6 +35,19 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.content_frame, discoveryView)
+                .commit();
+    }
+
+
+    private void startDetailsView() {
+
+        DetailsView detailsView = new DetailsView();
+        DetailsPresenter detailsPresenter = new DetailsPresenter();
+        detailsView.setPresenter(detailsPresenter);
+        detailsPresenter.setView(detailsView);
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.detail_frame, detailsView)
                 .commit();
     }
 

@@ -11,6 +11,7 @@ import husaynhakeem.io.popularmovies.database.DbTasks;
 import husaynhakeem.io.popularmovies.features.details.DetailsPresenter;
 import husaynhakeem.io.popularmovies.features.details.DetailsView;
 import husaynhakeem.io.popularmovies.models.Movie;
+import husaynhakeem.io.popularmovies.utilities.UiUtils;
 
 import static husaynhakeem.io.popularmovies.database.DbTasks.FAVORITE_QUERY;
 import static husaynhakeem.io.popularmovies.models.Movie.MOVIE;
@@ -55,10 +56,14 @@ public class FavoritesPresenter implements FavoritesContract.Presenter, LoaderMa
         bundle.putParcelable(MOVIE, movie);
         detailsView.setArguments(bundle);
 
+        int frameId = R.id.content_frame;
+        if (UiUtils.isTablet())
+            frameId = R.id.detail_frame;
+
         view.getActivity()
                 .getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_frame, detailsView)
+                .replace(frameId, detailsView)
                 .addToBackStack("Details")
                 .commit();
     }
