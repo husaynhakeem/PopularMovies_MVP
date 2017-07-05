@@ -8,6 +8,7 @@ import android.support.v4.content.Loader;
 import java.net.URL;
 
 import husaynhakeem.io.popularmovies.R;
+import husaynhakeem.io.popularmovies.features.MainActivity;
 import husaynhakeem.io.popularmovies.features.details.DetailsPresenter;
 import husaynhakeem.io.popularmovies.features.details.DetailsView;
 import husaynhakeem.io.popularmovies.models.Mapper;
@@ -172,8 +173,10 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
         detailsView.setArguments(bundle);
 
         int frameId = R.id.content_frame;
-        if (UiUtils.isTablet())
+        if (UiUtils.isTablet()) {
             frameId = R.id.detail_frame;
+            ((MainActivity) view.getActivity()).onMovieDetailDisplayed();
+        }
 
         view.getActivity()
                 .getSupportFragmentManager()

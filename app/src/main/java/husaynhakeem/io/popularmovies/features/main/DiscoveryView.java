@@ -30,6 +30,8 @@ public class DiscoveryView extends Fragment implements DiscoveryContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (presenter == null)
+            setPresenter(new DiscoveryPresenter());
         presenter.setView(this);
         presenter.start();
     }

@@ -42,6 +42,9 @@ public class MoviesView extends Fragment implements MoviesContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (presenter == null)
+            setPresenter(new MoviesPresenter());
         presenter.setView(this);
         presenter.start();
 

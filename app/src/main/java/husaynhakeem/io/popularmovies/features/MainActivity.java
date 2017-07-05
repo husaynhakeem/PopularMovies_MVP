@@ -3,10 +3,9 @@ package husaynhakeem.io.popularmovies.features;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.View;
 
 import husaynhakeem.io.popularmovies.R;
-import husaynhakeem.io.popularmovies.features.details.DetailsPresenter;
-import husaynhakeem.io.popularmovies.features.details.DetailsView;
 import husaynhakeem.io.popularmovies.features.main.DiscoveryPresenter;
 import husaynhakeem.io.popularmovies.features.main.DiscoveryView;
 
@@ -20,10 +19,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         startDiscoveryView();
-//        if (UiUtils.isTablet())
-//            startDetailsView();
     }
 
 
@@ -39,16 +35,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void startDetailsView() {
-
-        DetailsView detailsView = new DetailsView();
-        DetailsPresenter detailsPresenter = new DetailsPresenter();
-        detailsView.setPresenter(detailsPresenter);
-        detailsPresenter.setView(detailsView);
-
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.detail_frame, detailsView)
-                .commit();
+    public void onMovieDetailDisplayed() {
+        findViewById(R.id.tv_no_detail_message).setVisibility(View.GONE);
     }
 
 

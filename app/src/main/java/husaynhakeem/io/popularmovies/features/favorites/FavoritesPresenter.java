@@ -8,6 +8,7 @@ import android.support.v4.content.Loader;
 
 import husaynhakeem.io.popularmovies.R;
 import husaynhakeem.io.popularmovies.database.DbTasks;
+import husaynhakeem.io.popularmovies.features.MainActivity;
 import husaynhakeem.io.popularmovies.features.details.DetailsPresenter;
 import husaynhakeem.io.popularmovies.features.details.DetailsView;
 import husaynhakeem.io.popularmovies.models.Movie;
@@ -57,8 +58,10 @@ public class FavoritesPresenter implements FavoritesContract.Presenter, LoaderMa
         detailsView.setArguments(bundle);
 
         int frameId = R.id.content_frame;
-        if (UiUtils.isTablet())
+        if (UiUtils.isTablet()) {
             frameId = R.id.detail_frame;
+            ((MainActivity) view.getActivity()).onMovieDetailDisplayed();
+        }
 
         view.getActivity()
                 .getSupportFragmentManager()

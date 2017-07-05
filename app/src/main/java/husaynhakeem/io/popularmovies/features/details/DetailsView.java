@@ -68,6 +68,9 @@ public class DetailsView extends Fragment implements DetailsContract.View {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_details, container, false);
         initViews();
+        if (presenter == null)
+            setPresenter(new DetailsPresenter());
+        presenter.setView(this);
         presenter.start();
         return rootView;
     }

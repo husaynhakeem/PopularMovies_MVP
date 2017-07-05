@@ -32,6 +32,8 @@ public class FavoritesView extends Fragment implements FavoritesContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (presenter == null)
+            setPresenter(new FavoritesPresenter());
         presenter.setView(this);
         presenter.start();
         adapter = new FavoritesAdapter(null, this);
@@ -89,9 +91,14 @@ public class FavoritesView extends Fragment implements FavoritesContract.View {
 
     @Override
     public void onDoneLoading() {
-        loadingProgressBar.setVisibility(View.GONE);
-        favoritesRecyclerView.setVisibility(View.VISIBLE);
-        noFavoritesTextView.setVisibility(View.GONE);
+        if (loadingProgressBar != null)
+            loadingProgressBar.setVisibility(View.GONE);
+
+        if (favoritesRecyclerView != null)
+            favoritesRecyclerView.setVisibility(View.VISIBLE);
+
+        if (noFavoritesTextView != null)
+            noFavoritesTextView.setVisibility(View.GONE);
     }
 
 
