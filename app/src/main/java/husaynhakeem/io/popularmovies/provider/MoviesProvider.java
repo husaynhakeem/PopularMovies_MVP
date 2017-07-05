@@ -13,8 +13,6 @@ import android.support.annotation.Nullable;
 
 import husaynhakeem.io.popularmovies.database.FavoriteMovieTable;
 import husaynhakeem.io.popularmovies.database.MovieDatabase;
-import husaynhakeem.io.popularmovies.database.PopularMovieTable;
-import husaynhakeem.io.popularmovies.database.TopRatedMovieTable;
 
 import static android.R.attr.id;
 import static husaynhakeem.io.popularmovies.provider.MoviesContract.CONTENT_AUTHORITY;
@@ -67,14 +65,6 @@ public class MoviesProvider extends ContentProvider {
 
         switch (match) {
 
-            case CODE_POPULAR_MOVIES:
-                cursor = query(PopularMovieTable.TABLE_NAME, projection, selection, selectionArgs, sortOrder);
-                break;
-
-            case CODE_TOP_RATED_MOVIES:
-                cursor = query(TopRatedMovieTable.TABLE_NAME, projection, selection, selectionArgs, sortOrder);
-                break;
-
             case CODE_FAVORITE_MOVIES:
                 cursor = query(FavoriteMovieTable.TABLE_NAME, projection, selection, selectionArgs, sortOrder);
                 break;
@@ -108,14 +98,6 @@ public class MoviesProvider extends ContentProvider {
 
         switch (match) {
 
-            case CODE_POPULAR_MOVIES:
-                returnUri = insert(uri, PopularMovieTable.TABLE_NAME, values);
-                break;
-
-            case CODE_TOP_RATED_MOVIES:
-                returnUri = insert(uri, TopRatedMovieTable.TABLE_NAME, values);
-                break;
-
             case CODE_FAVORITE_MOVIES:
                 returnUri = insert(uri, FavoriteMovieTable.TABLE_NAME, values);
                 break;
@@ -141,55 +123,6 @@ public class MoviesProvider extends ContentProvider {
 
 
     @Override
-    public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
-
-        int match = sUriMatcher.match(uri);
-
-        switch (match) {
-
-            case CODE_POPULAR_MOVIES:
-                return bulkInsert(uri, PopularMovieTable.TABLE_NAME, values);
-
-            case CODE_TOP_RATED_MOVIES:
-                return bulkInsert(uri, TopRatedMovieTable.TABLE_NAME, values);
-
-            default:
-                throw new RuntimeException("Bulk insert: Undefined query uri" + uri);
-        }
-    }
-
-    private int bulkInsert(Uri uri, String tableName, ContentValues[] values) {
-        SQLiteDatabase db = movieDb.getWritableDatabase();
-        db.beginTransaction();
-
-        int insertedRows = 0;
-        long rowId;
-
-        try {
-            for (ContentValues value : values) {
-                rowId = db.insert(tableName, null, value);
-
-                if (rowId > -1)
-                    insertedRows++;
-                else
-                    throw new SQLException("Bulk Insert: Failed to insert row in " + uri);
-            }
-
-            if (insertedRows > 0)
-                getContext().getContentResolver().notifyChange(uri, null);
-
-        } finally {
-            db.endTransaction();
-        }
-
-        if (insertedRows > 0)
-            getContext().getContentResolver().notifyChange(uri, null);
-
-        return insertedRows;
-    }
-
-
-    @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
         return 0;
     }
@@ -202,14 +135,6 @@ public class MoviesProvider extends ContentProvider {
         int numberOfDeletedRows;
 
         switch (match) {
-
-            case CODE_POPULAR_MOVIES:
-                numberOfDeletedRows = delete(PopularMovieTable.TABLE_NAME, selection, selectionArgs);
-                break;
-
-            case CODE_TOP_RATED_MOVIES:
-                numberOfDeletedRows = delete(TopRatedMovieTable.TABLE_NAME, selection, selectionArgs);
-                break;
 
             case CODE_FAVORITE_MOVIES:
                 numberOfDeletedRows = delete(FavoriteMovieTable.TABLE_NAME, selection, selectionArgs);

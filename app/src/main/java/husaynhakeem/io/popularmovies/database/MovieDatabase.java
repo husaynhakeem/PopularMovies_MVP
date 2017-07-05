@@ -14,26 +14,6 @@ public class MovieDatabase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "movies.db";
     private static final int DATABASE_VERSION = 1;
 
-    private static final String QUERY_CREATE_POPULAR_TABLE = "CREATE TABLE " +
-            PopularMovieTable.TABLE_NAME + "(" +
-            MovieTable.COLUMN_MOVIE_ID + " INTEGER PRIMARY KEY," +
-            MovieTable.COLUMN_MOVIE_TITLE + " TEXT," +
-            MovieTable.COLUMN_MOVIE_POSTER + " TEXT," +
-            MovieTable.COLUMN_MOVIE_RELEASE_DATE + " TEXT," +
-            MovieTable.COLUMN_MOVIE_VOTE_AVERAGE + " DOUBLE," +
-            MovieTable.COLUMN_MOVIE_OVERVIEW + " TEXT" +
-            ")";
-
-    private static final String QUERY_CREATE_TOP_RATED_TABLE = "CREATE TABLE " +
-            TopRatedMovieTable.TABLE_NAME + "(" +
-            MovieTable.COLUMN_MOVIE_ID + " INTEGER PRIMARY KEY," +
-            MovieTable.COLUMN_MOVIE_TITLE + " TEXT," +
-            MovieTable.COLUMN_MOVIE_POSTER + " TEXT," +
-            MovieTable.COLUMN_MOVIE_RELEASE_DATE + " TEXT," +
-            MovieTable.COLUMN_MOVIE_VOTE_AVERAGE + " DOUBLE," +
-            MovieTable.COLUMN_MOVIE_OVERVIEW + " TEXT" +
-            ")";
-
     private static final String QUERY_CREATE_FAVORITE_TABLE = "CREATE TABLE " +
             FavoriteMovieTable.TABLE_NAME + "(" +
             MovieTable.COLUMN_MOVIE_ID + " INTEGER PRIMARY KEY," +
@@ -43,10 +23,6 @@ public class MovieDatabase extends SQLiteOpenHelper {
             MovieTable.COLUMN_MOVIE_VOTE_AVERAGE + " DOUBLE," +
             MovieTable.COLUMN_MOVIE_OVERVIEW + " TEXT" +
             ")";
-
-    private static final String QUERY_DELETE_POPULAR_TABLE = "DROP TABLE IF EXISTS " + PopularMovieTable.TABLE_NAME;
-
-    private static final String QUERY_DELETE_TOP_RATED_TABLE = "DROP TABLE IF EXISTS " + TopRatedMovieTable.TABLE_NAME;
 
     private static final String QUERY_DELETE_FAVORITE_TABLE = "DROP TABLE IF EXISTS " + FavoriteMovieTable.TABLE_NAME;
 
@@ -58,16 +34,12 @@ public class MovieDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(QUERY_CREATE_POPULAR_TABLE);
-        db.execSQL(QUERY_CREATE_TOP_RATED_TABLE);
         db.execSQL(QUERY_CREATE_FAVORITE_TABLE);
     }
 
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(QUERY_DELETE_POPULAR_TABLE);
-        db.execSQL(QUERY_DELETE_TOP_RATED_TABLE);
         db.execSQL(QUERY_DELETE_FAVORITE_TABLE);
         onCreate(db);
     }

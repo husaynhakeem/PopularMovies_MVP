@@ -9,7 +9,6 @@ import husaynhakeem.io.popularmovies.features.MainActivity;
 import husaynhakeem.io.popularmovies.models.Movie;
 
 import static husaynhakeem.io.popularmovies.utilities.DbUtils.toContentValues;
-import static husaynhakeem.io.popularmovies.utilities.DbUtils.toContentValuesArray;
 import static husaynhakeem.io.popularmovies.utilities.DbUtils.whereArgs;
 import static husaynhakeem.io.popularmovies.utilities.DbUtils.whereParam;
 
@@ -20,12 +19,6 @@ import static husaynhakeem.io.popularmovies.utilities.DbUtils.whereParam;
 public class DbTasks {
 
 
-    public static final String POPULAR_BULK_INSERT = "popular_insert";
-    public static final String POPULAR_DELETE = "popular_delete";
-    public static final String TOP_RATED_BULK_INSERT = "top_rated_insert";
-    public static final String TOP_RATED_DELETE = "top_rated_delete";
-    public static final String POPULAR_BULK_DELETE = "popular_bulk_delete";
-    public static final String TOP_RATED_BULK_DELETE = "top_rated_bulk_delete";
     public static final String FAVORITE_INSERT = "favorite_insert";
     public static final String FAVORITE_DELETE = "favorite_delete";
     public static final String FAVORITE_QUERY = "favorite_query";
@@ -39,36 +32,6 @@ public class DbTasks {
             protected Void doInBackground(Void... params) {
 
                 switch (action) {
-
-                    case POPULAR_BULK_INSERT:
-                        context.getContentResolver()
-                                .bulkInsert(PopularMovieTable.CONTENT_URI, toContentValuesArray((Movie[]) values));
-                        break;
-
-                    case POPULAR_DELETE:
-                        context.getContentResolver()
-                                .delete(PopularMovieTable.CONTENT_URI, whereParam(MovieTable.COLUMN_MOVIE_ID), whereArgs((Movie[]) values));
-                        break;
-
-                    case POPULAR_BULK_DELETE:
-                        context.getContentResolver()
-                                .delete(PopularMovieTable.CONTENT_URI, null, null);
-                        break;
-
-                    case TOP_RATED_BULK_INSERT:
-                        context.getContentResolver()
-                                .bulkInsert(TopRatedMovieTable.CONTENT_URI, toContentValuesArray((Movie[]) values));
-                        break;
-
-                    case TOP_RATED_DELETE:
-                        context.getContentResolver()
-                                .delete(TopRatedMovieTable.CONTENT_URI, whereParam(MovieTable.COLUMN_MOVIE_ID), whereArgs((Movie[]) values));
-                        break;
-
-                    case TOP_RATED_BULK_DELETE:
-                        context.getContentResolver()
-                                .delete(TopRatedMovieTable.CONTENT_URI, null, null);
-                        break;
 
                     case FAVORITE_INSERT:
                         context.getContentResolver()

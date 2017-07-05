@@ -8,7 +8,6 @@ import android.support.v4.content.Loader;
 import java.net.URL;
 
 import husaynhakeem.io.popularmovies.R;
-import husaynhakeem.io.popularmovies.database.DbTasks;
 import husaynhakeem.io.popularmovies.features.details.DetailsPresenter;
 import husaynhakeem.io.popularmovies.features.details.DetailsView;
 import husaynhakeem.io.popularmovies.models.Mapper;
@@ -17,10 +16,6 @@ import husaynhakeem.io.popularmovies.models.MoviesPage;
 import husaynhakeem.io.popularmovies.network.GeneralNetworkUtils;
 import husaynhakeem.io.popularmovies.network.MoviesNetworkUtils;
 
-import static husaynhakeem.io.popularmovies.database.DbTasks.POPULAR_BULK_DELETE;
-import static husaynhakeem.io.popularmovies.database.DbTasks.POPULAR_BULK_INSERT;
-import static husaynhakeem.io.popularmovies.database.DbTasks.TOP_RATED_BULK_DELETE;
-import static husaynhakeem.io.popularmovies.database.DbTasks.TOP_RATED_BULK_INSERT;
 import static husaynhakeem.io.popularmovies.models.Movie.MOVIE;
 
 /**
@@ -89,9 +84,6 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
         } else {
             sortCriteria = SORT_BY_MOST_POPULAR;
         }
-
-        DbTasks.executeTask(view.getContext(),
-                sortCriteria.equals(SORT_BY_MOST_POPULAR) ? POPULAR_BULK_DELETE : TOP_RATED_BULK_DELETE);
     }
 
 
@@ -158,10 +150,6 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
         totalPages = data.getTotalPages();
         view.bindMoviesToList(data.getMovies());
         view.onDoneLoading();
-
-        DbTasks.executeTask(view.getContext(),
-                sortCriteria.equals(SORT_BY_MOST_POPULAR) ? POPULAR_BULK_INSERT : TOP_RATED_BULK_INSERT,
-                data.getMovies().toArray(new Movie[data.getMovies().size()]));
     }
 
 
