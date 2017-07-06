@@ -129,17 +129,26 @@
                     <TextView
                         android:id="@+id/tv_trailers_title"
                         style="@style/MovieDetailSectionTilte"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/space_normal"
                         android:text="@string/movie_trailers" />
 
-                    <GridLayout
-                        android:id="@+id/gl_movie_trailers"
+                    <net.cachapa.expandablelayout.ExpandableLayout
+                        android:id="@+id/exl_trailers"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:alignmentMode="alignMargins"
-                        android:useDefaultMargins="true" />
+                        app:el_duration="1000"
+                        app:el_expanded="true"
+                        app:el_parallax="0.5">
+
+                        <GridLayout
+                            android:id="@+id/gl_movie_trailers"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:alignmentMode="alignMargins"
+                            android:useDefaultMargins="true" />
+                    </net.cachapa.expandablelayout.ExpandableLayout>
 
                     <TextView
                         android:id="@+id/tv_no_trailers"
@@ -161,6 +170,7 @@
                         android:visibility="gone" />
 
                 </LinearLayout>
+
             </android.support.v7.widget.CardView>
 
 
@@ -170,7 +180,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_normal"
                 app:cardElevation="@dimen/cardview_elevation">
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -184,7 +193,7 @@
                     <TextView
                         android:id="@+id/tv_reviews_title"
                         style="@style/MovieDetailSectionTilte"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/movie_reviews" />
 
@@ -231,13 +240,22 @@
                             android:visibility="gone" />
 
                         <!--Reviews-->
-                        <LinearLayout
-                            android:id="@+id/ll_movie_reviews"
+                        <net.cachapa.expandablelayout.ExpandableLayout
+                            android:id="@+id/exl_reviews"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:paddingLeft="@dimen/space_small"
-                            android:paddingRight="@dimen/space_small" />
+                            app:el_duration="1000"
+                            app:el_expanded="true"
+                            app:el_parallax="0.5">
+
+                            <LinearLayout
+                                android:id="@+id/ll_movie_reviews"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingLeft="@dimen/space_small"
+                                android:paddingRight="@dimen/space_small" />
+                        </net.cachapa.expandablelayout.ExpandableLayout>
 
                         <ProgressBar
                             android:id="@+id/pb_reviews_loading"

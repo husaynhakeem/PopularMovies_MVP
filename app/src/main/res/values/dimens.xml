@@ -18,5 +18,6 @@
 
     <dimen name="progress_bar_dimension">42dp</dimen>
     <dimen name="fab_dimension">56dp</dimen>
+    <dimen name="expandable_min_height">60dp</dimen>
 
 </resources>

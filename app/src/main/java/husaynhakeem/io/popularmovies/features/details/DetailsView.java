@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import net.cachapa.expandablelayout.ExpandableLayout;
+
 import java.util.List;
 
 import husaynhakeem.io.popularmovies.R;
@@ -52,6 +54,7 @@ public class DetailsView extends Fragment implements DetailsContract.View {
     private TextView overViewTextView;
 
     // Reviews
+    private ExpandableLayout reviewsExpandableLayout;
     private LinearLayout reviewsLayout;
     private ProgressBar reviewsLoadingProgressBar;
     private View reviewsNoInternetLayout;
@@ -60,6 +63,7 @@ public class DetailsView extends Fragment implements DetailsContract.View {
     private DetailsPresenter presenter;
 
     // Trailers
+    private ExpandableLayout trailersExpandableLayout;
     private GridLayout trailersGridView;
     private TextView noTrailersTextView;
     private TextView trailersNoInternetTextView;
@@ -88,13 +92,13 @@ public class DetailsView extends Fragment implements DetailsContract.View {
         releaseDateTextView = (TextView) rootView.findViewById(R.id.tv_release_date);
         voteAverageTextView = (TextView) rootView.findViewById(R.id.tv_vote_average);
         overViewTextView = (TextView) rootView.findViewById(R.id.tv_overview);
-
+        trailersExpandableLayout = (ExpandableLayout) rootView.findViewById(R.id.exl_trailers);
         trailersGridView = (GridLayout) rootView.findViewById(R.id.gl_movie_trailers);
         trailersGridView.setColumnCount(UiUtils.numberOfTrailersPerRow());
-
         noTrailersTextView = (TextView) rootView.findViewById(R.id.tv_no_trailers);
         trailersNoInternetTextView = (TextView) rootView.findViewById(R.id.tv_no_internet_trailers);
         reviewsLayout = (LinearLayout) rootView.findViewById(R.id.ll_movie_reviews);
+        reviewsExpandableLayout = (ExpandableLayout) rootView.findViewById(R.id.exl_reviews);
         reviewsLoadingProgressBar = (ProgressBar) rootView.findViewById(R.id.pb_reviews_loading);
         reviewsNoInternetLayout = rootView.findViewById(R.id.ll_no_internet_reviews);
         reviewRetryButton = (Button) rootView.findViewById(R.id.btn_retry_reviews);
@@ -118,6 +122,26 @@ public class DetailsView extends Fragment implements DetailsContract.View {
             @Override
             public void onClick(View v) {
                 onSaveMovieClicked();
+            }
+        });
+
+        rootView.findViewById(R.id.tv_trailers_title).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (trailersExpandableLayout.isExpanded())
+                    trailersExpandableLayout.collapse();
+                else
+                    trailersExpandableLayout.expand();
+            }
+        });
+
+        rootView.findViewById(R.id.tv_reviews_title).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (reviewsExpandableLayout.isExpanded())
+                    reviewsExpandableLayout.collapse();
+                else
+                    reviewsExpandableLayout.expand();
             }
         });
     }
