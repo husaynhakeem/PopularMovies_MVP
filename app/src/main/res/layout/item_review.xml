@@ -10,7 +10,7 @@
         android:id="@+id/tv_review_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_normal"
+        android:textSize="@dimen/text_size_big"
         android:textStyle="bold"
         tools:text="TextView" />
 
@@ -21,4 +21,11 @@
         android:layout_marginTop="@dimen/space_small"
         android:textSize="@dimen/text_size_normal"
         tools:text="@string/dummy_overview" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/space_normal"
+        android:background="@color/dark_gray" />
+
 </LinearLayout>
