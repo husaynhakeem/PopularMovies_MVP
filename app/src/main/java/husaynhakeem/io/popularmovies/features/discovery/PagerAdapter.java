@@ -37,14 +37,12 @@ public class PagerAdapter extends FragmentPagerAdapter {
             moviesView = new MoviesView();
             MoviesPresenter moviesPresenter = new MoviesPresenter();
             moviesView.setPresenter(moviesPresenter);
-            moviesPresenter.setView(moviesView);
         }
 
         if (favoritesView == null) {
             favoritesView = new FavoritesView();
             FavoritesPresenter favoritesPresenter = new FavoritesPresenter();
             favoritesView.setPresenter(favoritesPresenter);
-            favoritesPresenter.setView(favoritesView);
         }
     }
 

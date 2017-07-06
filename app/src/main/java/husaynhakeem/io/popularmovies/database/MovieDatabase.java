@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import static android.provider.BaseColumns._ID;
 import static husaynhakeem.io.popularmovies.database.FavoriteMovieTable.COLUMN_MOVIE_ID;
 import static husaynhakeem.io.popularmovies.database.FavoriteMovieTable.COLUMN_MOVIE_OVERVIEW;
 import static husaynhakeem.io.popularmovies.database.FavoriteMovieTable.COLUMN_MOVIE_POSTER;
@@ -19,11 +20,12 @@ public class MovieDatabase extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME = "movies.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private static final String QUERY_CREATE_FAVORITE_TABLE = "CREATE TABLE " +
             FavoriteMovieTable.TABLE_NAME + "(" +
-            COLUMN_MOVIE_ID + " INTEGER PRIMARY KEY," +
+            _ID + "INTEGER PRIMARY KEY," +
+            COLUMN_MOVIE_ID + " INTEGER," +
             COLUMN_MOVIE_TITLE + " TEXT," +
             COLUMN_MOVIE_POSTER + " TEXT," +
             COLUMN_MOVIE_RELEASE_DATE + " TEXT," +

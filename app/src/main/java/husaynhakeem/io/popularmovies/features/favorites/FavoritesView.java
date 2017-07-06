@@ -32,10 +32,9 @@ public class FavoritesView extends Fragment implements FavoritesContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (presenter == null) {
+        if (presenter == null)
             setPresenter(new FavoritesPresenter());
-            presenter.setView(this);
-        }
+        presenter.setView(this);
         presenter.start();
         adapter = new FavoritesAdapter(null, this);
     }

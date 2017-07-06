@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Popular movies</string>
-
     <string name="themoviedb_api_key">d9cfa9b786b4f434116f6bc47d8ddcff</string>
 
     <!--Discovery screen-->
