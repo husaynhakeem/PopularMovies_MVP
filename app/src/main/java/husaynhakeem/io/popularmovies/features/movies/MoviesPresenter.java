@@ -49,8 +49,6 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
         if (!GeneralNetworkUtils.isInternetAvailable(view.getContext())) {
             view.onNoInternetConnection();
         } else {
-            view.onInternetConnection();
-
             if (canLoadMoreMovies()) {
                 view.getActivity().getSupportLoaderManager().restartLoader(MOVIES_DISCOVERY_LOADER_ID, null, this);
             }
@@ -129,8 +127,7 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
                 try {
                     URL moviesUrl = MoviesNetworkUtils.buildMoviesUrl(getContext(), sortCriteria, String.valueOf(currentPage));
                     String moviesPageJson = GeneralNetworkUtils.getResponseFromUrl(moviesUrl);
-                    moviesPage = (MoviesPage) Mapper.instance().convertFromJsonToMovies(moviesPageJson, MoviesPage.class);
-
+                    moviesPage = (MoviesPage) Mapper.instance().convertFromJsonToObject(moviesPageJson, MoviesPage.class);
                     return moviesPage;
 
                 } catch (Exception e) {
@@ -188,9 +185,15 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
 
 
     @Override
-    public void onNoInternetConnection() {
+    public void checkForConnection() {
         if (!GeneralNetworkUtils.isInternetAvailable(view.getContext()))
-            view.onNoInternetConnection();
+            onNoInternetConnection();
+    }
+
+
+    @Override
+    public void onNoInternetConnection() {
+        view.onNoInternetConnection();
     }
 
 

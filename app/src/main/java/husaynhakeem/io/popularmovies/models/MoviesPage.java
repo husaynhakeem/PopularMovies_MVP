@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+import static husaynhakeem.io.popularmovies.utilities.MovieUtils.areMovieListsEqual;
+
 /**
  * Created by husaynhakeem on 6/11/17.
  */
@@ -24,7 +26,6 @@ public class MoviesPage {
 
     @JsonProperty("results")
     private List<Movie> movies;
-
 
     public int getPage() {
         return page;
@@ -58,7 +59,6 @@ public class MoviesPage {
         this.movies = movies;
     }
 
-
     @Override
     public boolean equals(Object obj) {
 
@@ -68,25 +68,9 @@ public class MoviesPage {
             return page == moviesPageObject.page
                     && totalResults == moviesPageObject.totalResults
                     && totalPages == moviesPageObject.totalPages
-                    && areEqual(movies, moviesPageObject.movies);
+                    && areMovieListsEqual(movies, moviesPageObject.movies);
         }
 
         return super.equals(obj);
-    }
-
-
-    /**
-     * @param movies
-     * @param moviesToCompare
-     * @return Whether 2 lists of movies are equal
-     */
-    private boolean areEqual(List<Movie> movies, List<Movie> moviesToCompare) {
-
-        if (moviesToCompare == null) {
-            return movies == null;
-        }
-
-        return !(movies.size() != moviesToCompare.size()
-                || !moviesToCompare.containsAll(movies));
     }
 }

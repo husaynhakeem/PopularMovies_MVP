@@ -5,9 +5,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.test.InstrumentationRegistry;
 
-import husaynhakeem.io.popularmovies.database.MovieTable;
 import husaynhakeem.io.popularmovies.models.Movie;
 import husaynhakeem.io.popularmovies.utilities.DbUtils;
+
+import static husaynhakeem.io.popularmovies.database.FavoriteMovieTable.COLUMN_MOVIE_ID;
 
 /**
  * Created by husaynhakeem on 7/3/17.
@@ -33,7 +34,7 @@ public class DbTestUtils {
         return context.getContentResolver()
                 .query(uri,
                         null,
-                        MovieTable.COLUMN_MOVIE_ID + " = ?",
+                        COLUMN_MOVIE_ID + " = ?",
                         new String[]{String.valueOf(movieId)},
                         null);
     }
@@ -42,7 +43,7 @@ public class DbTestUtils {
     static int deleteMovie(Uri uri, int movieId) {
         return context.getContentResolver()
                 .delete(uri,
-                        MovieTable.COLUMN_MOVIE_ID + " = ?",
+                        COLUMN_MOVIE_ID + " = ?",
                         new String[]{String.valueOf(movieId)}
                 );
     }

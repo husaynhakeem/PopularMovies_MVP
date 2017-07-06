@@ -6,13 +6,14 @@ import android.view.Menu;
 import android.view.View;
 
 import husaynhakeem.io.popularmovies.R;
-import husaynhakeem.io.popularmovies.features.main.DiscoveryPresenter;
-import husaynhakeem.io.popularmovies.features.main.DiscoveryView;
+import husaynhakeem.io.popularmovies.features.discovery.DiscoveryPresenter;
+import husaynhakeem.io.popularmovies.features.discovery.DiscoveryView;
 
 public class MainActivity extends AppCompatActivity {
 
 
     private DiscoveryView discoveryView;
+    private DiscoveryPresenter discoveryPresenter;
 
 
     @Override
@@ -26,8 +27,9 @@ public class MainActivity extends AppCompatActivity {
     private void startDiscoveryView() {
 
         discoveryView = new DiscoveryView();
-        DiscoveryPresenter discoveryPresenter = new DiscoveryPresenter();
+        discoveryPresenter = new DiscoveryPresenter();
         discoveryView.setPresenter(discoveryPresenter);
+        discoveryPresenter.setView(discoveryView);
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.content_frame, discoveryView)
@@ -40,20 +42,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void onFavoritesChanged() {
+        discoveryView.onFavoritesChanged();
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_movies_discovery, menu);
         return true;
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-
-    public void onFavoritesChanged() {
-        discoveryView.onFavoritesChanged();
     }
 }

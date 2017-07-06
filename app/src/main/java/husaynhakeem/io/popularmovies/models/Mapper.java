@@ -26,11 +26,11 @@ public class Mapper<T> {
     }
 
 
-    public T convertFromJsonToMovies(String moviesJson, Class<T> classType) {
+    public T convertFromJsonToObject(String json, Class<T> classType) {
 
         try {
             ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(moviesJson, classType);
+            return mapper.readValue(json, classType);
         } catch (IOException e) {
             e.printStackTrace();
             return null;

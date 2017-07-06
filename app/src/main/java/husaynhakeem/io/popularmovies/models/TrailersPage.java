@@ -18,13 +18,7 @@ public class TrailersPage {
     @JsonProperty("results")
     private List<Trailer> trailers;
 
-
     public TrailersPage() {
-    }
-
-    public TrailersPage(int id, List<Trailer> trailers) {
-        this.id = id;
-        this.trailers = trailers;
     }
 
     public int getId() {

@@ -1,4 +1,4 @@
-package husaynhakeem.io.popularmovies.features.main;
+package husaynhakeem.io.popularmovies.features.discovery;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,8 +17,8 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
 
     private static final int NUMBER_OF_PAGES = 2;
-    private static final int FIRST_PAGE = 0;
-    private static final int SECOND_PAGE = 1;
+    private static final int FIRST_PAGE_INDEX = 0;
+    private static final int SECOND_PAGE_INDEX = 1;
 
 
     private MoviesView moviesView;
@@ -37,13 +37,14 @@ public class PagerAdapter extends FragmentPagerAdapter {
             moviesView = new MoviesView();
             MoviesPresenter moviesPresenter = new MoviesPresenter();
             moviesView.setPresenter(moviesPresenter);
+            moviesPresenter.setView(moviesView);
         }
 
         if (favoritesView == null) {
             favoritesView = new FavoritesView();
             FavoritesPresenter favoritesPresenter = new FavoritesPresenter();
             favoritesView.setPresenter(favoritesPresenter);
-
+            favoritesPresenter.setView(favoritesView);
         }
     }
 
@@ -53,10 +54,10 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
         switch (position) {
 
-            case FIRST_PAGE:
+            case FIRST_PAGE_INDEX:
                 return moviesView;
 
-            case SECOND_PAGE:
+            case SECOND_PAGE_INDEX:
                 return favoritesView;
 
             default:

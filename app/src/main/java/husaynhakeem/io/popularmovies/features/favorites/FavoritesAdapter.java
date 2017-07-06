@@ -13,12 +13,13 @@ import husaynhakeem.io.popularmovies.R;
 import husaynhakeem.io.popularmovies.models.Movie;
 import husaynhakeem.io.popularmovies.network.MoviePosterNetworkUtils;
 
-import static husaynhakeem.io.popularmovies.database.MovieTable.COLUMN_MOVIE_ID;
-import static husaynhakeem.io.popularmovies.database.MovieTable.COLUMN_MOVIE_OVERVIEW;
-import static husaynhakeem.io.popularmovies.database.MovieTable.COLUMN_MOVIE_POSTER;
-import static husaynhakeem.io.popularmovies.database.MovieTable.COLUMN_MOVIE_RELEASE_DATE;
-import static husaynhakeem.io.popularmovies.database.MovieTable.COLUMN_MOVIE_TITLE;
-import static husaynhakeem.io.popularmovies.database.MovieTable.COLUMN_MOVIE_VOTE_AVERAGE;
+import static husaynhakeem.io.popularmovies.database.FavoriteMovieTable.COLUMN_MOVIE_ID;
+import static husaynhakeem.io.popularmovies.database.FavoriteMovieTable.COLUMN_MOVIE_OVERVIEW;
+import static husaynhakeem.io.popularmovies.database.FavoriteMovieTable.COLUMN_MOVIE_POSTER;
+import static husaynhakeem.io.popularmovies.database.FavoriteMovieTable.COLUMN_MOVIE_RELEASE_DATE;
+import static husaynhakeem.io.popularmovies.database.FavoriteMovieTable.COLUMN_MOVIE_TITLE;
+import static husaynhakeem.io.popularmovies.database.FavoriteMovieTable.COLUMN_MOVIE_VOTE_AVERAGE;
+
 
 /**
  * Created by husaynhakeem on 7/2/17.

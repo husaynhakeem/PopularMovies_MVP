@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import husaynhakeem.io.popularmovies.features.MainActivity;
 import husaynhakeem.io.popularmovies.models.Movie;
 
+import static husaynhakeem.io.popularmovies.database.FavoriteMovieTable.COLUMN_MOVIE_ID;
 import static husaynhakeem.io.popularmovies.utilities.DbUtils.toContentValues;
 import static husaynhakeem.io.popularmovies.utilities.DbUtils.whereArgs;
 import static husaynhakeem.io.popularmovies.utilities.DbUtils.whereParam;
@@ -40,7 +41,7 @@ public class DbTasks {
 
                     case FAVORITE_DELETE:
                         context.getContentResolver()
-                                .delete(FavoriteMovieTable.CONTENT_URI, whereParam(MovieTable.COLUMN_MOVIE_ID), whereArgs((Movie[]) values));
+                                .delete(FavoriteMovieTable.CONTENT_URI, whereParam(COLUMN_MOVIE_ID), whereArgs((Movie[]) values));
                         break;
                 }
 

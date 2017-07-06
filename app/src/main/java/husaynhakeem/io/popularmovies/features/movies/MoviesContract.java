@@ -26,8 +26,6 @@ public interface MoviesContract extends BaseView {
 
         void displaySortCriteria(String sortCriteria);
 
-        void onInternetConnection();
-
         void onNoInternetConnection();
 
         void scrollBackToTop();
@@ -55,6 +53,8 @@ public interface MoviesContract extends BaseView {
         void setSortCriteria(String sortCriteria);
 
         void onMovieClicked(Movie movie);
+
+        void checkForConnection();
 
         void onNoInternetConnection();
     }

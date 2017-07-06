@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,9 @@ import husaynhakeem.io.popularmovies.models.Trailer;
 import husaynhakeem.io.popularmovies.network.MovieTrailersNetworkUtils;
 import husaynhakeem.io.popularmovies.utilities.StringUtils;
 import husaynhakeem.io.popularmovies.utilities.TrailerUtils;
+import husaynhakeem.io.popularmovies.utilities.UiUtils;
+
+import static husaynhakeem.io.popularmovies.utilities.TrailerUtils.trailerView;
 
 /**
  * Created by husaynhakeem on 7/1/17.
@@ -68,9 +72,10 @@ public class DetailsView extends Fragment implements DetailsContract.View {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_details, container, false);
         initViews();
-        if (presenter == null)
+        if (presenter == null) {
             setPresenter(new DetailsPresenter());
-        presenter.setView(this);
+            presenter.setView(this);
+        }
         presenter.start();
         return rootView;
     }
@@ -83,7 +88,10 @@ public class DetailsView extends Fragment implements DetailsContract.View {
         releaseDateTextView = (TextView) rootView.findViewById(R.id.tv_release_date);
         voteAverageTextView = (TextView) rootView.findViewById(R.id.tv_vote_average);
         overViewTextView = (TextView) rootView.findViewById(R.id.tv_overview);
+
         trailersGridView = (GridLayout) rootView.findViewById(R.id.gl_movie_trailers);
+        trailersGridView.setColumnCount(UiUtils.numberOfTrailersPerRow());
+
         noTrailersTextView = (TextView) rootView.findViewById(R.id.tv_no_trailers);
         trailersNoInternetTextView = (TextView) rootView.findViewById(R.id.tv_no_internet_trailers);
         reviewsLayout = (LinearLayout) rootView.findViewById(R.id.ll_movie_reviews);
@@ -97,15 +105,6 @@ public class DetailsView extends Fragment implements DetailsContract.View {
     }
 
 
-    @Override
-    public void setFABImage(boolean isMovieSaved) {
-        if (isMovieSaved)
-            saveMovieFAB.setImageResource(R.drawable.ic_action_save_movie_checked);
-        else
-            saveMovieFAB.setImageResource(R.drawable.ic_action_save_movie_unchecked);
-    }
-
-
     private void initListeners() {
 
         reviewRetryButton.setOnClickListener(new View.OnClickListener() {
@@ -115,13 +114,21 @@ public class DetailsView extends Fragment implements DetailsContract.View {
             }
         });
 
-
         saveMovieFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onSaveMovieClicked();
             }
         });
+    }
+
+
+    @Override
+    public void setFABImage(boolean isMovieSaved) {
+        if (isMovieSaved)
+            saveMovieFAB.setImageResource(R.drawable.ic_action_save_movie_checked);
+        else
+            saveMovieFAB.setImageResource(R.drawable.ic_action_save_movie_unchecked);
     }
 
 
@@ -164,18 +171,19 @@ public class DetailsView extends Fragment implements DetailsContract.View {
         trailersNoInternetTextView.setVisibility(View.GONE);
 
         for (Trailer trailer : trailers) {
-            trailersGridView.addView(trailerView(trailer));
+            trailersGridView.addView(trailerItemView(trailer));
+            Log.e("Trailer", trailer.getKey());
         }
     }
 
 
-    private View trailerView(final Trailer trailer) {
-        View itemView = LayoutInflater.from(rootView.getContext()).inflate(R.layout.item_trailer, (ViewGroup) rootView, false);
+    private View trailerItemView(final Trailer trailer) {
+        View itemView = trailerView(rootView);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri trailerUriForYoutubeApp = MovieTrailersNetworkUtils.buildTrailerYoutubeUri(trailer.getKey());
-                String trailerUrlForBrowser = MovieTrailersNetworkUtils.buildTrailerYoutubeUrl(trailer.getKey());
+                Uri trailerUriForYoutubeApp = MovieTrailersNetworkUtils.buildYoutubeTrailerUri(trailer.getKey());
+                String trailerUrlForBrowser = MovieTrailersNetworkUtils.buildYoutubeTrailerUrl(trailer.getKey());
                 TrailerUtils.openTrailer(getContext(), trailerUriForYoutubeApp, trailerUrlForBrowser);
             }
         });

@@ -17,8 +17,6 @@ import husaynhakeem.io.popularmovies.database.MovieDatabase;
 import static android.R.attr.id;
 import static husaynhakeem.io.popularmovies.provider.MoviesContract.CONTENT_AUTHORITY;
 import static husaynhakeem.io.popularmovies.provider.MoviesContract.FAVORITE_MOVIES_PATH;
-import static husaynhakeem.io.popularmovies.provider.MoviesContract.POPULAR_MOVIES_PATH;
-import static husaynhakeem.io.popularmovies.provider.MoviesContract.TOP_RATED_MOVIES_PATH;
 
 /**
  * Created by husaynhakeem on 6/27/17.
@@ -27,13 +25,9 @@ import static husaynhakeem.io.popularmovies.provider.MoviesContract.TOP_RATED_MO
 public class MoviesProvider extends ContentProvider {
 
 
-    private static final int CODE_POPULAR_MOVIES = 100;
-    private static final int CODE_TOP_RATED_MOVIES = 101;
     private static final int CODE_FAVORITE_MOVIES = 102;
 
-
     private static final UriMatcher sUriMatcher = buildUriMatcher();
-
 
     private MovieDatabase movieDb;
 
@@ -41,8 +35,6 @@ public class MoviesProvider extends ContentProvider {
     private static UriMatcher buildUriMatcher() {
 
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(CONTENT_AUTHORITY, POPULAR_MOVIES_PATH, CODE_POPULAR_MOVIES);
-        uriMatcher.addURI(CONTENT_AUTHORITY, TOP_RATED_MOVIES_PATH, CODE_TOP_RATED_MOVIES);
         uriMatcher.addURI(CONTENT_AUTHORITY, FAVORITE_MOVIES_PATH, CODE_FAVORITE_MOVIES);
         return uriMatcher;
     }

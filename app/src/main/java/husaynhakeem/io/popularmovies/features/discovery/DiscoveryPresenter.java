@@ -1,4 +1,4 @@
-package husaynhakeem.io.popularmovies.features.main;
+package husaynhakeem.io.popularmovies.features.discovery;
 
 import husaynhakeem.io.popularmovies.features.favorites.FavoritesView;
 

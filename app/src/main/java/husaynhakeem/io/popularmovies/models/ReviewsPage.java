@@ -32,17 +32,6 @@ public class ReviewsPage {
     @JsonProperty("total_results")
     private int totalResults;
 
-    public ReviewsPage() {
-    }
-
-    public ReviewsPage(long id, int page, List<Review> reviews, int totalPages, int totalResults) {
-        this.id = id;
-        this.page = page;
-        this.reviews = reviews;
-        this.totalPages = totalPages;
-        this.totalResults = totalResults;
-    }
-
     public long getId() {
         return id;
     }

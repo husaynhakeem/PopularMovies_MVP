@@ -42,19 +42,18 @@ public class MovieTrailersNetworkUtils {
     }
 
 
-    public static Uri buildTrailerYoutubeUri(String trailerKey) {
+    public static Uri buildYoutubeTrailerUri(String trailerKey) {
         return Uri.parse(YOUTUBE_BASE_URI + trailerKey);
     }
 
 
-    public static String buildTrailerYoutubeUrl(String trailerKey) {
+    public static String buildYoutubeTrailerUrl(String trailerKey) {
 
         Uri youtubeTrailerUri = Uri.parse(YOUTUBE_BASE_URL)
                 .buildUpon()
                 .appendEncodedPath(YOUTUBE_WATCH_KEYWORD)
                 .appendQueryParameter(YOUTUBE_VIDEO_PARAMETER_KEY, trailerKey)
                 .build();
-
         return youtubeTrailerUri.toString();
     }
 }

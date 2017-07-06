@@ -57,7 +57,7 @@ public class TrailersLoader implements LoaderManager.LoaderCallbacks<List<Traile
                         try {
                             URL movieTrailersUrl = MovieTrailersNetworkUtils.buildTrailersUrl(getContext(), args.getInt(MOVIE_ID));
                             String movieTrailersJson = GeneralNetworkUtils.getResponseFromUrl(movieTrailersUrl);
-                            TrailersPage trailersPage = (TrailersPage) Mapper.instance().convertFromJsonToMovies(movieTrailersJson, TrailersPage.class);
+                            TrailersPage trailersPage = (TrailersPage) Mapper.instance().convertFromJsonToObject(movieTrailersJson, TrailersPage.class);
                             movieTrailers = trailersPage.getTrailers();
                             return movieTrailers;
                         } catch (Exception e) {

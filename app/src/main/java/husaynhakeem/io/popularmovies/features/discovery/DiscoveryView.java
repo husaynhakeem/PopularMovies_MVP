@@ -1,4 +1,4 @@
-package husaynhakeem.io.popularmovies.features.main;
+package husaynhakeem.io.popularmovies.features.discovery;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,9 +30,10 @@ public class DiscoveryView extends Fragment implements DiscoveryContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (presenter == null)
+        if (presenter == null) {
             setPresenter(new DiscoveryPresenter());
-        presenter.setView(this);
+            presenter.setView(this);
+        }
         presenter.start();
     }
 

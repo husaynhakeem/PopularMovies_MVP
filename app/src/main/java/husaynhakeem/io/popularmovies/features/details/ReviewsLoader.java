@@ -58,7 +58,7 @@ public class ReviewsLoader implements LoaderManager.LoaderCallbacks<List<Review>
                         try {
                             URL movieReviewsUrl = MovieReviewsNetworkUtils.buildReviewsUrl(getContext(), args.getInt(MOVIE_ID));
                             String movieReviewsJson = GeneralNetworkUtils.getResponseFromUrl(movieReviewsUrl);
-                            ReviewsPage reviewsPage = (ReviewsPage) Mapper.instance().convertFromJsonToMovies(movieReviewsJson, ReviewsPage.class);
+                            ReviewsPage reviewsPage = (ReviewsPage) Mapper.instance().convertFromJsonToObject(movieReviewsJson, ReviewsPage.class);
                             movieReviews = reviewsPage.getReviews();
                             return movieReviews;
                         } catch (Exception e) {

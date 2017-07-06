@@ -137,7 +137,9 @@
                     <GridLayout
                         android:id="@+id/gl_movie_trailers"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:alignmentMode="alignMargins"
+                        android:useDefaultMargins="true" />
 
                     <TextView
                         android:id="@+id/tv_no_trailers"
