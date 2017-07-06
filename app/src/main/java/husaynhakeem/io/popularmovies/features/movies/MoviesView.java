@@ -202,11 +202,9 @@ public class MoviesView extends Fragment implements MoviesContract.View {
                 presenter.displaySortCriteria();
                 return true;
 
-            case R.id.action_settings:
-                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
 
