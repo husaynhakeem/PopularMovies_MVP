@@ -177,8 +177,8 @@ public class DetailsView extends Fragment implements DetailsContract.View {
             return;
 
         titleTextView.setText(movie.getTitle());
-        releaseDateTextView.setText(StringUtils.getYearFromDate(movie.getReleaseDate()));
-        voteAverageTextView.setText(StringUtils.getVoteAverageToDisplay(movie.getVoteAverage()));
+        releaseDateTextView.setText(getString(R.string.release_date, StringUtils.getYearFromDate(movie.getReleaseDate())));
+        voteAverageTextView.setText(getString(R.string.vote_average, StringUtils.getVoteAverageToDisplay(movie.getVoteAverage())));
         overViewTextView.setText(movie.getOverview());
     }
 
