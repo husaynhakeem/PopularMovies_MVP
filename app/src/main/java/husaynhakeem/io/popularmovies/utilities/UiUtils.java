@@ -10,8 +10,8 @@ public class UiUtils {
 
 
     private static final int TABLET_MIN_WIDTH = 600;
-    private static final int ROW_MIN_WIDTH_TABLET = 100;
-    private static final int ROW_MIN_WIDTH_PHONE = 150;
+    private static final int ROW_MIN_WIDTH_TABLET = 300;
+    private static final int ROW_MIN_WIDTH_PHONE = 350;
     private static final int TRAILER_WIDTH_WITH_MARGINS = 120;
     private static final int TRAILER_OUTER_SPACE_PER_SIDE = 10;
 
