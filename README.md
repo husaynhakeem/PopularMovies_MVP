@@ -1,8 +1,8 @@
 # Popular Movies Application
 
-A simple Android app that helps users discover movies.
+An Android app that helps users discover movies.
 
-This app is within the scope of Udacity's Android Developer Nanodegree, so far the current project represents only the 1st part of the whole project.
+This app is within the scope of Udacity's Android Developer Nanodegree.
 
 ## Features
 
@@ -11,12 +11,27 @@ This app is within the scope of Udacity's Android Developer Nanodegree, so far t
 - [x] Discover the most popular and the highest rated movies
 - [x] Endless scrolling through the list of movies
 - [x] Read reviews about movies from other users
+- [x] Watch movie trailers
+- [x] Mark movies as favorites and save them
+- [x] Offline mode supported
+- [x] Optimized UI for phones and tablets
 
 #### Upcoming features:
 
-- [] Watch movie trailers
-- [] Mask movies ad favorites and save them
-- [] Optimized UI for phones and tablets
+- [] Support for different languages
+- [] Auto update of movies frequently
+- [] Offline mode for all movies
+
+
+## libraries used in this project
+
+- [RecyclerView and CardView](https://developer.android.com/training/material/lists-cards.html)
+- [Picasso](http://square.github.io/picasso/)
+- [HttpURLConnection](https://developer.android.com/reference/java/net/HttpURLConnection.html)
+- [Jackson core annotations and Data binding](https://github.com/FasterXML/jackson-docs)
+- [Expandable Layout](https://github.com/cachapa/ExpandableLayout)
+- [JUnit](https://developer.android.com/training/testing/unit-testing/local-unit-tests.html)
+
 
 ## Developer setup
 
@@ -25,6 +40,10 @@ This app is within the scope of Udacity's Android Developer Nanodegree, so far t
 The app uses themoviedb.org API to get all movies data (Information about the movies, posters, trailers, etc.).
 
 In order to build the app you must provide your own [API key](https://www.themoviedb.org/account/signup). Go to the `app/res/values/strings.xml` file, and insert your own API Key in the following line `<string name="themoviedb_api_key">YOUR_API_KEY</string>`.
+
+
+### Do you want to contribute
+Feel free to report or add any useful feature, I will be glad to improve it with your help!
 
 
 # Licence
