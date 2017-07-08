@@ -42,11 +42,11 @@ The app uses themoviedb.org API to get all movies data (Information about the mo
 In order to build the app you must provide your own [API key](https://www.themoviedb.org/account/signup). Go to the `app/res/values/strings.xml` file, and insert your own API Key in the following line `<string name="themoviedb_api_key">YOUR_API_KEY</string>`.
 
 
-### Do you want to contribute
+## Do you want to contribute
 Feel free to report or add any useful feature, I will be glad to improve it with your help!
 
 
-# Licence
+## Licence
 ```
 Copyright 2017 Husayn Abdul Hakeem
 
