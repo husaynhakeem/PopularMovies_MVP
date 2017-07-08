@@ -12,7 +12,8 @@
         android:id="@+id/pb_loading"
         android:layout_width="@dimen/progress_bar_dimension"
         android:layout_height="@dimen/progress_bar_dimension"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/layout_no_internet"
