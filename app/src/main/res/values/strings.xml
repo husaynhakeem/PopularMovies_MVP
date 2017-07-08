@@ -1,21 +1,17 @@
 <resources>
     <string name="app_name">Popular movies</string>
-    <string name="themoviedb_api_key">d9cfa9b786b4f434116f6bc47d8ddcff</string>
+    <string name="themoviedb_api_key">YOUR_API_KEY</string>
 
     <!--Discovery screen-->
-    <string name="activity_movies_discovery">Popular movies</string>
     <string name="message_no_internet">Make sure you are connected to the internet, then try again.</string>
     <string name="button_retry">Retry</string>
     <string name="action_sort">Sort</string>
-    <string name="action_settings">Settings</string>
     <string name="message_sort_by_most_popular">Movies sorted by most popular</string>
     <string name="message_sort_by_top_rated">Movies sorted by top rated</string>
     <string name="message_no_favorites">It seems you currently don\'t have any saved movies.</string>
 
     <!--Details screen-->
-    <string name="activity_movie_detail">Movie detail</string>
     <string name="movie_poster_description">Movie poster</string>
-    <string name="action_save_movie">Save movie</string>
     <string name="release_date">Released in %s</string>
     <string name="vote_average">Rating: %s</string>
     <string name="movie_overview">Overview</string>
