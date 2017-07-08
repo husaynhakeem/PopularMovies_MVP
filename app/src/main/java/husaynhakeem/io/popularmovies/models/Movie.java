@@ -1,7 +1,5 @@
 package husaynhakeem.io.popularmovies.models;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -17,27 +15,21 @@ public class Movie implements Parcelable {
 
     public static final String MOVIE = "movie";
 
-    @PrimaryKey
     @JsonProperty("id")
     private int id;
 
-    @ColumnInfo(name = "vote_average")
     @JsonProperty("vote_average")
     private double voteAverage;
 
-    @ColumnInfo(name = "title")
     @JsonProperty("title")
     private String title;
 
-    @ColumnInfo(name = "poster_path")
     @JsonProperty("poster_path")
     private String posterPath;
 
-    @ColumnInfo(name = "overview")
     @JsonProperty("overview")
     private String overview;
 
-    @ColumnInfo(name = "release_date")
     @JsonProperty("release_date")
     private String releaseDate;
 

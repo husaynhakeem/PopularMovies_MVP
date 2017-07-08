@@ -42,5 +42,4 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.3'
     compile 'net.cachapa.expandablelayout:expandablelayout:2.9.1'
     testCompile 'junit:junit:4.12'
-    annotationProcessor 'android.arch.persistence.room:compiler:1.0.0-alpha1'
 }
