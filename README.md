@@ -4,6 +4,11 @@ An Android app that helps users discover movies.
 
 This app is within the scope of Udacity's Android Developer Nanodegree.
 
+
+## Demo
+![alt text](https://raw.githubusercontent.com/Husaynhakeem/PopularMovies_MVP/b86823859d32bc11e99ae1a335d8af14f5ec7468/app/src/main/res/drawable/popular_movies_preview.png)
+
+
 ## Features
 
 #### Current features:
