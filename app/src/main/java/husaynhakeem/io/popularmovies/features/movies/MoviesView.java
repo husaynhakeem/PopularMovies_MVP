@@ -55,6 +55,7 @@ public class MoviesView extends Fragment implements MoviesContract.View {
         life-cycle starts from onCreateView() method
          */
         moviesAdapter = new MoviesAdapter(null, this);
+//        reInitMovies();
     }
 
 
@@ -63,13 +64,12 @@ public class MoviesView extends Fragment implements MoviesContract.View {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_movies, container, false);
         initViews();
-        reInitMovies();
         setHasOptionsMenu(true);
         return rootView;
     }
 
 
-    private void reInitMovies() {
+    public void reInitList() {
         if (moviesAdapter != null && moviesAdapter.getItemCount() > 0)
             moviesAdapter.reInit();
     }

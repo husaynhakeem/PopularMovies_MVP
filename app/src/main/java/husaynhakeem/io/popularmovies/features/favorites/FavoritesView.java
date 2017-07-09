@@ -37,6 +37,7 @@ public class FavoritesView extends Fragment implements FavoritesContract.View {
         presenter.setView(this);
         presenter.start();
         adapter = new FavoritesAdapter(null, this);
+//        reInitFavorites();
     }
 
 

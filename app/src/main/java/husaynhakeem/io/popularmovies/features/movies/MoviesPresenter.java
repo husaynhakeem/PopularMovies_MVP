@@ -74,6 +74,7 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
         currentPage = 1;
         totalPages = 1;
         switchSortCriteria();
+        view.reInitList();
     }
 
 
