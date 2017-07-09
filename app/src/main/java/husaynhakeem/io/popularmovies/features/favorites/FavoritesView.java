@@ -49,6 +49,12 @@ public class FavoritesView extends Fragment implements FavoritesContract.View {
     }
 
 
+    private void reInitFavorites() {
+        if (adapter != null && adapter.getItemCount() > 0)
+            adapter.reInit();
+    }
+
+
     @Override
     public void initViews() {
         favoritesRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_favorites);

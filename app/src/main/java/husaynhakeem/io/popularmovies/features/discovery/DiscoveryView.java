@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import husaynhakeem.io.popularmovies.R;
+import husaynhakeem.io.popularmovies.features.MainActivity;
 import husaynhakeem.io.popularmovies.features.movies.MoviesView;
 
 /**
@@ -44,7 +45,16 @@ public class DiscoveryView extends Fragment implements DiscoveryContract.View {
         rootView = inflater.inflate(R.layout.fragment_discovery, container, false);
         setupPager();
         setupTabs();
+        showMenu();
         return rootView;
+    }
+
+
+    @Override
+    public void showMenu() {
+        MainActivity activity = ((MainActivity) getActivity());
+        if (activity != null)
+            activity.showMenu();
     }
 
 

@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DiscoveryView discoveryView;
     private DiscoveryPresenter discoveryPresenter;
+    private Menu menu;
 
 
     @Override
@@ -50,6 +51,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_movies_discovery, menu);
+        this.menu = menu;
         return true;
+    }
+
+
+    public void showMenu() {
+        if (menu != null && menu.findItem(R.id.action_sort) != null)
+            menu.findItem(R.id.action_sort).setVisible(true);
+    }
+
+
+    public void hideMenu() {
+        if (menu != null && menu.findItem(R.id.action_sort) != null)
+            menu.findItem(R.id.action_sort).setVisible(false);
     }
 }

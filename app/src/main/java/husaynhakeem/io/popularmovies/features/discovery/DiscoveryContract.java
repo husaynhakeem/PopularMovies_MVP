@@ -12,6 +12,8 @@ public interface DiscoveryContract {
 
     interface View extends BaseView<Presenter> {
 
+        void showMenu();
+
         void setupPager();
 
         void setupTabs();

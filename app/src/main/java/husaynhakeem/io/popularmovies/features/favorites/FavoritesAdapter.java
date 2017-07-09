@@ -73,6 +73,11 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     }
 
 
+    public void reInit() {
+        favorites = null;
+    }
+
+
     @Override
     public int getItemCount() {
         return favorites == null ? 0 : favorites.getCount();

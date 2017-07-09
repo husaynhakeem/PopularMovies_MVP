@@ -16,6 +16,8 @@ public interface DetailsContract {
 
     interface View extends BaseView<Presenter> {
 
+        void hideMenu();
+
         void initViews();
 
         void setFABImage(boolean isMovieSaved);

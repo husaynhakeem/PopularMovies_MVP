@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 import java.util.List;
 
 import husaynhakeem.io.popularmovies.R;
+import husaynhakeem.io.popularmovies.features.MainActivity;
 import husaynhakeem.io.popularmovies.models.Movie;
 import husaynhakeem.io.popularmovies.models.Review;
 import husaynhakeem.io.popularmovies.models.Trailer;
@@ -33,6 +35,7 @@ import husaynhakeem.io.popularmovies.utilities.TrailerUtils;
 import husaynhakeem.io.popularmovies.utilities.UiUtils;
 
 import static husaynhakeem.io.popularmovies.utilities.TrailerUtils.trailerView;
+import static husaynhakeem.io.popularmovies.utilities.UiUtils.isTablet;
 
 /**
  * Created by husaynhakeem on 7/1/17.
@@ -81,7 +84,18 @@ public class DetailsView extends Fragment implements DetailsContract.View {
             presenter.setView(this);
         }
         presenter.start();
+        hideMenu();
         return rootView;
+    }
+
+
+    @Override
+    public void hideMenu() {
+        if (!isTablet()) {
+            MainActivity activity = ((MainActivity) getActivity());
+            if (activity != null)
+                activity.hideMenu();
+        }
     }
 
 
@@ -317,5 +331,11 @@ public class DetailsView extends Fragment implements DetailsContract.View {
     @Override
     public void onRetry() {
         presenter.onRetry();
+    }
+
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
     }
 }

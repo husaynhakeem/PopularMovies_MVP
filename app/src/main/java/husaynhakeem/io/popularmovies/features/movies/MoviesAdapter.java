@@ -68,6 +68,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     }
 
 
+    public void reInit() {
+        if (this.movies == null) {
+            this.movies = new ArrayList<>();
+        } else
+            movies.clear();
+    }
+
+
     public List<Movie> getMovies() {
         return movies;
     }

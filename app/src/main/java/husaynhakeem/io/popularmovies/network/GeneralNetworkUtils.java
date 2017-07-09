@@ -48,6 +48,6 @@ public class GeneralNetworkUtils {
     public static boolean isInternetAvailable(Context context) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnectedOrConnecting();
+        return networkInfo != null && networkInfo.isConnected();
     }
 }
