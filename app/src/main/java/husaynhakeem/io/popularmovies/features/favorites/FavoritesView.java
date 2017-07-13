@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import husaynhakeem.io.popularmovies.R;
 import husaynhakeem.io.popularmovies.models.Movie;
+import husaynhakeem.io.popularmovies.utilities.UiUtils;
 
 /**
  * Created by husaynhakeem on 7/1/17.
@@ -37,7 +38,6 @@ public class FavoritesView extends Fragment implements FavoritesContract.View {
         presenter.setView(this);
         presenter.start();
         adapter = new FavoritesAdapter(null, this);
-//        reInitFavorites();
     }
 
 
@@ -50,16 +50,10 @@ public class FavoritesView extends Fragment implements FavoritesContract.View {
     }
 
 
-    private void reInitFavorites() {
-        if (adapter != null && adapter.getItemCount() > 0)
-            adapter.reInit();
-    }
-
-
     @Override
     public void initViews() {
         favoritesRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_favorites);
-        favoritesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        favoritesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), Math.max(2, UiUtils.numberOfMovieRows())));
         favoritesRecyclerView.setHasFixedSize(true);
 
         favoritesRecyclerView.setAdapter(adapter);

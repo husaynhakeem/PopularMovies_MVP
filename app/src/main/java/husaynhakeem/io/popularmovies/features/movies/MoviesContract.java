@@ -36,6 +36,8 @@ public interface MoviesContract extends BaseView {
 
     interface Presenter extends BasePresenter {
 
+        void start(boolean loadNewData);
+
         boolean canLoadMoreMovies();
 
         void loadMovies();

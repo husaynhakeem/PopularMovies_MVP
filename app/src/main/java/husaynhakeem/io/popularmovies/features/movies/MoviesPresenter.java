@@ -40,17 +40,31 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
 
     @Override
     public void start() {
-        loadMovies();
+        start(false);
+    }
+
+
+    @Override
+    public void start(boolean loadNewData) {
+        loadMovies(loadNewData);
     }
 
 
     @Override
     public void loadMovies() {
+        loadMovies(true);
+    }
+
+
+    private void loadMovies(boolean loadNewData) {
         if (!GeneralNetworkUtils.isInternetAvailable(view.getContext())) {
             view.onNoInternetConnection();
         } else {
             if (canLoadMoreMovies()) {
-                view.getActivity().getSupportLoaderManager().restartLoader(MOVIES_DISCOVERY_LOADER_ID, null, this);
+                if (!loadNewData)
+                    view.getActivity().getSupportLoaderManager().initLoader(MOVIES_DISCOVERY_LOADER_ID, null, this);
+                else
+                    view.getActivity().getSupportLoaderManager().restartLoader(MOVIES_DISCOVERY_LOADER_ID, null, this);
             }
         }
     }
@@ -64,7 +78,7 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
 
     @Override
     public void loadMore() {
-        loadMovies();
+        loadMovies(true);
     }
 
 
@@ -74,7 +88,6 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
         currentPage = 1;
         totalPages = 1;
         switchSortCriteria();
-        view.reInitList();
     }
 
 

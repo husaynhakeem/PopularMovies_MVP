@@ -25,7 +25,7 @@ public class FavoritesPresenter implements FavoritesContract.Presenter, LoaderMa
 
 
     private static final int FAVORITE_MOVIES_LOADER_ID = 2;
-    private static FavoritesView view;
+    private FavoritesView view;
 
 
     @Override

@@ -45,7 +45,7 @@ public class MoviesView extends Fragment implements MoviesContract.View {
         if (presenter == null)
             setPresenter(new MoviesPresenter());
         presenter.setView(this);
-        presenter.start();
+        presenter.start(savedInstanceState == null);
 
         /*
         Adapter initialization moved here in order to keep only one instance of it
@@ -55,7 +55,6 @@ public class MoviesView extends Fragment implements MoviesContract.View {
         life-cycle starts from onCreateView() method
          */
         moviesAdapter = new MoviesAdapter(null, this);
-//        reInitMovies();
     }
 
 
@@ -66,12 +65,6 @@ public class MoviesView extends Fragment implements MoviesContract.View {
         initViews();
         setHasOptionsMenu(true);
         return rootView;
-    }
-
-
-    public void reInitList() {
-        if (moviesAdapter != null && moviesAdapter.getItemCount() > 0)
-            moviesAdapter.reInit();
     }
 
 
