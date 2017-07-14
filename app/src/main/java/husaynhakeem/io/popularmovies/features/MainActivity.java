@@ -12,8 +12,8 @@ import husaynhakeem.io.popularmovies.features.discovery.DiscoveryView;
 public class MainActivity extends AppCompatActivity {
 
 
-    private DiscoveryView discoveryView;
-    private DiscoveryPresenter discoveryPresenter;
+    private static DiscoveryView discoveryView;
+    private static DiscoveryPresenter discoveryPresenter;
     private Menu menu;
 
 
@@ -22,8 +22,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (savedInstanceState == null)
-            startDiscoveryView();
+        if (savedInstanceState != null)
+            return;
+
+        startDiscoveryView();
     }
 
 

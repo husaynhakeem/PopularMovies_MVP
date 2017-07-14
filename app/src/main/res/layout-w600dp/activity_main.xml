@@ -4,29 +4,30 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/content_frame"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2" />
+        android:layout_weight="2"
+        android:orientation="vertical" />
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/detail_frame"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3">
+        android:layout_weight="3"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/tv_no_detail_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_margin="@dimen/space_normal"
             android:gravity="center"
             android:text="@string/message_no_movie_detail"
             android:textSize="@dimen/text_size_normal"
             android:textStyle="bold" />
 
-    </FrameLayout>
+    </RelativeLayout>
 
 </LinearLayout>

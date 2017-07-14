@@ -3,6 +3,7 @@ package husaynhakeem.io.popularmovies.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static husaynhakeem.io.popularmovies.utilities.MovieUtils.areMovieListsEqual;
@@ -26,6 +27,10 @@ public class MoviesPage {
 
     @JsonProperty("results")
     private List<Movie> movies;
+
+    public MoviesPage() {
+        movies = new ArrayList<>();
+    }
 
     public int getPage() {
         return page;
@@ -57,6 +62,12 @@ public class MoviesPage {
 
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
+    }
+
+    public void addMovies(List<Movie> movies) {
+        if (this.movies == null)
+            this.movies = new ArrayList<>();
+        this.movies.addAll(movies);
     }
 
     @Override

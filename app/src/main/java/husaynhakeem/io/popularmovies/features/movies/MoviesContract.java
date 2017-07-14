@@ -1,10 +1,9 @@
 package husaynhakeem.io.popularmovies.features.movies;
 
-import java.util.List;
-
 import husaynhakeem.io.popularmovies.BasePresenter;
-import husaynhakeem.io.popularmovies.models.Movie;
 import husaynhakeem.io.popularmovies.BaseView;
+import husaynhakeem.io.popularmovies.models.Movie;
+import husaynhakeem.io.popularmovies.models.MoviesPage;
 
 /**
  * Created by husaynhakeem on 6/11/17.
@@ -16,7 +15,7 @@ public interface MoviesContract extends BaseView {
 
         void initViews();
 
-        void bindMoviesToList(List<Movie> movies);
+        void bindMoviesToList(MoviesPage moviesPage);
 
         void onMoviesListReset();
 
@@ -35,8 +34,6 @@ public interface MoviesContract extends BaseView {
 
 
     interface Presenter extends BasePresenter {
-
-        void start(boolean loadNewData);
 
         boolean canLoadMoreMovies();
 

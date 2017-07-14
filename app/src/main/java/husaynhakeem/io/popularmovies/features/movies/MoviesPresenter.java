@@ -37,33 +37,24 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
     private int currentPage = 1;
     private int totalPages = 1;
 
+    private boolean isFirstCall = true;
+
 
     @Override
     public void start() {
-        start(false);
+        loadMovies();
     }
 
 
-    @Override
-    public void start(boolean loadNewData) {
-        loadMovies(loadNewData);
-    }
-
-
-    @Override
     public void loadMovies() {
-        loadMovies(true);
-    }
-
-
-    private void loadMovies(boolean loadNewData) {
         if (!GeneralNetworkUtils.isInternetAvailable(view.getContext())) {
             view.onNoInternetConnection();
         } else {
             if (canLoadMoreMovies()) {
-                if (!loadNewData)
+                if (isFirstCall) {
                     view.getActivity().getSupportLoaderManager().initLoader(MOVIES_DISCOVERY_LOADER_ID, null, this);
-                else
+                    isFirstCall = false;
+                } else
                     view.getActivity().getSupportLoaderManager().restartLoader(MOVIES_DISCOVERY_LOADER_ID, null, this);
             }
         }
@@ -78,7 +69,7 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
 
     @Override
     public void loadMore() {
-        loadMovies(true);
+        loadMovies();
     }
 
 
@@ -161,7 +152,7 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
 
         currentPage++;
         totalPages = data.getTotalPages();
-        view.bindMoviesToList(data.getMovies());
+        view.bindMoviesToList(data);
         view.onDoneLoading();
     }
 
@@ -213,5 +204,15 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
 
     public void setView(MoviesView view) {
         this.view = view;
+    }
+
+
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
+
+
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
     }
 }

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="120dp"
     android:layout_height="120dp"
     android:padding="@dimen/space_small">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/black">
+        android:background="@android:color/black"
+        android:gravity="center">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -16,6 +17,6 @@
             android:contentDescription="@string/play_trailer"
             android:src="@drawable/ic_play_trailer" />
 
-    </FrameLayout>
+    </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

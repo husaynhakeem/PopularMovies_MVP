@@ -7,7 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import husaynhakeem.io.popularmovies.R;
 import husaynhakeem.io.popularmovies.features.MainActivity;
@@ -61,7 +61,7 @@ public class TrailerUtils {
 
     public static View trailerView(View rootView) {
         View itemView = LayoutInflater.from(rootView.getContext()).inflate(R.layout.item_trailer, (ViewGroup) rootView, false);
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(itemView.getLayoutParams());
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(itemView.getLayoutParams());
         layoutParams.setMargins(trailerOuterSpaceInPx(), 0, trailerOuterSpaceInPx(), 0);
         itemView.setLayoutParams(layoutParams);
         return itemView;

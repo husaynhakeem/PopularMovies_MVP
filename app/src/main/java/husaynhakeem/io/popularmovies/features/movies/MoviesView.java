@@ -12,10 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import java.util.List;
-
 import husaynhakeem.io.popularmovies.R;
 import husaynhakeem.io.popularmovies.models.Movie;
+import husaynhakeem.io.popularmovies.models.MoviesPage;
 import husaynhakeem.io.popularmovies.utilities.UiUtils;
 import husaynhakeem.io.popularmovies.view.EndlessRecyclerViewScrollListener;
 
@@ -32,11 +31,15 @@ public class MoviesView extends Fragment implements MoviesContract.View {
     private View rootView;
     private RecyclerView moviesRecyclerView;
     private EndlessRecyclerViewScrollListener recyclerViewScrollListener;
+    private GridLayoutManager gridLayoutManager;
     private MoviesAdapter moviesAdapter;
     private ProgressBar loadingProgressBar;
     private View noInternetLayout;
 
     private MoviesPresenter presenter;
+
+    private static MoviesPage moviesPage = new MoviesPage();
+    private static int moviesIndex = 0;
 
 
     @Override
@@ -45,16 +48,15 @@ public class MoviesView extends Fragment implements MoviesContract.View {
         if (presenter == null)
             setPresenter(new MoviesPresenter());
         presenter.setView(this);
-        presenter.start(savedInstanceState == null);
 
-        /*
-        Adapter initialization moved here in order to keep only one instance of it
-        through the fragment's view recreations.
-        When the main fragment is replaced, this fragment stays in the created state,
-        when the main fragment is returned to, this method is not re-run, the fragment's
-        life-cycle starts from onCreateView() method
-         */
-        moviesAdapter = new MoviesAdapter(null, this);
+        if (savedInstanceState == null) {
+            presenter.start();
+            moviesAdapter = new MoviesAdapter(null, this);
+        } else {
+            presenter.setCurrentPage(moviesPage.getPage());
+            presenter.setTotalPages(moviesPage.getTotalPages());
+            moviesAdapter = new MoviesAdapter(moviesPage.getMovies(), this);
+        }
     }
 
 
@@ -72,10 +74,10 @@ public class MoviesView extends Fragment implements MoviesContract.View {
     public void initViews() {
         moviesRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_movies);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), Math.max(2, UiUtils.numberOfMovieRows()));
-        moviesRecyclerView.setLayoutManager(layoutManager);
+        gridLayoutManager = new GridLayoutManager(getContext(), Math.max(2, UiUtils.numberOfMovieRows()));
+        moviesRecyclerView.setLayoutManager(gridLayoutManager);
 
-        recyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+        recyclerViewScrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 presenter.loadMore();
@@ -84,6 +86,7 @@ public class MoviesView extends Fragment implements MoviesContract.View {
         moviesRecyclerView.addOnScrollListener(recyclerViewScrollListener);
         moviesRecyclerView.setHasFixedSize(true);
         moviesRecyclerView.setAdapter(moviesAdapter);
+        moviesRecyclerView.scrollToPosition(moviesIndex);
 
         loadingProgressBar = (ProgressBar) rootView.findViewById(R.id.pb_loading);
         noInternetLayout = rootView.findViewById(R.id.layout_no_internet);
@@ -100,9 +103,13 @@ public class MoviesView extends Fragment implements MoviesContract.View {
 
 
     @Override
-    public void bindMoviesToList(List<Movie> movies) {
-        moviesAdapter.addMovies(movies);
+    public void bindMoviesToList(MoviesPage moviesPage) {
+        moviesAdapter.addMovies(moviesPage.getMovies());
         moviesAdapter.notifyDataSetChanged();
+
+        MoviesView.moviesPage.addMovies(moviesPage.getMovies());
+        MoviesView.moviesPage.setPage(moviesPage.getPage() + 1);
+        MoviesView.moviesPage.setTotalPages(moviesPage.getTotalPages());
     }
 
 
@@ -112,6 +119,11 @@ public class MoviesView extends Fragment implements MoviesContract.View {
             moviesAdapter.getMovies().clear();
         moviesAdapter.notifyDataSetChanged();
         recyclerViewScrollListener.resetState();
+
+        MoviesView.moviesPage = new MoviesPage();
+        MoviesView.moviesPage.setPage(1);
+        MoviesView.moviesPage.setTotalPages(1);
+        moviesIndex = 0;
     }
 
 
@@ -200,6 +212,9 @@ public class MoviesView extends Fragment implements MoviesContract.View {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(SORT_CRITERIA_KEY, presenter.getSortCriteria());
+
+        if (gridLayoutManager != null && gridLayoutManager.findLastCompletelyVisibleItemPosition() >= 0)
+            moviesIndex = gridLayoutManager.findLastCompletelyVisibleItemPosition();
     }
 
 
