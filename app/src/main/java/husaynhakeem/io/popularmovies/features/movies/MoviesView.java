@@ -18,6 +18,8 @@ import husaynhakeem.io.popularmovies.models.MoviesPage;
 import husaynhakeem.io.popularmovies.utilities.UiUtils;
 import husaynhakeem.io.popularmovies.view.EndlessRecyclerViewScrollListener;
 
+import static husaynhakeem.io.popularmovies.features.movies.MoviesPresenter.SORT_BY_MOST_POPULAR;
+
 /**
  * Created by husaynhakeem on 7/1/17.
  */
@@ -40,6 +42,7 @@ public class MoviesView extends Fragment implements MoviesContract.View {
 
     private static MoviesPage moviesPage = new MoviesPage();
     private static int moviesIndex = 0;
+    private static String sortCriteria = SORT_BY_MOST_POPULAR;
 
 
     @Override
@@ -55,6 +58,7 @@ public class MoviesView extends Fragment implements MoviesContract.View {
         } else {
             presenter.setCurrentPage(moviesPage.getPage());
             presenter.setTotalPages(moviesPage.getTotalPages());
+            presenter.setSortCriteria(sortCriteria);
             moviesAdapter = new MoviesAdapter(moviesPage.getMovies(), this);
         }
     }
@@ -150,7 +154,7 @@ public class MoviesView extends Fragment implements MoviesContract.View {
     public void displaySortCriteria(String sortCriteria) {
         int messageSortCriteria;
 
-        if (MoviesPresenter.SORT_BY_MOST_POPULAR.equals(sortCriteria))
+        if (SORT_BY_MOST_POPULAR.equals(sortCriteria))
             messageSortCriteria = R.string.message_sort_by_most_popular;
         else
             messageSortCriteria = R.string.message_sort_by_top_rated;
@@ -211,18 +215,9 @@ public class MoviesView extends Fragment implements MoviesContract.View {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(SORT_CRITERIA_KEY, presenter.getSortCriteria());
-
+        sortCriteria = presenter.getSortCriteria();
         if (gridLayoutManager != null && gridLayoutManager.findLastCompletelyVisibleItemPosition() >= 0)
             moviesIndex = gridLayoutManager.findLastCompletelyVisibleItemPosition();
-    }
-
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null && savedInstanceState.containsKey(SORT_CRITERIA_KEY))
-            presenter.setSortCriteria(savedInstanceState.getString(SORT_CRITERIA_KEY));
     }
 
 

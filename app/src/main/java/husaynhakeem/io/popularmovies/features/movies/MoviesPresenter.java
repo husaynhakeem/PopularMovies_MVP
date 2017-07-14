@@ -37,7 +37,7 @@ public class MoviesPresenter implements MoviesContract.Presenter, LoaderManager.
     private int currentPage = 1;
     private int totalPages = 1;
 
-    private boolean isFirstCall = true;
+    private static boolean isFirstCall = true;
 
 
     @Override
